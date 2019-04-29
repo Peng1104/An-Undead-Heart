@@ -155,7 +155,7 @@ class FileController(ABC):
 
 	#Cria uma nova arvore de configuração - USO INTERNO
 	def createNew(self, tree, value):
-		if type(tree) == list and len(tree) > 0 and (type(value) == str or type(value) == list or type(value) == dict):
+		if type(tree) == list and len(tree) > 0:
 			dicionario = {}
 
 			if len(tree) == 1:
@@ -175,7 +175,7 @@ class FileController(ABC):
 
 	#Processa o set - USO INTERNO
 	def process_set(self, tree, dicionario, value):
-		if type(tree) == list and len(tree) > 0 and type(dicionario) == dict and (type(value) == str or type(value) == list or type(value) == dict or value == None):
+		if type(tree) == list and len(tree) > 0 and type(dicionario) == dict:
 			#Verefica se a existe a chave na arvore de configuração
 			if tree[0] in dicionario:
 				#Verefica se é chave final
@@ -217,7 +217,7 @@ class FileController(ABC):
 
 	#Processa o get - USO INTERNO
 	def process_get(self, tree, dicionario, default_value):
-		if type(tree) == list and len(tree) > 0 and type(dicionario) == dict and (type(default_value) == str or type(default_value) == list or type(default_value) == dict or default_value == None):
+		if type(tree) == list and len(tree) > 0 and type(dicionario) == dict:
 			#Verefica se a existe a chave na arvore de configuração
 			if tree[0] in dicionario:
 				#Verefica se é a chave final e retorna a string 
@@ -365,7 +365,7 @@ class FileController(ABC):
 					if type(item) == int or type(item) == float or type(item) == bool:
 						lista.append(int(item))
 					else:
-						string = str(item):
+						string = str(item)
 
 						if re.search("^-?\d+(.\d+)?$", string):
 							lista.append(int(string))
