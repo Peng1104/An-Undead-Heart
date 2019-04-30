@@ -1,10 +1,11 @@
 # Roguelike
 Continuação do Jogo do INSPER
-
-
-temos que definir os parametros de como o o jogo será
-- fazer graficos
-- criar README.md e escrever as ideias
-- criar outro README.md como tutorial do jogo
-o que mais?
-- criar MD de funçoes
+# Ideias
+- Lucas Hix:
+	- "Spore" -> Jogo com sistema de evolução e mudança durante o jogo
+	- "Skyrim" -> Missões que levam a desbloquear novos cenarios (MainStoryLine) e mundo aberto
+	- "Stelaris" -> Sistema de civilizações / Imperios que modificam suas habilidades
+- Fernando:
+	- "Street Fighter" -> Jogo de luta com diferentes storylines dependendo do personagem
+	- "Roguelike" -> Jogo estilo rogue
+	- "Binding of Isaac" -> Jogo roguelike com elementos similares com Zelda
