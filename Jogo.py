@@ -6,12 +6,15 @@
 # - Daniel Gurgel Terra, danielgt1@al.insper.edu.br
 
 import Default
+import pygame
 from FileController import YamlFile
 
 #Arquivo as configurações opcionais do jogo
-config = YamlFile("/Config.yml")
+config = YamlFile("Opções/Config.yml")
 
-#Jogo em si
-while True:
-	print("Hello World")
-	break
+try:
+	running = True
+	#Jogo em si
+	while running:
+		print("Hello World")
+		break
