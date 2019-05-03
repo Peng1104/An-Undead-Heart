@@ -9,3 +9,7 @@ Continuação do Jogo do INSPER
 	- "Street Fighter" -> Jogo de luta com diferentes storylines dependendo do personagem
 	- "Roguelike" -> Jogo estilo rogue
 	- "Binding of Isaac" -> Jogo roguelike com elementos similares com Zelda
+- Daniel:
+	- "Hollow Knight" -> Metroidvania
+	- "L.A. Noire" -> Detetive
+	- "Doki Doki Literature Club" -> Dating Sim
