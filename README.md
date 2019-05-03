@@ -1,6 +1,12 @@
 # Roguelike
 Continuação do Jogo do INSPER
-# Ideias
+
+## Alunos:
+- Lucas Hix, lucash@al.insper.edu.br
+- Fernando Giuseppe Avila Beltramo, fernandogab@al.insper.edu.br
+- Daniel Gurgel Terra, danielgt1@al.insper.edu.br
+
+## Ideias Iniciais
 - Lucas Hix:
 	- "Spore" -> Jogo com sistema de evolução e mudança durante o jogo
 	- "Skyrim" -> Missões que levam a desbloquear novos cenarios (MainStoryLine) e mundo aberto
