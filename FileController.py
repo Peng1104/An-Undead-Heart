@@ -280,11 +280,11 @@ class FileController(ABC):
 
 			#Verefica se a string é um inteiro
 			if re.search("^-?\d+$", string):
-				return float(string)
+				return int(string)
 			#Seta na localização o valor default se o mesmo existir
 			elif default_value != None:
 				self.set(path, default_value)
-				return default_value
+				return int(default_value)
 		else:
 			raise TypeError("Path precisa ser uma String com pelo menos 1 caractere e/ou default_value tem que ser um Inteiro!")
 
@@ -440,6 +440,8 @@ class YamlFile(FileController):
 
 	#Salva os dados para o arquivo
 	def save(self):
+		if not Path(self.FilePath[:self.FilePath.rfind("/")]).exists():
+			os.makedirs(self.FilePath[:self.FilePath.rfind("/")], 666)
 		with open(self.FilePath, 'w', encoding="utf-8") as file:
 			file.write(yaml.dump(self.data, allow_unicode=True, default_flow_style=False, sort_keys=False))
 
@@ -459,5 +461,7 @@ class JSONFile(FileController):
 
 	#Salva os dados para o arquivo
 	def save(self):
+		if not Path(self.FilePath[:self.FilePath.rfind("/")]).exists():
+			os.makedirs(self.FilePath[:self.FilePath.rfind("/")], 666)
 		with open(self.FilePath, 'w', encoding="utf-8") as file:
 			file.write(json.dumps(self.data, ensure_ascii=False, indent="\t"))
