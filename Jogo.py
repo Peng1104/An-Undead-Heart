@@ -25,7 +25,7 @@ pygame.display.set_caption(Default.Nome_Do_Jogo)
 clock = clock = pygame.time.Clock()
 screen = pygame.display.set_mode((Largura, Altura))
 
-background = pygame.image.load("Configurações do Jogo/Imagens dos menus/Titulo1.png")
+background = pygame.image.load("Configurações do Jogo/Imagens/Menus/Titulo1.png")
 background = pygame.transform.scale(background, (Largura, Altura))
 background_rect = background.get_rect()
 
