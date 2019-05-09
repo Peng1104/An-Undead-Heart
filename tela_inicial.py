@@ -1,15 +1,7 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue May  7 00:48:00 2019
-
-@author: Yang
-"""
-
 import pygame
-import random
 from os import path
 
-from config import img_dir, BLACK, FPS, GAME, QUIT
+from Configs import img_dir, PRETO, FPS, NEW_GAME, LOAD_GAME, OPTIONS, QUIT
 
 def tela_inicial(screen):
     clock = pygame.time.Clock()
@@ -44,7 +36,7 @@ def tela_inicial(screen):
                         state = QUIT
                         running = False
                     
-        screen.fill(BLACK)
+        screen.fill(PRETO)
         screen.blit(background, background_rect)
 
         pygame.display.flip()
