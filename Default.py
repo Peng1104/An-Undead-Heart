@@ -7,10 +7,10 @@ NOME_DO_JOGO = "PlaceHolder"
 FPS = 60
 
 #Alura da Página do Jogo
-ALTURA = 1600
+ALTURA = 900
 
 #Largura da Página do Jogo
-LARGURA = 900
+LARGURA = 1600
 
 #Cores do Jogo
 BRANCO = (255, 255, 255)

@@ -30,7 +30,7 @@ def tela_inicial(screen):
                         state = LOAD_GAME
                         running = False
                     if (mouse_y > 364) and (mouse_y < 442):
-                        state = OPCOES
+                        state = OPTIONS
                         running = False
                     if (mouse_y > 444) and (mouse_y < 522):
                         state = QUIT

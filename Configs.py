@@ -14,8 +14,8 @@ NOME_DO_JOGO = "PlaceHolder"
 config = YamlFile(opt_dir + "/Config.yml")
 
 FPS = config.getFloat("FPS", default_value=Default.FPS)
-ALTURA = config.getInt("Altura", default_value=Default.Altura)
-LARGURA = config.getInt("Largura", default_value=Default.Largura)
+ALTURA = config.getInt("Altura", default_value=Default.ALTURA)
+LARGURA = config.getInt("Largura", default_value=Default.LARGURA)
 
 config.save()
 
