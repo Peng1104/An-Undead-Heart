@@ -27,10 +27,11 @@ class Player(pygame.sprite.Sprite):
         
         # Centraliza embaixo da tela.
         self.rect.centerx = LARGURA / 2
-        self.rect.bottom = ALTURA - 10
+        self.rect.bottom = ALTURA / 2
         
         # Velocidade da nave
         self.speedx = 0
+        self.speedy = 0
         
         # Melhora a colisão estabelecendo um raio de um circulo
         self.radius = 25
@@ -38,6 +39,7 @@ class Player(pygame.sprite.Sprite):
     # Metodo que atualiza a posição da navinha
     def update(self):
         self.rect.x += self.speedx
+        self.rect.y += self.speedy
         
         # Mantem dentro da tela
         if self.rect.right > LARGURA:
@@ -54,10 +56,45 @@ def tela_jogo(screen):
     all_sprites = pygame.sprite.Group()
     all_sprites.add(player)
     
-    # A cada loop, redesenha o fundo e os sprites
-    screen.fill(PRETO)
-    screen.blit(background, background_rect)
-    all_sprites.draw(screen)
+    clock = pygame.time.Clock()
+    
+    PLAYING = 0
+    DONE = 1
+    
+    state = PLAYING
+    while state != DONE:
+        clock.tick(FPS)
         
-    # Depois de desenhar tudo, inverte o display.
-    pygame.display.flip()
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    player.speedx = -8
+                if event.key == pygame.K_RIGHT:
+                    player.speedx = 8
+                if event.key == pygame.K_UP:
+                    player.speedy = -8
+                if event.key == pygame.K_DOWN:
+                    player.speedy = 8
+                if event.key == pygame.K_q:
+                    state = QUIT
+            
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_LEFT:
+                    player.speedx = 0
+                if event.key == pygame.K_RIGHT:
+                    player.speedx = 0
+                if event.key == pygame.K_UP:
+                    player.speedy = 0
+                if event.key == pygame.K_DOWN:
+                    player.speedy = 0
+        
+        all_sprites.update()
+        # A cada loop, redesenha o fundo e os sprites
+        screen.fill(PRETO)
+        screen.blit(background, background_rect)
+        all_sprites.draw(screen)
+        
+        # Depois de desenhar tudo, inverte o display.
+        pygame.display.flip()
+
+    return QUIT

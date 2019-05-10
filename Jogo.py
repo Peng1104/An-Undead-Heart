@@ -7,10 +7,9 @@
 
 import Default
 import pygame
-from FileController import YamlFile
 from tela_inicial import tela_inicial
 from tela_jogo import tela_jogo
-from Configs import INIT, QUIT, NEW_GAME, LARGURA, ALTURA, FPS
+from Configs import INIT, QUIT, NEW_GAME, LARGURA, ALTURA
 
 #Arquivo as configurações opcionais do jogo
 
@@ -18,7 +17,6 @@ pygame.init()
 
 pygame.display.set_caption(Default.NOME_DO_JOGO)
 
-clock = clock = pygame.time.Clock()
 screen = pygame.display.set_mode((LARGURA, ALTURA))
 
 
@@ -28,17 +26,11 @@ try:
     state = INIT
     while state != QUIT:
         if state == INIT:
-            state = tela_inicial(screen)
-        elif state == NEW_GAME:
+            state = tela_jogo(screen) # mudar para tela_inicial
+        if state == NEW_GAME:
             state = tela_jogo(screen)
         else:
             state = QUIT
-        clock.tick(FPS)
-        
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                rodando = False
-                break
 
 finally:
 	pygame.quit()
