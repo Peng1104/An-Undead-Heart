@@ -26,7 +26,7 @@ try:
     state = INIT
     while state != QUIT:
         if state == INIT:
-            state = tela_jogo(screen) # mudar para tela_inicial
+            state = tela_inicial(screen) # mudar para tela_inicial
         if state == NEW_GAME:
             state = tela_jogo(screen)
         else:
