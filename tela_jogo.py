@@ -90,13 +90,13 @@ def tela_jogo(screen):
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    player.speedx = 8
+                    player.speedx = 5
                 if event.key == pygame.K_RIGHT:
-                    player.speedx = -8
+                    player.speedx = -5
                 if event.key == pygame.K_UP:
-                    player.speedy = 8
+                    player.speedy = 5
                 if event.key == pygame.K_DOWN:
-                    player.speedy = -8
+                    player.speedy = -5
                 if event.key == pygame.K_q:
                     state = QUIT
             

@@ -21,12 +21,9 @@ class LoadImagens():
 						continue
 					else:
 						imagem = pygame.image.load(FilePath + "/" + file)
-						rect = imagem.get_rect()
-						Largura = imagem.get_size()[0]
-						Altura = imagem.get_size()[1]
-						Centro = (Largura/2, Altura/2)
+						Centro = (imagem.get_size()[0]/2, imagem.get_size()[1]/2)
 
-						maps[file[:-4]] = [imagem, rect, Largura, Altura, Centro]
+						maps[file[:-4]] = [imagem, Centro]
 				else:
 					continue
 			else:
