@@ -19,7 +19,6 @@ pygame.display.set_caption(Default.NOME_DO_JOGO)
 
 screen = pygame.display.set_mode((LARGURA, ALTURA))
 
-
 all_sprites = pygame.sprite.Group()
 
 try:
