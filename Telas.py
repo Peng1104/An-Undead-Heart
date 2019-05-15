@@ -64,7 +64,7 @@ class MenuMaker(ABC):
 				if event.type == pygame.MOUSEBUTTONDOWN:
 
 					#Pega a cor selecionada
-					__action__ = self.__action__(self.Localização_dos_Botões.get_at((mouse_x, mouse_y)))
+					__action__ = self.__action__(CriarObjeto(self.Localização_dos_Botões, Multiplicador).get_at((mouse_x, mouse_y)))
 
 					#Mundaça de Estado do Jogo
 					if __action__ != -1:
