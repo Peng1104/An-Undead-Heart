@@ -40,6 +40,8 @@ AZUL = (0, 0, 255, 255)
 AMARELO = (255, 255, 0, 255)
 ROSA = (255, 0, 255, 255)
 CIANO = (0, 255, 255, 255)
+LARANJA = (255, 125, 0 ,255)
+ROXO = (125, 0, 255, 255)
 
 #Estados do Jogo
 SEM_MUDANÇA = -1
