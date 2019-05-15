@@ -17,15 +17,8 @@ class LoadImagens():
 		for file in os.listdir(FilePath):
 			if file.find(".") > 0:
 				if file.endswith(".png") or file.endswith(".jpg") or file.endswith(".gif") or file.endswith(".bmp") or file.endswith(".pcx") or file.endswith(".tga") or file.endswith(".tif") or file.endswith(".lbm") or file.endswith(".pbm") or file.endswith(".pgm") or file.endswith(".ppm") or file.endswith(".xpm"):  
-					if file[:-4] in maps:
-						continue
-					else:
-						imagem = pygame.image.load(FilePath + "/" + file)
-						Centro = (imagem.get_size()[0]/2, imagem.get_size()[1]/2)
-
-						maps[file[:-4]] = [imagem, Centro]
-				else:
-					continue
+					if not file[:-4] in maps:
+						maps[file[:-4]] = pygame.image.load(FilePath + "/" + file)
 			else:
 				maps[file] = self.__loadFile__(FilePath + "/" + file, {})
 		return maps

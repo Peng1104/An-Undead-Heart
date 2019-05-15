@@ -1,24 +1,55 @@
 #Arquivo que controla as telas do Jogo
 import pygame
-from Default import *
+from Configs import *
 from abc import ABC, abstractmethod
+
+#Função para adequar as Imagens do Tipo Objeto a Dimensão do Jogo
+def CriarObjeto(Imagem, Multiplicador):
+	if type(Imagem) != pygame.Surface:
+		raise TypeError("Imagem não é um Surface")
+	elif type(Multiplicador) != float and type(Multiplicador) != int:
+		raise TypeError("Multiplicador não é um Número")
+	else:
+		#Dimensiona a Imagem
+		return pygame.transform.scale(Imagem, (int(Imagem.get_size()[0]*Multiplicador), int(Imagem.get_size()[1]*Multiplicador)))
+
+#Função para criar ou alterar o Plano de Fundo do Jogo
+def AtualizarPlanodeFundo(Tela, Imagem, Multiplicador):
+	if type(Tela) != pygame.Surface:
+		raise TypeError("Tela não é um Surface")
+	elif type(Imagem) != pygame.Surface:
+		raise TypeError("Imagem não é um Surface")
+	elif type(Multiplicador) != float and type(Multiplicador) != int:
+		raise TypeError("Multiplicador não é um Número")
+	elif Imagem.get_size()[0] != 1920 or Imagem.get_size()[1] != 1080:
+		raise Exception("A Imagem de Plano de Fundo tem que ser 1920 por 1080")
+	else:
+		#Dimensiona a Imagem
+		Imagem = pygame.transform.scale(Imagem, (int(Imagem.get_size()[0]*Multiplicador), int(Imagem.get_size()[1]*Multiplicador)))
+
+		#Configura a Tela
+		Tela.fill((0, 0, 0, 255)) #PRETO
+		Tela.blit(Imagem, Imagem.get_rect())
+		pygame.display.flip()
+
+		return Tela
 
 class MenuMaker(ABC):
 
-	def __init__(self, Imagens, Tamanho):
-		if "Imagem" not in Imagens or "Localização Dos Botões" not in Imagens or Imagens["Imagem"][1] != Imagens["Localização Dos Botões"][1]:
-			print("Erro-Imagem:", not("Imagem" not in Imagens))
-			print("Erro-Localização-Dos-Botões:", not("Localização Dos Botões" not in Imagens))
-			print("Erro de Tamanho:", not(Imagens["Imagem"][1] != Imagens["Localizaçã Dos Botões"][1]))
-			raise Error()
+	def __init__(self, Imagens):
+		if "Plano de fundo" not in Imagens:
+			raise FileNotFoundError("Não foi possivel identificar o arquivo do plano de fundo")
+		elif "Localização dos botões" not in Imagens:
+			raise FileNotFoundError("Não foi possivel identificar o arquivo da localização dos botões")
+		elif Imagens["Plano de fundo"].get_size() != Imagens["Localização dos botões"].get_size():
+			raise Exception("O Tamanho da imagem da localização dos botões não é igual a imagem de plano de fundo")
 		else:
 			super().__init__()
-			self.Plano_de_Fundo = pygame.transform.scale(Imagens["Imagem"][0], Tamanho)
-			self.Rect_do_Plano_de_Fundo = self.Plano_de_Fundo.get_rect()
-			self.Localização_dos_Botões = pygame.transform.scale(Imagens["Localização Dos Botões"][0], Tamanho)
+			self.Plano_de_Fundo = Imagens["Plano de fundo"]
+			self.Localização_dos_Botões = Imagens["Localização dos botões"]
 
 	#Executa a tela
-	def run(self, Tela):
+	def run(self, Tela, Multiplicador):
 		while True:
 			for event in pygame.event.get():
 
@@ -39,10 +70,7 @@ class MenuMaker(ABC):
 					if __action__ != -1:
 						return __action__
 
-			#Atualiza a Tela do Jogo
-			Tela.fill(PRETO)
-			Tela.blit(self.Plano_de_Fundo, self.Rect_do_Plano_de_Fundo)
-			pygame.display.flip()
+			AtualizarPlanodeFundo(Tela, self.Plano_de_Fundo, Multiplicador)
 
 	@abstractmethod
 	def __action__(self, Cor_selecionada):
@@ -50,8 +78,8 @@ class MenuMaker(ABC):
 
 class Menu_Principal(MenuMaker):
 
-	def __init__(self, Imagens, Tamanho):
-		super().__init__(Imagens, Tamanho)
+	def __init__(self, Imagens):
+		super().__init__(Imagens)
 
 	def __action__(self, Cor_selecionada):
 		if Cor_selecionada == AZUL:
@@ -67,8 +95,8 @@ class Menu_Principal(MenuMaker):
 
 class Menu_De_Opções(MenuMaker):
 
-	def __init__(self, Imagens, Tamanho):
-		super().__init__(Imagens, Tamanho)
+	def __init__(self, Imagens):
+		super().__init__(Imagens)
 
 	def __action__(self, Cor_selecionada):
 		if Cor_selecionada == AZUL:
@@ -82,8 +110,8 @@ class Menu_De_Opções(MenuMaker):
 
 class Menu_De_Como_Jogar(MenuMaker):
 
-	def __init__(self, Imagens, Tamanho):
-		super().__init__(Imagens, Tamanho)
+	def __init__(self, Imagens):
+		super().__init__(Imagens)
 
 	def __action__(self, Cor_selecionada):
 		if Cor_selecionada == AMARELO:
@@ -94,8 +122,8 @@ class Menu_De_Como_Jogar(MenuMaker):
 #TODO PENSAR MELHOR COMO FAZER
 class Menu_De_Video(MenuMaker):
 
-	def __int__(self, Imagens, Tamanho):
-		super().__init__(Imagens, Tamanho)
+	def __int__(self, Imagens):
+		super().__init__(Imagens)
 
 	def __action__(self, Cor_selecionada):
 		if Cor_selecionada == AZUL:
