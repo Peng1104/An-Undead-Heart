@@ -86,8 +86,8 @@ class Menu_De_Como_Jogar(MenuMaker):
 		super().__init__(Imagens, Tamanho)
 
 	def __action__(self, Cor_selecionada):
-		if Cor_selecionada == VERDE:
-			return MENU_PRINCIPAL
+		if Cor_selecionada == AMARELO:
+			return MENU_DAS_OPÇÕES
 		else:
 			return SEM_MUDANÇA
 
@@ -103,6 +103,6 @@ class Menu_De_Video(MenuMaker):
 		elif Cor_selecionada == VERMELHO:
 			return MENU_DE_COMO_JOGAR
 		elif Cor_selecionada == VERDE:
-			return Menu_De_Opções
+			return MENU_DAS_OPÇÕES
 		else:
 			return SEM_MUDANÇA

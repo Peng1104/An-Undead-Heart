@@ -14,31 +14,36 @@ from FileController import YamlFile
 #Arquivo que contem as opções do jogo
 config = YamlFile(Dir_Opções + "/Config.yml")
 
-#Variaveis do Jogo
-GAME_FPS = config.getFloat("FPS", default_value=FPS)
-GAME_ALTURA = config.getInt("Altura", default_value=ALTURA)
-GAME_LARGURA = config.getInt("Largura", default_value=LARGURA)
-GAME_NOME_DO_JOGO = config.getString("Nome do Jogo", default_value=NOME_DO_JOGO)
-
-#Salvar o Arquivo
-config.save()
-
 #Imagens do Jogo
 Imagens = LoadImagens(Dir_Imagens).getImagens()
 
-#Iniciando o Jogo
+#Inicia o Jogo
 pygame.init()
 
-#Aplica o FPS ao Jogo
-pygame.time.Clock().tick(GAME_FPS)
+#Vareavel do Clock (FPS)
+if config.getFloat("FPS", default_value=60) < 1.0:
+	config.set("FPS", 60)
+
+#Ativa o Clock do Jogo
+pygame.time.Clock().tick(config.getFloat("FPS", default_value=60))
 
 #Aplicar nome do Jogo a Janela do Jogo
-pygame.display.set_caption(GAME_NOME_DO_JOGO)
+pygame.display.set_caption(config.getString("Nome do Jogo", default_value="An Undead Heart"))
 
-#Aplicar tamanho para a Janela do Jogo
-Tela = pygame.display.set_mode((GAME_LARGURA, GAME_ALTURA))
+#Vareavel de Resolução do Jogo
+if config.getInt("Nível de Resolução do Jogo", default_value=4) > 6 or config.getInt("Nível de Resolução do Jogo") < 1:
+	config.set("Nível de Resolução do Jogo", 4)
 
-#
+RESOLUÇÃO = RESOLUÇÕES[config.getInt("Nível de Resolução do Jogo")]
+DIVISOR = DIVISORES[config.getInt("Nível de Resolução do Jogo")]
+
+#Cria a Tela ultilizando a Resolução do Jogo
+if config.getBoolean("Tela Cheia", default_value=False):
+	Tela = pygame.display.set_mode(RESOLUÇÃO, flags=pygame.FULLSCREEN)
+else:
+	Tela = pygame.display.set_mode(RESOLUÇÃO)
+
+#Todas As Imagens Transformadas
 all_sprites = pygame.sprite.Group()
 
 #Jogo em si
@@ -56,12 +61,14 @@ try:
         if Estado == SAIR:
             break
         elif Estado == MENU_PRINCIPAL:
-            Estado = Telas.Menu_Principal(Imagens.get("Menu Principal"), (GAME_LARGURA, GAME_ALTURA)).run(Tela)
+            Estado = Telas.Menu_Principal(Imagens.get("Menu Principal"), RESOLUÇÃO).run(Tela)
         elif Estado == MENU_DAS_OPÇÕES:
-            Estado = Telas.Menu_De_Opções(Imagens.get("Menu de Opções"), (GAME_LARGURA, GAME_ALTURA)).run(Tela)
+            Estado = Telas.Menu_De_Opções(Imagens.get("Menu de Opções"), RESOLUÇÃO).run(Tela)
         elif Estado == MENU_DE_COMO_JOGAR:
-            Estado = Telas.Menu_De_Como_Jogar(Imagens.get("Menu de Como Jogar"), (GAME_LARGURA, GAME_ALTURA)).run(Tela)
+            Estado = Telas.Menu_De_Como_Jogar(Imagens.get("Menu de Como Jogar"), RESOLUÇÃO).run(Tela)
         elif Estado == MENU_DE_VIDEO:
-            Estado = Telas.Menu_De_Video(Imagens.get("Menu de Vídeo"), (GAME_LARGURA, GAME_ALTURA)).run(Tela)
+            Estado = Telas.Menu_De_Video(Imagens.get("Menu de Vídeo"), RESOLUÇÃO).run(Tela)
 finally:
 	pygame.quit()
+	#Salvar o Arquivo
+	config.save()
