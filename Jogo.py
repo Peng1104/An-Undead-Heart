@@ -6,10 +6,10 @@
 # - Daniel Gurgel Terra, danielgt1@al.insper.edu.br
 
 import pygame
-import Telas
-from Configs import *
-from ImageController import LoadImagens
-from FileController import YamlFile
+import GameCode.Telas as Telas
+from GameCode.Configs import *
+from GameCode.ImageController import LoadImagens
+from GameCode.FileController import YamlFile
 
 #Arquivo que contem as opções do jogo
 config = YamlFile(Dir_Opções + "/Config.yml")

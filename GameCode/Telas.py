@@ -1,6 +1,6 @@
 #Arquivo que controla as telas do Jogo
 import pygame
-from Configs import *
+from GameCode.Configs import *
 from abc import ABC, abstractmethod
 
 #Função para adequar as Imagens do Tipo Objeto a Dimensão do Jogo

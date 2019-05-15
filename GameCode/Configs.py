@@ -1,11 +1,9 @@
-from os import path
+from os import path, pardir
 
 #Arquivo das configurações do Jogo
 
-#Diretorios
-
 #Diretório Principal (Diretorio Pai)
-Dir_Principal = path.join(path.dirname(__file__), "Configurações")
+Dir_Principal = path.join("Configurações")
 
 #Diretório das Imagens
 Dir_Imagens = path.join(Dir_Principal, "Imagens")
@@ -40,6 +38,8 @@ VERMELHO = (255, 0, 0, 255)
 VERDE = (0, 255, 0, 255)
 AZUL = (0, 0, 255, 255)
 AMARELO = (255, 255, 0, 255)
+ROSA = (255, 0, 255, 255)
+CIANO = (0, 255, 255, 255)
 
 #Estados do Jogo
 SEM_MUDANÇA = -1
@@ -48,5 +48,5 @@ SAIR = 1
 MENU_DAS_OPÇÕES = 2
 MENU_DE_COMO_JOGAR = 3
 MENU_DE_VIDEO = 4
-NOVO_JOGO = 2
-CARREGAR_JOGO = 3
+NOVO_JOGO = 5
+CARREGAR_JOGO = 6
