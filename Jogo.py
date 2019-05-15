@@ -8,8 +8,8 @@
 import pygame
 import GameCode.Telas as Telas
 from GameCode.Configs import *
-from GameCode.ImageController import LoadImagens
-from GameCode.FileController import YamlFile
+from GameCode.Controllers.ImageController import LoadImagens
+from GameCode.Controllers.FileController import YamlFile
 
 #Arquivo que contem as opções do jogo
 config = YamlFile(Dir_Opções + "/Config.yml")
