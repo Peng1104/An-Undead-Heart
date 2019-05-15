@@ -1,5 +1,4 @@
 #Arquivo que contem as condições originais do Jogo
-
 from os import path
 
 #Nome do jogo

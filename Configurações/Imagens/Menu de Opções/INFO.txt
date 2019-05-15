@@ -1,3 +1,0 @@
-Botão para voltar ao Menu de Opções é verde
-Botão para ir para o Menu de Vídeo é azul
-Botão para ir para o Menu_de_Jogo é Menu de Como Jogar
