@@ -1,17 +1,18 @@
 Valor das AÇÕES:
 
-1 -  Menu Principal
-2 -  Sair do Jogo
-3 -  Menu de Opções
-4 -  Menu de Como Jogar
-5 -  Menu de Vídeo
-6 -  Ativar Modo de Tela Cheia
-7 -  Desativar Modo de Tela Cheia
-8 -  Mudar para a Resolução para 1080p
-9 -  Mudar para a Resolução para 900p
-10 - Mudar para a Resolução para 720p
-11 - Mudar para a Resolução para 576p
-12 - Mudar para a Resolução para 540p
-13 - Mudar para a Resolução para 360p
-14 - Menu para Carregar Jogo Salvo
-15 - Menu de Novo Jogo
+0 -  Menu Principal
+1 -  Sair do Jogo
+2 -  Menu de Opções
+3 -  Menu de Como Jogar
+4 -  Menu de Vídeo
+5 -  Ativar Modo de Tela Cheia
+6 -  Desativar Modo de Tela Cheia
+7 -  Mudar para a Resolução para 1080p
+8 -  Mudar para a Resolução para 900p
+9 -  Mudar para a Resolução para 720p
+10 - Mudar para a Resolução para 576p
+11 - Mudar para a Resolução para 540p
+12 - Mudar para a Resolução para 360p
+13 - Menu para Carregar Jogo Salvo
+14 - Menu de Novo Jogo
+15 - Jogo em SI
