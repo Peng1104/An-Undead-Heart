@@ -188,6 +188,14 @@ try:
             #Retorna para o Menu de Vídeo
             Estado = MENU_DE_VIDEO
 
+        #Entra no Menu para selecionar um Jogo Salvo
+        elif Estado == MENU_PARA_CARREGAR_JOGO_SALVO:
+            Estado = MenuMaker("Menu para Carregar Jogo Salvo").run(Tela, MULTIPLICADOR)
+
+        #Entra no Menu para criar um Novo Jogo
+        elif Estado == MENU_DE_NOVO_JOGO:
+            Estado = MenuMaker("Menu de Novo Jogo").run(Tela, MULTIPLICADOR)
+
         #Vai para o Jogo
         elif Estado == JOGO:
             Estado = tela_jogo(Tela)
@@ -195,5 +203,5 @@ finally:
 	#Fecha o Jogo
 	pygame.quit()
 
-	#Salvar o Arquivo de CONFIGuração
+	#Salvar o Arquivo de Configuração
 	CONFIG.save()
