@@ -1,6 +1,8 @@
-from os import path, pardir
+#Arquivo das variáveis do Jogo
 
-#Arquivo das configurações do Jogo
+from os import path
+from GameCode.Controllers.ImageController import LoadImagens
+from GameCode.Controllers.FileController import YamlFile
 
 #Diretório Principal (Diretorio Pai)
 Dir_Principal = path.join("Configurações")
@@ -8,23 +10,16 @@ Dir_Principal = path.join("Configurações")
 #Diretório das Imagens
 Dir_Imagens = path.join(Dir_Principal, "Imagens")
 
-#Diretório do Arquivo Config.yml
-Dir_Opções = path.join(Dir_Principal, "Opções")
+#Imagens do Jogo
+IMAGENS_DO_JOGO = LoadImagens(Dir_Imagens).getImagens()
 
-#Resoluções do Jogo todas 16:9
-RESOLUÇÕES = {
-	1 : (640, 360),
-	2 : (960, 540),
-	3 : (1024, 576),
-	4 : (1280, 720),
-	5 : (1600, 900),
-	6 : (1920, 1080)
-}
+#Arquivo que contem as opções do jogo
+CONFIG = YamlFile(path.join(path.join(Dir_Principal, "Opções"), "Config.yml"))
 
 #Transformadores para a escala dos objetos
 MULTIPLICADORES = {
-	1 : 3,
-	2 : 2,
+	1 : 1/3,
+	2 : 1/2,
 	3 : 1.6/3,
 	4 : 2/3,
 	5 : 2.5/3,
@@ -50,7 +45,14 @@ SAIR = 1
 MENU_DAS_OPÇÕES = 2
 MENU_DE_COMO_JOGAR = 3
 MENU_DE_VIDEO = 4
-NOVO_JOGO = 5
-CARREGAR_JOGO = 6
-
-JOGO = -2
+ATIVAR_TELA_CHEIA = 5
+DESATIVAR_TELA_CHEIA = 6
+RESOLUÇÃO_DE_1080P = 7
+RESOLUÇÃO_DE_900P = 8
+RESOLUÇÃO_DE_720P = 9
+RESOLUÇÃO_DE_576P = 10
+RESOLUÇÃO_DE_540P = 11
+RESOLUÇÃO_DE_360P = 12
+MENU_PARA_CARREGAR_JOGO_SALVO = 13
+MENU_DE_NOVO_JOGO = 14
+JOGO = 15

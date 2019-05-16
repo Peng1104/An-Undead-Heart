@@ -1,0 +1,11 @@
+Lista de Botões:
+- Exemplo
+
+Botão:
+    Exemplo:
+        ImagemOriginal: SAIR
+        Imagem2: SAIR2
+        Ação: 1
+        Posição:
+        - 140
+        - 810

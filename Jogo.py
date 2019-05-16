@@ -6,53 +6,47 @@
 # - Daniel Gurgel Terra, danielgt1@al.insper.edu.br
 
 import pygame
-import GameCode.Telas as Telas
 from GameCode.Configs import *
-from GameCode.Controllers.ImageController import LoadImagens
-from GameCode.Controllers.FileController import YamlFile
+from GameCode.MenuMaker import MenuMaker
 
+#EM FASE DE TESTES
 from GameCode.tela_jogo import tela_jogo
 
-#Arquivo que contem as opções do jogo
-config = YamlFile(Dir_Opções + "/Config.yml")
-
-#Imagens do Jogo
-Imagens = LoadImagens(Dir_Imagens).getImagens()
+def MakeTela(Multiplicador, Tela_Cheia):
+    if Tela_Cheia:
+        return pygame.display.set_mode((int(1920*MULTIPLICADOR), int(1080*MULTIPLICADOR)), flags=pygame.FULLSCREEN)
+    else:
+        return pygame.display.set_mode((int(1920*MULTIPLICADOR), int(1080*MULTIPLICADOR)))
 
 #Inicia o Jogo
 pygame.init()
 
 #Vareavel do Clock (FPS)
-if config.getFloat("FPS", default_value=60) < 1.0:
-	config.set("FPS", 60)
+if CONFIG.getFloat("FPS", default_value=60) < 1.0:
+	CONFIG.set("FPS", 60)
 
 #Ativa o Clock do Jogo
-pygame.time.Clock().tick(config.getFloat("FPS", default_value=60))
+pygame.time.Clock().tick(CONFIG.getFloat("FPS", default_value=60))
 
 #Aplicar nome do Jogo a Janela do Jogo
-pygame.display.set_caption(config.getString("Nome do Jogo", default_value="An Undead Heart"))
+pygame.display.set_caption(CONFIG.getString("Nome do Jogo", default_value="An Undead Heart"))
 
 #Vareavel de Resolução do Jogo
-if config.getInt("Nível de Resolução do Jogo", default_value=4) > 6 or config.getInt("Nível de Resolução do Jogo") < 1:
-	config.set("Nível de Resolução do Jogo", 4)
-
-#Cria a Tela ultilizando a Resolução do Jogo
-if config.getBoolean("Tela Cheia", default_value=False):
-	Tela = pygame.display.set_mode(RESOLUÇÕES[config.getInt("Nível de Resolução do Jogo")], flags=pygame.FULLSCREEN)
-else:
-	Tela = pygame.display.set_mode(RESOLUÇÕES[config.getInt("Nível de Resolução do Jogo")])
+if CONFIG.getInt("Nível de Resolução do Jogo", default_value=4) > 6 or CONFIG.getInt("Nível de Resolução do Jogo") < 1:
+	CONFIG.set("Nível de Resolução do Jogo", 4)
 
 #Define o tamanho das Imagens
-MULTIPLICADOR = MULTIPLICADORES[config.getInt("Nível de Resolução do Jogo")]
+MULTIPLICADOR = MULTIPLICADORES[CONFIG.getInt("Nível de Resolução do Jogo")]
 
-#Todas As Imagens Transformadas
-all_sprites = pygame.sprite.Group()
+#Cria a Tela do Jogo ultilizando a função MakeTela
+Tela = MakeTela(MULTIPLICADOR, CONFIG.getBoolean("Tela Cheia", default_value=False))
 
-#Jogo em si
+#Estado Inicial do Jogo
+Estado = MENU_PRINCIPAL
+
+#Runable do Jogo
 try:
-    Estado = JOGO
-
-    while Estado != SAIR:
+    while True:
 
         #Fechando o Jogo atravez do X
         for event in pygame.event.get():
@@ -60,19 +54,146 @@ try:
                 Estado = SAIR
                 break
 
-        if Estado == SAIR:
+        #PARAR O LOOP
+        if Estado == SAIR or Estado == SEM_MUDANÇA:
             break
+
+        #Entra no Menu Principal
         elif Estado == MENU_PRINCIPAL:
-            Estado = Telas.Menu_Principal(Imagens.get("Menu Principal")).run(Tela, MULTIPLICADOR)
+            Estado = MenuMaker("Menu Principal").run(Tela, MULTIPLICADOR)
+
+        #Entra no Menu das Opções
         elif Estado == MENU_DAS_OPÇÕES:
-            Estado = Telas.Menu_De_Opções(Imagens.get("Menu de Opções")).run(Tela, MULTIPLICADOR)
+            Estado = MenuMaker("Menu de Opções").run(Tela, MULTIPLICADOR)
+
+        #Entra no Menu de Como Jogar
         elif Estado == MENU_DE_COMO_JOGAR:
-            Estado = Telas.Menu_De_Como_Jogar(Imagens.get("Menu de Como Jogar")).run(Tela, MULTIPLICADOR)
+            Estado = MenuMaker("Menu de Como Jogar").run(Tela, MULTIPLICADOR)
+
+        #Entra no Menu de Vídeo
         elif Estado == MENU_DE_VIDEO:
-            Estado = Telas.Menu_De_Video(Imagens.get("Menu de Vídeo")).run(Tela, MULTIPLICADOR)
+            Estado = MenuMaker("Menu de Vídeo").run(Tela, MULTIPLICADOR)
+
+        #Ativa a Tela cheia e volta para o Menu de Vídeo
+        elif Estado == ATIVAR_TELA_CHEIA:
+            #Atualiza a regra no Config
+            CONFIG.set("Tela Cheia", True)
+            CONFIG.save()
+
+            #Atualiza a Tela
+            Tela = MakeTela(MULTIPLICADOR, CONFIG.getBoolean("Tela Cheia"))
+
+            #Retorna para o Menu de Vídeo
+            Estado = MENU_DE_VIDEO
+
+        #Desativa a Tela cheia e volta para o Menu de Vídeo
+        elif Estado == DESATIVAR_TELA_CHEIA:
+            #Atualiza a regra no Config
+            CONFIG.set("Tela Cheia", False)
+            CONFIG.save()
+
+            #Atualiza a Tela
+            Tela = MakeTela(MULTIPLICADOR, CONFIG.getBoolean("Tela Cheia"))
+
+            #Retorna para o Menu de Vídeo
+            Estado = MENU_DE_VIDEO
+
+        #Troca para a Resolução de 1080p e volta para o Menu de Vídeo
+        elif Estado == RESOLUÇÃO_DE_1080P:
+            #Atualiza a regra no Config
+            CONFIG.set("Nível de Resolução do Jogo", 6)
+            CONFIG.save()
+
+            #Atualiza o Multiplicador
+            MULTIPLICADOR = MULTIPLICADORES[CONFIG.getInt("Nível de Resolução do Jogo")]
+
+            #Atualiza a Tela
+            Tela = MakeTela(MULTIPLICADOR, CONFIG.getBoolean("Tela Cheia"))
+
+            #Retorna para o Menu de Vídeo
+            Estado = MENU_DE_VIDEO
+
+        #Troca para a Resolução de 900p e volta para o Menu de Vídeo
+        elif Estado == RESOLUÇÃO_DE_900P:
+            #Atualiza a regra no Config
+            CONFIG.set("Nível de Resolução do Jogo", 5)
+            CONFIG.save()
+
+            #Atualiza o Multiplicador
+            MULTIPLICADOR = MULTIPLICADORES[CONFIG.getInt("Nível de Resolução do Jogo")]
+
+            #Atualiza a Tela
+            Tela = MakeTela(MULTIPLICADOR, CONFIG.getBoolean("Tela Cheia"))
+
+            #Retorna para o Menu de Vídeo
+            Estado = MENU_DE_VIDEO
+
+        #Troca para a Resolução de 720p e volta para o Menu de Vídeo
+        elif Estado == RESOLUÇÃO_DE_720P:
+            #Atualiza a regra no Config
+            CONFIG.set("Nível de Resolução do Jogo", 4)
+            CONFIG.save()
+
+            #Atualiza o Multiplicador
+            MULTIPLICADOR = MULTIPLICADORES[CONFIG.getInt("Nível de Resolução do Jogo")]
+
+            #Atualiza a Tela
+            Tela = MakeTela(MULTIPLICADOR, CONFIG.getBoolean("Tela Cheia"))
+
+            #Retorna para o Menu de Vídeo
+            Estado = MENU_DE_VIDEO
+
+        #Troca para a Resolução de 576p e volta para o Menu de Vídeo
+        elif Estado == RESOLUÇÃO_DE_576P:
+            #Atualiza a regra no Config
+            CONFIG.set("Nível de Resolução do Jogo", 3)
+            CONFIG.save()
+
+            #Atualiza o Multiplicador
+            MULTIPLICADOR = MULTIPLICADORES[CONFIG.getInt("Nível de Resolução do Jogo")]
+
+            #Atualiza a Tela
+            Tela = MakeTela(MULTIPLICADOR, CONFIG.getBoolean("Tela Cheia"))
+
+            #Retorna para o Menu de Vídeo
+            Estado = MENU_DE_VIDEO
+
+        #Troca para a Resolução de 540p e volta para o Menu de Vídeo
+        elif Estado == RESOLUÇÃO_DE_540P:
+            #Atualiza a regra no Config
+            CONFIG.set("Nível de Resolução do Jogo", 2)
+            CONFIG.save()
+
+            #Atualiza o Multiplicador
+            MULTIPLICADOR = MULTIPLICADORES[CONFIG.getInt("Nível de Resolução do Jogo")]
+
+            #Atualiza a Tela
+            Tela = MakeTela(MULTIPLICADOR, CONFIG.getBoolean("Tela Cheia"))
+
+            #Retorna para o Menu de Vídeo
+            Estado = MENU_DE_VIDEO
+
+        #Troca para a Resolução de 360p e volta para o Menu de Vídeo
+        elif Estado == RESOLUÇÃO_DE_360P:
+            #Atualiza a regra no Config
+            CONFIG.set("Nível de Resolução do Jogo", 1)
+            CONFIG.save()
+
+            #Atualiza o Multiplicador
+            MULTIPLICADOR = MULTIPLICADORES[CONFIG.getInt("Nível de Resolução do Jogo")]
+
+            #Atualiza a Tela
+            Tela = MakeTela(MULTIPLICADOR, CONFIG.getBoolean("Tela Cheia"))
+
+            #Retorna para o Menu de Vídeo
+            Estado = MENU_DE_VIDEO
+
+        #Vai para o Jogo
         elif Estado == JOGO:
             Estado = tela_jogo(Tela)
 finally:
+	#Fecha o Jogo
 	pygame.quit()
-	#Salvar o Arquivo
-	config.save()
+
+	#Salvar o Arquivo de CONFIGuração
+	CONFIG.save()
