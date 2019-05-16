@@ -1,10 +1,13 @@
 import pygame
-import random
 from os import path
 
-from Configs import INIT, QUIT, NEW_GAME, LARGURA, ALTURA, FPS, PRETO, img_dir
+from GameCode.Configs import PRETO, SAIR, Dir_Imagens
 
-#classe
+# >> importações temporarias <<
+LARGURA = 1600
+ALTURA = 900
+FPS = 60
+Dir_Game = path.join(Dir_Imagens, "Game")
 
 # Classe Jogador
 class Player(pygame.sprite.Sprite):
@@ -15,9 +18,10 @@ class Player(pygame.sprite.Sprite):
         # Construtor da classe pai (Sprite).
         pygame.sprite.Sprite.__init__(self)
         
+        # Dá camera ao personagem
         self.camera = camera
         
-        # Carregando a imagem de fundo.
+        # Carregando a imagem do personagem
         self.image = player_img
         
         # Diminuindo o tamanho da imagem.
@@ -36,14 +40,14 @@ class Player(pygame.sprite.Sprite):
         self.rect.centerx = self.px - self.camera.px
         self.rect.centery = self.py - self.camera.py
         
-        # Velocidade da nave
+        # Velocidade do personagem
         self.speedx = 0
         self.speedy = 0
         
         # Melhora a colisão estabelecendo um raio de um circulo
         self.radius = 25
     
-    # Metodo que atualiza a posição da navinha
+    # Atualiza a posição do Player
     def update(self):
         self.px += self.speedx
         self.py += self.speedy
@@ -67,12 +71,12 @@ class Camera:
         self.py = py
 
 def tela_jogo(screen):
-    background = pygame.image.load(path.join(img_dir, 'Escola 01.jpg')).convert()
+    background = pygame.image.load(path.join(Dir_Game, 'Escola 01.png')).convert()
     background_rect = background.get_rect()
     
     camera = Camera(0, 0)
     
-    player = Player(pygame.image.load(path.join(img_dir, "pawn.png")).convert(), camera)
+    player = Player(pygame.image.load(path.join(Dir_Game, "pawn.png")).convert(), camera)
     
     
     all_sprites = pygame.sprite.Group()
@@ -98,7 +102,7 @@ def tela_jogo(screen):
                 if event.key == pygame.K_DOWN:
                     player.speedy = -5
                 if event.key == pygame.K_q:
-                    state = QUIT
+                    state = DONE
             
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
@@ -121,4 +125,4 @@ def tela_jogo(screen):
         # Depois de desenhar tudo, inverte o display.
         pygame.display.flip()
 
-    return QUIT
+    return SAIR

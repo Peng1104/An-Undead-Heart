@@ -11,6 +11,8 @@ from GameCode.Configs import *
 from GameCode.Controllers.ImageController import LoadImagens
 from GameCode.Controllers.FileController import YamlFile
 
+from GameCode.tela_jogo import tela_jogo
+
 #Arquivo que contem as opções do jogo
 config = YamlFile(Dir_Opções + "/Config.yml")
 
@@ -48,7 +50,7 @@ all_sprites = pygame.sprite.Group()
 
 #Jogo em si
 try:
-    Estado = MENU_PRINCIPAL
+    Estado = JOGO
 
     while Estado != SAIR:
 
@@ -68,6 +70,8 @@ try:
             Estado = Telas.Menu_De_Como_Jogar(Imagens.get("Menu de Como Jogar")).run(Tela, MULTIPLICADOR)
         elif Estado == MENU_DE_VIDEO:
             Estado = Telas.Menu_De_Video(Imagens.get("Menu de Vídeo")).run(Tela, MULTIPLICADOR)
+        elif Estado == JOGO:
+            Estado = tela_jogo(Tela)
 finally:
 	pygame.quit()
 	#Salvar o Arquivo
