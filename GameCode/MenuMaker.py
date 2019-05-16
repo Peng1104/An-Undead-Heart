@@ -72,7 +72,7 @@ class MenuMaker():
 			if "Plano de fundo" not in Imagens:
 				raise FileNotFoundError("Não foi possivel identificar o arquivo do plano de fundo")
 			elif "Botões" not in Imagens:
-				raise ileNotFoundError("Não foi possivel identificar o diretório dos Botões")
+				raise FileNotFoundError("Não foi possivel identificar o diretório dos Botões")
 			else:
 				self.Plano_de_Fundo = Imagens["Plano de fundo"]
 				self.Imagens = Imagens["Botões"]
