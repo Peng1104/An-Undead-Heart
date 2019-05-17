@@ -1,7 +1,7 @@
 import pygame
 from os import path
 
-from GameCode.Configs import PRETO, SAIR, Dir_Imagens
+from GameCode.Configs import PRETO, BRANCO, SAIR, Dir_Imagens
 
 # >> importações temporarias <<
 LARGURA = 1920
@@ -28,10 +28,10 @@ class Player(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(player_img, (50, 38))
         
         # Deixando transparente.
-        self.image.set_colorkey(PRETO)
+        self.image.set_colorkey(BRANCO)
         
-        self.px = LARGURA / 4
-        self.py = ALTURA / 4
+        self.px = LARGURA /2
+        self.py = ALTURA /2
         
         # Detalhes sobre o posicionamento.
         self.rect = self.image.get_rect()
