@@ -1,0 +1,18 @@
+Lista de Botões:
+- Voltar_ao_Menu
+- Load_Game
+- Opções
+- Sair_do_jogo
+
+
+Botão:
+    Voltar_ao_Menu:
+        ImagemOriginal: VOLTAR AO MENU
+        Imagem2: BRILHO
+        Ação: 0
+        Posição:
+        - 135
+        - 100
+
+
+

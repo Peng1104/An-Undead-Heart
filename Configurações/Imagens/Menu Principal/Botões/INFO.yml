@@ -1,11 +1,40 @@
 Lista de Botões:
-- Exemplo
+- New_Game
+- Load_Game
+- Opções
+- Sair_do_jogo
+
 
 Botão:
-    Exemplo:
-        ImagemOriginal: SAIR
-        Imagem2: SAIR2
-        Ação: 11
-        Posição:
-        - 140
-        - 810
+    New_Game:
+            ImagemOriginal: NEW_GAME
+            Imagem2: BRILHO
+            Ação: 14
+            Posição:
+                - 135
+                - 435
+    Load_Game:
+            ImagemOriginal: LOAD_GAME
+            Imagem2: BRILHO
+            Ação: 13
+            Posição:
+                - 135
+                - 560
+    Opções:
+            ImagemOriginal: MENU_OPÇÕES
+            Imagem2: BRILHO
+            Ação: 2
+            Posição:
+                - 135
+                - 690
+    Sair_do_jogo:
+            ImagemOriginal: SAIR
+            Imagem2: BRILHO
+            Ação: 1
+            Posição:
+                - 135
+                - 815
+
+
+
+

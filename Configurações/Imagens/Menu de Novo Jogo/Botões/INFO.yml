@@ -1,0 +1,22 @@
+Lista de Botões:
+- Voltar_ao_Menu
+- Personagem
+
+Botão:
+    Voltar_ao_Menu:
+        ImagemOriginal: VOLTAR AO MENU
+        Imagem2: BRILHO
+        Ação: 0
+        Posição:
+        - 135
+        - 100
+    Personagem:
+        ImagemOriginal: PERSONAGEM
+        Imagem2: BRILHO
+        Ação: 15
+        Posição:
+        - 740
+        - 475
+
+
+
