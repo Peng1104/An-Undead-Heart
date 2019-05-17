@@ -1,39 +1,27 @@
 Lista de Botões:
-- New_Game
-- Load_Game
-- Opções
-- Sair_do_jogo
-
+- Menu_De_Vídeo
+- Como_Jogar
+- Voltar
 
 Botão:
-    New_Game:
+    Menu_De_Vídeo:
         ImagemOriginal: NEW_GAME
         Imagem2: BRILHO
-        Ação: 14
+        Ação: 4
         Posição:
         - 135
         - 435
-    Load_Game:
-        ImagemOriginal: LOAD_GAME
-        Imagem2: BRILHO
-        Ação: 13
-        Posição:
-        - 135
-        - 560
-    Opções:
+    Como_Jogar:
         ImagemOriginal: MENU_OPÇÕES
         Imagem2: BRILHO
-        Ação: 2
+        Ação: 3
         Posição:
         - 135
         - 690
-    Sair_do_jogo:
+    Voltar:
         ImagemOriginal: SAIR
         Imagem2: BRILHO
-        Ação: 1
+        Ação: 0
         Posição:
         - 135
         - 815
-
-
-

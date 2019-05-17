@@ -3,6 +3,8 @@
 from GameCode.Configs import IMAGENS_DO_JOGO, SEM_MUDANÇA, SAIR, Dir_Imagens, YamlFile, path
 from GameCode.Construtor import *
 
+bugfix = False
+
 class MenuButton(NewObject):
 
 	def __init__(self, ImagemOriginal, Multiplicador, Posição, Imagem2, Ação):
@@ -27,6 +29,9 @@ class MenuButton(NewObject):
 		#Verficia se o mause está por cima do Botão
 		if self.rect.collidepoint(Mouse_Pos):
 
+			#BUGFIX (CULPA DO PYGAME)
+			global bugfix
+
 			#Altera a Imagem
 			self.image = CriarObjeto(self.Imagem2, Multiplicador)
 
@@ -34,8 +39,13 @@ class MenuButton(NewObject):
 			self.image.set_colorkey((0, 0, 0))
 
 			if Mouse_Press:
-				return self.Ação
+				if not bugfix:
+					bugfix = True
+					return self.Ação
+				else:
+					return SEM_MUDANÇA
 			else:
+				bugfix = False
 				return SEM_MUDANÇA
 		else:
 			#Altera a Imagem

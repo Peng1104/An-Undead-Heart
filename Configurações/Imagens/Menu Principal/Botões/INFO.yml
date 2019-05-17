@@ -4,7 +4,6 @@ Lista de Botões:
 - Opções
 - Sair_do_jogo
 
-
 Botão:
     New_Game:
             ImagemOriginal: NEW_GAME
@@ -34,7 +33,3 @@ Botão:
             Posição:
                 - 135
                 - 815
-
-
-
-
