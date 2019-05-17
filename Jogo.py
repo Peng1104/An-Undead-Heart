@@ -65,19 +65,19 @@ try:
 
 		#Entra no Menu Principal
 		elif Estado == MENU_PRINCIPAL:
-			Estado = MenuMaker("Menu Principal").run(Tela, MULTIPLICADOR)
+			Estado = MenuMaker("Menu Principal").run(TELA, MULTIPLICADOR)
 
 		#Entra no Menu das Opções
 		elif Estado == MENU_DAS_OPÇÕES:
-			Estado = MenuMaker("Menu de Opções").run(Tela, MULTIPLICADOR)
+			Estado = MenuMaker("Menu de Opções").run(TELA, MULTIPLICADOR)
 
 		#Entra no Menu de Como Jogar
 		elif Estado == MENU_DE_COMO_JOGAR:
-			Estado = MenuMaker("Menu de Como Jogar").run(Tela, MULTIPLICADOR)
+			Estado = MenuMaker("Menu de Como Jogar").run(TELA, MULTIPLICADOR)
 
 		#Entra no Menu de Vídeo
 		elif Estado == MENU_DE_VIDEO:
-			Estado = MenuMaker("Menu de Vídeo").run(Tela, MULTIPLICADOR)
+			Estado = MenuMaker("Menu de Vídeo").run(TELA, MULTIPLICADOR)
 
 		#Ativa a Tela cheia e volta para o Menu de Vídeo
 		elif Estado == ATIVAR_TELA_CHEIA:
@@ -145,15 +145,15 @@ try:
 
 		#Entra no Menu para selecionar um Jogo Salvo
 		elif Estado == MENU_PARA_CARREGAR_JOGO_SALVO:
-			Estado = MenuMaker("Menu para Carregar Jogo Salvo").run(Tela, MULTIPLICADOR)
+			Estado = MenuMaker("Menu para Carregar Jogo Salvo").run(TELA, MULTIPLICADOR)
 
 		#Entra no Menu para criar um Novo Jogo
 		elif Estado == MENU_DE_NOVO_JOGO:
-			Estado = MenuMaker("Menu de Novo Jogo").run(Tela, MULTIPLICADOR)
+			Estado = MenuMaker("Menu de Novo Jogo").run(TELA, MULTIPLICADOR)
 
 		#Vai para o Jogo
 		elif Estado == JOGO:
-			Estado = tela_jogo(Tela)
+			Estado = tela_jogo(TELA)
 
 		#Estado Desconhecido = Para o Jogo
 		else:

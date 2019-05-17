@@ -8,7 +8,7 @@ Botão:
     New_Game:
             ImagemOriginal: NEW_GAME
             Imagem2: BRILHO
-            Ação: 14
+            Ação: 15
             Posição:
                 - 135
                 - 435

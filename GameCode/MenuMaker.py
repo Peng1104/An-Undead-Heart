@@ -3,8 +3,6 @@
 from GameCode.Configs import IMAGENS_DO_JOGO, SEM_MUDANÇA, SAIR, Dir_Imagens, YamlFile, path
 from GameCode.Construtor import *
 
-bugfix = False
-
 class MenuButton(NewObject):
 
 	def __init__(self, ImagemOriginal, Multiplicador, Posição, Imagem2, Ação):
@@ -26,27 +24,17 @@ class MenuButton(NewObject):
 
 	#Função de execusão do botão
 	def run(self, Multiplicador, Mouse_Press, Mouse_Pos):
-		#Verficia se o mause está por cima do Botão
+		#Verficica se o mause está por cima do Botão
 		if self.rect.collidepoint(Mouse_Pos):
-
-			#BUGFIX (CULPA DO PYGAME)
-			global bugfix
-
 			#Altera a Imagem
 			self.image = CriarObjeto(self.Imagem2, Multiplicador)
 
 			#Faz a Imagem Ficar Transparente
 			self.image.set_colorkey((0, 0, 0))
 
+			#Verficica se o houve um MOUSEBUTTONDOWN
 			if Mouse_Press:
-				if not bugfix:
-					bugfix = True
-					return self.Ação
-				else:
-					return SEM_MUDANÇA
-			else:
-				bugfix = False
-				return SEM_MUDANÇA
+				return self.Ação
 		else:
 			#Altera a Imagem
 			self.image = CriarObjeto(self.ImagemOriginal, Multiplicador)
@@ -54,7 +42,7 @@ class MenuButton(NewObject):
 			#Faz a Imagem Ficar Transparente
 			self.image.set_colorkey((0, 0, 0))
 
-			return SEM_MUDANÇA
+		return SEM_MUDANÇA
 
 class MenuMaker():
 
@@ -81,14 +69,20 @@ class MenuMaker():
 			#Lista dos Botões
 			Botões = []
 
+			Mouse_Press = False
+
 			for event in pygame.event.get():
 
 				#Verifica se clicou no X
 				if event.type == pygame.QUIT:
 					return SAIR
 
+				#Verifica se o mause foi precionado
+				if event.type == pygame.MOUSEBUTTONDOWN:
+					Mouse_Press = True
+
 			for button in self.getObjects(Multiplicador):
-				NOVO_ESTADO = button.run(Multiplicador, pygame.mouse.get_pressed()[0], pygame.mouse.get_pos())
+				NOVO_ESTADO = button.run(Multiplicador, Mouse_Press, pygame.mouse.get_pos())
 
 				#Adiciona Botão a lista
 				Botões.append(button)
