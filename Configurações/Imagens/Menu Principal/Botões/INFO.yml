@@ -7,28 +7,28 @@ Lista de Botões:
 Botão:
     New_Game:
             ImagemOriginal: NEW_GAME
-            Imagem2: BRILHO
+            Imagem2: NEW_GAME - BRILHO
             Ação: 15
             Posição:
                 - 135
                 - 435
     Load_Game:
             ImagemOriginal: LOAD_GAME
-            Imagem2: BRILHO
+            Imagem2: LOAD_GAME - BRILHO
             Ação: 13
             Posição:
                 - 135
                 - 560
     Opções:
             ImagemOriginal: MENU_OPÇÕES
-            Imagem2: BRILHO
+            Imagem2: MENU_OPÇÕES - BRILHO
             Ação: 2
             Posição:
                 - 135
                 - 690
     Sair_do_jogo:
             ImagemOriginal: SAIR
-            Imagem2: BRILHO
+            Imagem2: SAIR - BRILHO
             Ação: 1
             Posição:
                 - 135

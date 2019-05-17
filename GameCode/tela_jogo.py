@@ -4,8 +4,8 @@ from os import path
 from GameCode.Configs import PRETO, SAIR, Dir_Imagens
 
 # >> importações temporarias <<
-LARGURA = 1600
-ALTURA = 900
+LARGURA = 1920
+ALTURA = 1080
 FPS = 60
 Dir_Game = path.join(Dir_Imagens, "Game")
 
@@ -30,8 +30,8 @@ class Player(pygame.sprite.Sprite):
         # Deixando transparente.
         self.image.set_colorkey(PRETO)
         
-        self.px = LARGURA / 2
-        self.py = ALTURA / 2
+        self.px = LARGURA / 4
+        self.py = ALTURA / 4
         
         # Detalhes sobre o posicionamento.
         self.rect = self.image.get_rect()
