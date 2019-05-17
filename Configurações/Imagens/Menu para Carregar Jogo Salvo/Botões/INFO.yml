@@ -1,18 +1,59 @@
 Lista de Botões:
 - Voltar_ao_Menu
-- Load_Game
-- Opções
-- Sair_do_jogo
-
+- Carregar_1
+- Carregar_2
+- Carregar_3
+- Carregar_4
+- Carregar_5
+- Carregar_6
 
 Botão:
     Voltar_ao_Menu:
         ImagemOriginal: VOLTAR AO MENU
+        Imagem2: VOLTAR AO MENU
+        Ação: 0
+        Posição:
+        - 140
+        - 115
+    Carregar_1:
+        ImagemOriginal: NÃO SALVO
         Imagem2: BRILHO
         Ação: 0
         Posição:
-        - 135
-        - 100
-
-
-
+        - 169
+        - 325
+    Carregar_2:
+        ImagemOriginal: NÃO SALVO
+        Imagem2: BRILHO
+        Ação: 0
+        Posição:
+        - 731
+        - 325
+    Carregar_3:
+        ImagemOriginal: NÃO SALVO
+        Imagem2: BRILHO
+        Ação: 0
+        Posição:
+        - 1304
+        - 325
+    Carregar_4:
+        ImagemOriginal: SALVO
+        Imagem2: SALVO - BRILHO
+        Ação: 0
+        Posição:
+        - 169
+        - 690
+    Carregar_5:
+        ImagemOriginal: SALVO
+        Imagem2: SALVO - BRILHO
+        Ação: 0
+        Posição:
+        - 731
+        - 690
+    Carregar_6:
+        ImagemOriginal: SALVO
+        Imagem2: SALVO - BRILHO
+        Ação: 0
+        Posição:
+        - 1304
+        - 690

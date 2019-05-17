@@ -1,39 +1,76 @@
 Lista de Botões:
-- New_Game
-- Load_Game
-- Opções
-- Sair_do_jogo
+- Voltar_ao_Menu
+- 1080p
+- 900p
+- 720p
+- 576p
+- 540p
+- 360p
+- SIM
+- NAO
 
 
 Botão:
-    New_Game:
-        ImagemOriginal: NEW_GAME
-        Imagem2: BRILHO
-        Ação: 14
-        Posição:
-        - 135
-        - 435
-    Load_Game:
-        ImagemOriginal: LOAD_GAME
-        Imagem2: BRILHO
-        Ação: 13
-        Posição:
-        - 135
-        - 560
-    Opções:
-        ImagemOriginal: MENU_OPÇÕES
-        Imagem2: BRILHO
+    Voltar_ao_Menu:
+        ImagemOriginal: VOLTAR AO MENU
+        Imagem2: VOLTAR AO MENU
         Ação: 2
         Posição:
-        - 135
-        - 690
-    Sair_do_jogo:
-        ImagemOriginal: SAIR
-        Imagem2: BRILHO
-        Ação: 1
+        - 140
+        - 115
+    1080p:
+        ImagemOriginal: 1920x1080
+        Imagem2: 1920x1080B
+        Ação: 7
         Posição:
-        - 135
-        - 815
-
-
-
+        - 730
+        - 478
+    900p:
+        ImagemOriginal: 1600x900
+        Imagem2: 1600x900B
+        Ação: 8
+        Posição:
+        - 730
+        - 573
+    720p:
+        ImagemOriginal: 1280x720
+        Imagem2: 1280x720B
+        Ação: 9
+        Posição:
+        - 730
+        - 667
+    576p:
+        ImagemOriginal: 1024x576
+        Imagem2: 1024x576B
+        Ação: 10
+        Posição:
+        - 732
+        - 761
+    540p:
+        ImagemOriginal: 960x540
+        Imagem2: 960x540B
+        Ação: 11
+        Posição:
+        - 733
+        - 850
+    360p:
+        ImagemOriginal: 640x360
+        Imagem2: 640x360B
+        Ação: 12
+        Posição:
+        - 732
+        - 930
+    SIM:
+        ImagemOriginal: SIM
+        Imagem2: SIM - BRILHO
+        Ação: 5
+        Posição:
+        - 1382
+        - 475
+    NAO:
+        ImagemOriginal: NAO
+        Imagem2: NAO - BRILHO
+        Ação: 6
+        Posição:
+        - 1527
+        - 475

@@ -26,22 +26,25 @@ def MakeScreen(Nível_de_Resolução, Tela_Cheia):
 	else:
 		return Multiplicador, pygame.display.set_mode((int(1920*Multiplicador), int(1080*Multiplicador)))
 
-#Inicia o Jogo
-pygame.init()
+def Carrega_condições():
+	#Inicia o Jogo
+	pygame.init()
 
-#Vareavel do Clock (FPS)
-if CONFIG.getFloat("FPS", default_value=60) < 1.0:
-	CONFIG.set("FPS", 60)
+	#Vareavel do Clock (FPS)
+	if CONFIG.getFloat("FPS", default_value=60) < 1.0:
+		CONFIG.set("FPS", 60)
 
-#Ativa o Clock do Jogo
-pygame.time.Clock().tick(CONFIG.getFloat("FPS", default_value=60))
+	#Ativa o Clock do Jogo
+	pygame.time.Clock().tick(CONFIG.getFloat("FPS", default_value=60))
 
-#Aplicar nome do Jogo a Janela do Jogo
-pygame.display.set_caption(CONFIG.getString("Nome do Jogo", default_value="An Undead Heart"))
+	#Aplicar nome do Jogo a Janela do Jogo
+	pygame.display.set_caption(CONFIG.getString("Nome do Jogo", default_value="An Undead Heart"))
 
-#Vareavel de Resolução do Jogo
-if CONFIG.getInt("Nível de Resolução do Jogo", default_value=4) > 6 or CONFIG.getInt("Nível de Resolução do Jogo") < 1:
-	CONFIG.set("Nível de Resolução do Jogo", 4)
+	#Vareavel de Resolução do Jogo
+	if CONFIG.getInt("Nível de Resolução do Jogo", default_value=4) > 6 or CONFIG.getInt("Nível de Resolução do Jogo") < 1:
+		CONFIG.set("Nível de Resolução do Jogo", 4)
+
+Carrega_condições()
 
 #Cria a Tela do Jogo e da o Multplicador das Imagens
 MULTIPLICADOR, TELA = MakeScreen(CONFIG.getInt("Nível de Resolução do Jogo"), CONFIG.getBoolean("Tela Cheia", default_value=False))

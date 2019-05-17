@@ -5,23 +5,23 @@ Lista de Botões:
 
 Botão:
     Menu_De_Vídeo:
-        ImagemOriginal: NEW_GAME
-        Imagem2: BRILHO
+        ImagemOriginal: CONFIGURAR
+        Imagem2: CONFIGURAR
         Ação: 4
         Posição:
-        - 135
-        - 435
+        - 757
+        - 325
     Como_Jogar:
-        ImagemOriginal: MENU_OPÇÕES
-        Imagem2: BRILHO
+        ImagemOriginal: COMO JOGAR
+        Imagem2: COMO JOGAR
         Ação: 3
         Posição:
-        - 135
-        - 690
+        - 750
+        - 490
     Voltar:
-        ImagemOriginal: SAIR
-        Imagem2: BRILHO
+        ImagemOriginal: VOLTAR
+        Imagem2: VOLTAR
         Ação: 0
         Posição:
-        - 135
-        - 815
+        - 823
+        - 657

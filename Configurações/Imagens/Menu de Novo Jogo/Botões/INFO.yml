@@ -1,23 +1,19 @@
 Lista de Botões:
 - Voltar_ao_Menu
 - Personagem
-- Botão 3
 
 Botão:
     Voltar_ao_Menu:
         ImagemOriginal: VOLTAR AO MENU
-        Imagem2: BRILHO
+        Imagem2: VOLTAR AO MENU
         Ação: 0
         Posição:
-        - 135
-        - 100
+        - 140
+        - 115
     Personagem:
         ImagemOriginal: PERSONAGEM
-        Imagem2: BRILHO
+        Imagem2: PERSONAGEMB
         Ação: 15
         Posição:
         - 740
-        - 475
-
-
-
+        - 455
