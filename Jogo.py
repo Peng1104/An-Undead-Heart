@@ -199,6 +199,11 @@ try:
         #Vai para o Jogo
         elif Estado == JOGO:
             Estado = tela_jogo(Tela)
+
+        #Estado Desconhecido = Para o Jogo
+        else:
+        	break
+
 finally:
 	#Fecha o Jogo
 	pygame.quit()

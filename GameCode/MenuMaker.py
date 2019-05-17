@@ -23,7 +23,7 @@ class MenuButton(NewObject):
 			self.Imagem2 = Imagem2
 
 	#Função de execusão do botão
-	def run(self, Multiplicador, Eventos, Mouse_Pos):
+	def run(self, Multiplicador, Mouse_Press, Mouse_Pos):
 		#Verficia se o mause está por cima do Botão
 		if self.rect.collidepoint(Mouse_Pos):
 
@@ -33,29 +33,16 @@ class MenuButton(NewObject):
 			#Faz a Imagem Ficar Transparente
 			self.image.set_colorkey((0, 0, 0))
 
-			for event in Eventos:
-
-				#Verifica se clicou no X
-				if event.type == pygame.QUIT:
-					return SAIR
-
-				#Verifica se o Botão foi clicado
-				if event.type == pygame.MOUSEBUTTONDOWN:
-					return self.Ação
-
-			return SEM_MUDANÇA
+			if Mouse_Press:
+				return self.Ação
+			else:
+				return SEM_MUDANÇA
 		else:
 			#Altera a Imagem
 			self.image = CriarObjeto(self.ImagemOriginal, Multiplicador)
 
 			#Faz a Imagem Ficar Transparente
 			self.image.set_colorkey((0, 0, 0))
-
-			for event in Eventos:
-
-				#Verifica se clicou no X
-				if event.type == pygame.QUIT:
-					return SAIR
 
 			return SEM_MUDANÇA
 
@@ -84,8 +71,14 @@ class MenuMaker():
 			#Lista dos Botões
 			Botões = []
 
+			for event in pygame.event.get():
+
+				#Verifica se clicou no X
+				if event.type == pygame.QUIT:
+					return SAIR
+
 			for button in self.getObjects(Multiplicador):
-				NOVO_ESTADO = button.run(Multiplicador, pygame.event.get(), pygame.mouse.get_pos())
+				NOVO_ESTADO = button.run(Multiplicador, pygame.mouse.get_pressed()[0], pygame.mouse.get_pos())
 
 				#Adiciona Botão a lista
 				Botões.append(button)
