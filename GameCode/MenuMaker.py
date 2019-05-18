@@ -1,9 +1,12 @@
 #Arquivo para criar as Telas dos Menus
 
-from GameCode.Configs import IMAGENS_DO_JOGO, SEM_MUDANÇA, SAIR, Dir_Imagens, YamlFile, path
-from GameCode.Construtor import *
+import pygame
+from os import path
+from GameCode.Construtores.Classes_Base import Novo_Objeto
+from GameCode.Construtores.Funções_Base import Atualizar_O_Plano_De_Fundo
+from GameCode.Configs import IMAGENS_DO_JOGO, SEM_MUDANÇA, SAIR, DIR_IMAGENS, YamlFile
 
-class MenuButton(NewObject):
+class MenuButton(Novo_Objeto):
 
 	def __init__(self, ImagemOriginal, Multiplicador, Posição, Imagem2, Ação):
 		if type(Imagem2) != pygame.Surface:
@@ -27,28 +30,24 @@ class MenuButton(NewObject):
 		#Verficica se o mause está por cima do Botão
 		if self.rect.collidepoint(Mouse_Pos):
 			#Altera a Imagem
-			self.image = CriarObjeto(self.Imagem2, Multiplicador)
-
-			#Faz a Imagem Ficar Transparente
-			self.image.set_colorkey((0, 0, 0))
+			self.Criar_Objeto(self.Imagem2, Multiplicador)
 
 			#Verficica se o houve um MOUSEBUTTONDOWN
 			if Mouse_Press:
 				return self.Ação
 		else:
 			#Altera a Imagem
-			self.image = CriarObjeto(self.ImagemOriginal, Multiplicador)
-
-			#Faz a Imagem Ficar Transparente
-			self.image.set_colorkey((0, 0, 0))
+			self.Criar_Objeto(self.ImagemOriginal, Multiplicador)
 
 		return SEM_MUDANÇA
 
-class MenuMaker():
+class Menu():
 
-	def __init__(self, Diretório_do_Menu):
+	def __init__(self, Diretório_do_Menu, Estado):
 		if type(Diretório_do_Menu) != str:
 			raise TypeError("Diretório_do_Menu tem que ser uma String")
+		elif type(Estado) != int:
+			raise TypeError("Estado precisa ser um Inteiro")
 		elif Diretório_do_Menu not in IMAGENS_DO_JOGO:
 			raise Exception("Diretório_do_Menu não Carregado!")
 		else:
@@ -61,13 +60,13 @@ class MenuMaker():
 			else:
 				self.Plano_de_Fundo = Imagens["Plano de fundo"]
 				self.Imagens = Imagens["Botões"]
-				self.path = path.join(path.join(Dir_Imagens, Diretório_do_Menu), "Botões")
+				self.path = path.join(path.join(DIR_IMAGENS, Diretório_do_Menu), "Botões")
+				self.Estado = Estado
 
 	#Chama a execução do Menu
 	def run(self, Tela, Multiplicador):
 		while True:
-			#Lista dos Botões
-			Botões = []
+			Botões = pygame.sprite.Group()
 
 			Mouse_Press = False
 
@@ -84,13 +83,12 @@ class MenuMaker():
 			for button in self.getObjects(Multiplicador):
 				NOVO_ESTADO = button.run(Multiplicador, Mouse_Press, pygame.mouse.get_pos())
 
-				#Adiciona Botão a lista
-				Botões.append(button)
+				Botões.add(button)
 
 				if NOVO_ESTADO != SEM_MUDANÇA:
 					return NOVO_ESTADO
 
-			AtualizarPlanodeFundo(Tela, self.Plano_de_Fundo, Multiplicador, Botões)
+			Atualizar_O_Plano_De_Fundo(Tela, self.Plano_de_Fundo, Multiplicador, Botões, self.Estado)
 
 	def getObjects(self, Multiplicador):
 		Objetos = []

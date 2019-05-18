@@ -1,13 +1,13 @@
 import pygame
 from os import path
 
-from GameCode.Configs import PRETO, BRANCO, SAIR, Dir_Imagens
+from GameCode.Configs import PRETO, BRANCO, SAIR, DIR_IMAGENS
 
 # >> importações temporarias <<
 LARGURA = 1920
 ALTURA = 1080
 FPS = 60
-Dir_Game = path.join(Dir_Imagens, "Game")
+Dir_Game = path.join(DIR_IMAGENS, "Game")
 
 # Classe Jogador
 class Player(pygame.sprite.Sprite):

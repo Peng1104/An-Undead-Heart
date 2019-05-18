@@ -1,20 +1,17 @@
 #Arquivo das variáveis do Jogo
 
 from os import path
-from GameCode.Controllers.ImageController import LoadImagens
-from GameCode.Controllers.FileController import YamlFile
+from GameCode.Construtores.FileController import YamlFile
+from GameCode.Construtores.Classes_Base import CarregarImagens
 
 #Diretório Principal (Diretorio Pai)
-Dir_Principal = path.join("Configurações")
+DIR_PRINCIPAL = path.join("Configurações")
 
 #Diretório das Imagens
-Dir_Imagens = path.join(Dir_Principal, "Imagens")
+DIR_IMAGENS = path.join(DIR_PRINCIPAL, "Imagens")
 
-#Imagens do Jogo
-IMAGENS_DO_JOGO = LoadImagens(Dir_Imagens).getImagens()
-
-#Arquivo que contem as opções do jogo
-CONFIG = YamlFile(path.join(path.join(Dir_Principal, "Opções"), "Config.yml"))
+#Diretório das Configurações do jogo
+DIR_OPÇÕES = path.join(DIR_PRINCIPAL, "Opções")
 
 #Transformadores para a escala dos objetos
 MULTIPLICADORES = {
@@ -25,6 +22,12 @@ MULTIPLICADORES = {
 	5 : 2.5/3,
 	6 : 1
 }
+
+#Arquivo que contem as opções do jogo
+CONFIG = YamlFile(DIR_OPÇÕES + "/Config.yml")
+
+#Imagens do Jogo
+IMAGENS_DO_JOGO = CarregarImagens(DIR_IMAGENS).getImagens()
 
 #Cores base
 BRANCO = (255, 255, 255, 255)
