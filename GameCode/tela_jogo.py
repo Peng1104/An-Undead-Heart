@@ -1,7 +1,7 @@
 import pygame
 from os import path
 
-from GameCode.Configs import PRETO, BRANCO, SAIR, DIR_IMAGENS
+from GameCode.Configs import PRETO, VERMELHO, SAIR, DIR_IMAGENS
 
 # >> importações temporarias <<
 LARGURA = 1920
@@ -25,10 +25,10 @@ class Player(pygame.sprite.Sprite):
         self.image = player_img
         
         # Diminuindo o tamanho da imagem.
-        self.image = pygame.transform.scale(player_img, (50, 38))
+        self.image = pygame.transform.scale(player_img, (200, 200))
         
         # Deixando transparente.
-        self.image.set_colorkey(BRANCO)
+        self.image.set_colorkey(VERMELHO)
         
         self.px = LARGURA /2
         self.py = ALTURA /2
@@ -76,7 +76,7 @@ def tela_jogo(screen):
     
     camera = Camera(0, 0)
     
-    player = Player(pygame.image.load(path.join(Dir_Game, "pawn.png")).convert(), camera)
+    player = Player(pygame.image.load(path.join(Dir_Game, "FRENTE.png")).convert(), camera)
     
     
     all_sprites = pygame.sprite.Group()
