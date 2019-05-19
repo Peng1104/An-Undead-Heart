@@ -1,6 +1,6 @@
 import pygame
 from os import path
-
+from GameCode.Construtores.Classes_Base import Novo_Objeto
 from GameCode.Configs import PRETO, VERMELHO, SAIR, DIR_IMAGENS
 
 # >> importações temporarias <<
@@ -10,10 +10,10 @@ FPS = 60
 Dir_Game = path.join(DIR_IMAGENS, "Game")
 
 # Classe Jogador
-class Player(pygame.sprite.Sprite):
+class Player(Novo_Objeto):
     
     # Construtor da classe.
-    def __init__(self, player_img, camera):
+    def __init__(self, player_img_front, player_img_back, player_img_left, player_img_right, camera):
         
         # Construtor da classe pai (Sprite).
         pygame.sprite.Sprite.__init__(self)
@@ -22,13 +22,22 @@ class Player(pygame.sprite.Sprite):
         self.camera = camera
         
         # Carregando a imagem do personagem
-        self.image = player_img
+        self.image_front = player_img_front
+        self.image_back = player_img_back
+        self.image_left = player_img_left
+        self.image_right = player_img_right
         
         # Diminuindo o tamanho da imagem.
-        self.image = pygame.transform.scale(player_img, (200, 200))
+        self.image_front = pygame.transform.scale(player_img_front, (200, 200))
+        self.image_back = pygame.transform.scale(player_img_back, (200, 200))
+        self.image_left = pygame.transform.scale(player_img_left, (200, 200))
+        self.image_right = pygame.transform.scale(player_img_right, (200, 200))
         
         # Deixando transparente.
-        self.image.set_colorkey(VERMELHO)
+        self.image_front.set_colorkey(VERMELHO)
+        self.image_back.set_colorkey(VERMELHO)
+        self.image_left.set_colorkey(VERMELHO)
+        self.image_right.set_colorkey(VERMELHO)
         
         self.px = LARGURA /2
         self.py = ALTURA /2
@@ -47,6 +56,10 @@ class Player(pygame.sprite.Sprite):
         # Melhora a colisão estabelecendo um raio de um circulo
         self.radius = 25
     
+    def update_Img(self):
+
+
+
     # Atualiza a posição do Player
     def update(self):
         self.px += self.speedx
@@ -70,14 +83,21 @@ class Camera:
         self.px = px
         self.py = py
 
+class Parede:
+    def __init__(self, x, y, size_x, size_y):
+        self.x = x
+
 def tela_jogo(screen):
     background = pygame.image.load(path.join(Dir_Game, 'Escola 01.png')).convert()
     background_rect = background.get_rect()
     
     camera = Camera(0, 0)
     
-    player_img = pygame.image.load(path.join(Dir_Game, "FRENTE.png")).convert()
-    player = Player(player_img, camera)
+    p_frente = pygame.image.load(path.join(Dir_Game, "FRENTE.png")).convert()
+    p_atr = pygame.image.load(path.join(Dir_Game, "ATRAS.png")).convert()
+    p_esq = pygame.image.load(path.join(Dir_Game, "ESQ.png")).convert()
+    p_dir = pygame.image.load(path.join(Dir_Game, "DIR.png")).convert()
+    player = Player(p_frente, p_atr, p_esq, p_dir, camera)
     
     
     all_sprites = pygame.sprite.Group()
