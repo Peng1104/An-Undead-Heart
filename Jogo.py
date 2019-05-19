@@ -8,8 +8,7 @@
 from GameCode.Construtores.Funções_Base import *
 from GameCode.MenuMaker import Menu, SavedGamesMenu
 
-#EM FASE DE TESTES
-#from GameCode.Tela_jogo import Tela_jogo
+from GameCode.tela_jogo import tela_jogo
 
 #Testes lucas
 from GameCode.GameMaker import Start_Game
@@ -18,7 +17,7 @@ from GameCode.GameMaker import Start_Game
 Multiplicador, Tela = Iniciar_Pygame()
 
 #Estado Inicial do Jogo
-Estado = MENU_PRINCIPAL
+Estado = JOGO
 
 #Save do Jogo sendo Jogado
 Save = -1
@@ -127,7 +126,8 @@ try:
 
 		#Vai para o Jogo
 		elif Estado == JOGO:
-			Estado = Start_Game(CONFIG.getString("Díretorios.Jogos Salvos", default_value="Jogos Salvos"), Save, Tela)
+			Estado = tela_jogo(Tela, Multiplicador)
+			#Estado = Start_Game(CONFIG.getString("Díretorios.Jogos Salvos", default_value="Jogos Salvos"), Save, Tela)
 
 		#Estado Desconhecido = Para o Jogo
 		else:
