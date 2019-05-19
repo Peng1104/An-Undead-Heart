@@ -76,7 +76,8 @@ def tela_jogo(screen):
     
     camera = Camera(0, 0)
     
-    player = Player(pygame.image.load(path.join(Dir_Game, "FRENTE.png")).convert(), camera)
+    player_img = pygame.image.load(path.join(Dir_Game, "FRENTE.png")).convert()
+    player = Player(player_img, camera)
     
     
     all_sprites = pygame.sprite.Group()
@@ -93,14 +94,35 @@ def tela_jogo(screen):
         
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
+
                 if event.key == pygame.K_LEFT:
                     player.speedx = 5
+
+                    player_img = pygame.image.load(path.join(Dir_Game, "DIR.png")).convert()
+                    player.image = pygame.transform.scale(player_img, (200, 200))
+                    player.image.set_colorkey(VERMELHO)
+
                 if event.key == pygame.K_RIGHT:
                     player.speedx = -5
+
+                    player_img = pygame.image.load(path.join(Dir_Game, "ESQ.png")).convert()
+                    player.image = pygame.transform.scale(player_img, (200, 200))
+                    player.image.set_colorkey(VERMELHO)
+
                 if event.key == pygame.K_UP:
                     player.speedy = 5
+
+                    player_img = pygame.image.load(path.join(Dir_Game, "ATRAS.png")).convert()
+                    player.image = pygame.transform.scale(player_img, (200, 200))
+                    player.image.set_colorkey(VERMELHO)
+
                 if event.key == pygame.K_DOWN:
                     player.speedy = -5
+
+                    player_img = pygame.image.load(path.join(Dir_Game, "FRENTE.png")).convert()
+                    player.image = pygame.transform.scale(player_img, (200, 200))
+                    player.image.set_colorkey(VERMELHO)
+
                 if event.key == pygame.K_q:
                     state = DONE
             
