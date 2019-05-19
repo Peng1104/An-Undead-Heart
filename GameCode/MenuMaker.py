@@ -1,10 +1,11 @@
 #Arquivo para criar as Telas dos Menus
 
 import pygame
-from os import path
+import re
+from os import path, listdir
 from GameCode.Construtores.Classes_Base import Novo_Objeto
 from GameCode.Construtores.Funções_Base import Atualizar_O_Plano_De_Fundo
-from GameCode.Configs import IMAGENS_DO_JOGO, SEM_MUDANÇA, SAIR, DIR_IMAGENS, YamlFile
+from GameCode.Configs import IMAGENS_DO_JOGO, SEM_MUDANÇA, SAIR, DIR_IMAGENS, MENU_PRINCIPAL, JOGO, YamlFile
 
 class MenuButton(Novo_Objeto):
 
@@ -105,5 +106,113 @@ class Menu():
 
 			if len(Posição) == 2 and Posição[0] >= 0 and Posição[1] >= 0 and ImagemOriginal in self.Imagens and Imagem2 in self.Imagens:
 				Objetos.append(MenuButton(self.Imagens[ImagemOriginal], Multiplicador, (Posição[0], Posição[1]), self.Imagens[Imagem2], Ação))
+
+		return Objetos
+
+class SavedGamesMenu(Menu):
+
+	def __init__(self, Diretório_do_Menu, Estado):
+		super().__init__(Diretório_do_Menu, Estado)
+
+	#Chama a execução do Menu IMPORTANTE - Retorna NOVO_ESTADO E O SAVE
+	def run(self, Tela, Multiplicador, Dir_Jogos_Salvos):
+		while True:
+			Botões = pygame.sprite.Group()
+
+			Mouse_Press = False
+
+			for event in pygame.event.get():
+
+				#Verifica se clicou no X
+				if event.type == pygame.QUIT:
+					return SAIR
+
+				#Verifica se o mause foi precionado
+				if event.type == pygame.MOUSEBUTTONDOWN:
+					Mouse_Press = True
+
+			#Lista de Botôes
+			Objetos = self.getObjects(Multiplicador, Dir_Jogos_Salvos)
+
+			#Numero do Jogo Salvo
+			SAVE = -1
+
+			if len(Objetos) != 7:
+				SAVE = 1
+
+			for button in Objetos:
+				NOVO_ESTADO = button.run(Multiplicador, Mouse_Press, pygame.mouse.get_pos())
+
+				Botões.add(button)
+
+				if NOVO_ESTADO != SEM_MUDANÇA:
+					return NOVO_ESTADO, SAVE
+
+				if SAVE == -1:
+					SAVE = SAVE + 2
+				else:
+					SAVE = SAVE + 1
+
+			Atualizar_O_Plano_De_Fundo(Tela, self.Plano_de_Fundo, Multiplicador, Botões, self.Estado)
+
+	#Cria os Botôes
+	def getObjects(self, Multiplicador, Dir_Jogos_Salvos):
+		Objetos = []
+
+		#Arquivo que contem as informações dos Botões
+		file = YamlFile(path.join(self.path, "INFO.yml"))
+
+		#Lista das Localizações dos Botões (em Tuple)
+		Localizações = []
+
+		for string in file.getStringList("Posições dos Botões", default_value=[]):
+			if re.search("^\[\d{1,4}, \d{1,4}\]$", string):
+				Numbers = string.split(", ")
+				Localizações.append((int(Numbers[0][1:]), int(Numbers[1][:-1])))
+
+		#Sem botões registrados
+		if len(Localizações) == 0:
+			raise Exception("ERRO! Não foi possivel criar o SavedGamesMenu - Sem Botões registrados")
+
+		Imagem_Voltar_Normal = file.getString("Imagem Botão Voltar", default_value="")
+		Imagem_Voltar_Brilhando = file.getString("Brilho Botão Voltar", default_value="")
+
+		#Verifica se deve ser criado o botão de voltar ao Menu Principal
+		if Imagem_Voltar_Normal in self.Imagens and Imagem_Voltar_Brilhando in self.Imagens:
+			Objetos.append(MenuButton(self.Imagens[Imagem_Voltar_Normal], Multiplicador, Localizações[0], self.Imagens[Imagem_Voltar_Brilhando], MENU_PRINCIPAL))
+
+			#Apaga a Lozalização do Botão de Voltar
+			del Localizações[0]
+
+			#Somente Botão de Voltar
+			if len(Localizações) == 0:
+				return Objetos
+
+		Imagem_Com_Save_Normal = file.getString("Imagem Com Save", default_value="")
+		Imagem_Com_Save_Brilhando = file.getString("Brilho Com Save", default_value="")
+		Imagem_Sem_Save_Normal = file.getString("Imagem Sem Save", default_value="")
+		Imagem_Sem_Save_Brilhando = file.getString("Brilho Sem Save", default_value="")
+
+		#Verifica a Existencia das Imagens de Saves
+		if Imagem_Com_Save_Normal in self.Imagens and Imagem_Com_Save_Brilhando in self.Imagens and Imagem_Sem_Save_Normal in self.Imagens and Imagem_Sem_Save_Brilhando in self.Imagens:
+			#Lista contendo todos os numeros de Jogos Salvos
+			Lista_de_Jogos_Salvos = []
+
+			#Verifica a existência do Diretório dos Saves
+			if path.isdir(Dir_Jogos_Salvos):
+				#Lista todos os itens no Díretorio
+				for f in listdir(Dir_Jogos_Salvos):
+					if f != "last_game.json" and f.startswith("Game_") and f.endswith(".json") and re.search("^\d+$", f[5:-5]):
+						Lista_de_Jogos_Salvos.append(int(f[5:-5]))
+
+			#Cria os botôes de Slots de Save Game
+			for i in range(len(Localizações)):
+				#Verifica se existe um Save na localização i
+				if (i+1) in Lista_de_Jogos_Salvos:
+					Objetos.append(MenuButton(self.Imagens[Imagem_Com_Save_Normal], Multiplicador, Localizações[i], self.Imagens[Imagem_Com_Save_Brilhando], JOGO))
+				else:
+					Objetos.append(MenuButton(self.Imagens[Imagem_Sem_Save_Normal], Multiplicador, Localizações[i], self.Imagens[Imagem_Sem_Save_Brilhando], SEM_MUDANÇA))
+		else:
+			raise Exception("ERRO! Não foi possivel criar o SavedGamesMenu - Imagens não identificadas")
 
 		return Objetos

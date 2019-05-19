@@ -1,4 +1,13 @@
 Nome do Jogo: An Undead Heart
-FPS: 1
+FPS: 60
 Nível de Resolução do Jogo: 6
 Tela Cheia: true
+Díretorios:
+  Jogos Salvos: Jogos Salvos
+  Imagens:
+    Menus:
+      Principal: Menu Principal
+      Opções: Menu de Opções
+      Vídeo: Menu de Vídeo
+      Novo Jogo: Menu de Novo Jogo
+      Carregar Save: Menu para Carregar Jogo Salvo

@@ -53,7 +53,7 @@ class CarregarImagens():
 			if path.isdir(FilePath):
 				self.DictDeImagens = self.__loadFile__(FilePath)
 			else:
-				raise NotADirectoryError("FilePath não é um Dirétorio!!")
+				raise NotADirectoryError(FilePath + " não existe ou não é um Dirétorio!!")
 		else:
 			raise TypeError("ERRO! FilePath deve ser uma String")
 
