@@ -67,6 +67,9 @@ class CarregarImagens():
 			if file.find(".") > 0 and len(file) > 4:
 				#Verifica se uma Imagem com o mesmo nome já foi salva 
 				if not file[:-4] in maps:
+					#Arruma a extenção do arquivo caso não esteja em minusculo
+					file = file[:-4] + file[-4:].lower()
+
 					#Verifica se o arquivo é do tipo Imagem
 					if file.endswith(".png") or file.endswith(".jpg") or file.endswith(".gif") or file.endswith(".bmp") or file.endswith(".pcx") or file.endswith(".tga") or file.endswith(".tif") or file.endswith(".lbm") or file.endswith(".pbm") or file.endswith(".pgm") or file.endswith(".ppm") or file.endswith(".xpm"):  
 						#Salva a Imagem com seu nome no Dicionário
