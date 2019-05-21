@@ -5,7 +5,8 @@ import re
 from os import path, listdir
 from GameCode.Construtores.Classes_Base import Novo_Objeto
 from GameCode.Construtores.Funções_Base import Atualizar_O_Plano_De_Fundo
-from GameCode.Configs import IMAGENS_DO_JOGO, SEM_MUDANÇA, SAIR, DIR_IMAGENS, MENU_PRINCIPAL, JOGO, YamlFile
+from GameCode.Construtores.FileController import YamlFile, JSONFile
+from GameCode.Configs import IMAGENS_DO_JOGO, SEM_MUDANÇA, SAIR, DIR_IMAGENS, MENU_PRINCIPAL, JOGO, MENU_DE_NOVO_JOGO
 
 class MenuButton(Novo_Objeto):
 
@@ -188,13 +189,11 @@ class SavedGamesMenu(Menu):
 			if len(Localizações) == 0:
 				return Objetos
 
-		Imagem_Com_Save_Normal = file.getString("Imagem Com Save", default_value="")
-		Imagem_Com_Save_Brilhando = file.getString("Brilho Com Save", default_value="")
 		Imagem_Sem_Save_Normal = file.getString("Imagem Sem Save", default_value="")
 		Imagem_Sem_Save_Brilhando = file.getString("Brilho Sem Save", default_value="")
 
 		#Verifica a Existencia das Imagens de Saves
-		if Imagem_Com_Save_Normal in self.Imagens and Imagem_Com_Save_Brilhando in self.Imagens and Imagem_Sem_Save_Normal in self.Imagens and Imagem_Sem_Save_Brilhando in self.Imagens:
+		if Imagem_Sem_Save_Normal in self.Imagens and Imagem_Sem_Save_Brilhando in self.Imagens:
 			#Lista contendo todos os numeros de Jogos Salvos
 			Lista_de_Jogos_Salvos = []
 
@@ -202,16 +201,26 @@ class SavedGamesMenu(Menu):
 			if path.isdir(Dir_Jogos_Salvos):
 				#Lista todos os itens no Díretorio
 				for f in listdir(Dir_Jogos_Salvos):
-					if f != "last_game.json" and f.startswith("Game_") and f.endswith(".json") and re.search("^\d+$", f[5:-5]):
-						Lista_de_Jogos_Salvos.append(int(f[5:-5]))
+					if f.startswith("SavedGame-") and f.endswith(".json") and re.search("^\d+$", f[10:-5]):
+						Lista_de_Jogos_Salvos.append(int(f[10:-5]))
 
 			#Cria os botôes de Slots de Save Game
 			for i in range(len(Localizações)):
 				#Verifica se existe um Save na localização i
 				if (i+1) in Lista_de_Jogos_Salvos:
-					Objetos.append(MenuButton(self.Imagens[Imagem_Com_Save_Normal], Multiplicador, Localizações[i], self.Imagens[Imagem_Com_Save_Brilhando], JOGO))
+					#Abre o save
+					JFile = JSONFile(Dir_Jogos_Salvos + "/SavedGame-" + str(i+1) + ".json")
+
+					#Procura a Imagem da Classe do Save
+					Imagem_Classe_Normal = JFile.getString("Classe", default_value="")
+					Imagem_Classe_Brilho = Imagem_Classe_Normal + "-BRILHO"
+
+					if Imagem_Classe_Normal in self.Imagens and Imagem_Classe_Brilho in self.Imagens:
+						Objetos.append(MenuButton(self.Imagens[Imagem_Classe_Normal], Multiplicador, Localizações[i], self.Imagens[Imagem_Classe_Brilho], JOGO))
+					else:
+						Objetos.append(MenuButton(self.Imagens[Imagem_Sem_Save_Normal], Multiplicador, Localizações[i], self.Imagens[Imagem_Sem_Save_Brilhando], MENU_DE_NOVO_JOGO))
 				else:
-					Objetos.append(MenuButton(self.Imagens[Imagem_Sem_Save_Normal], Multiplicador, Localizações[i], self.Imagens[Imagem_Sem_Save_Brilhando], SEM_MUDANÇA))
+					Objetos.append(MenuButton(self.Imagens[Imagem_Sem_Save_Normal], Multiplicador, Localizações[i], self.Imagens[Imagem_Sem_Save_Brilhando], MENU_DE_NOVO_JOGO))
 		else:
 			raise Exception("ERRO! Não foi possivel criar o SavedGamesMenu - Imagens não identificadas")
 

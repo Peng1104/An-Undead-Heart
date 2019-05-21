@@ -11,8 +11,8 @@ Botão:
         - 140
         - 115
     Personagem:
-        ImagemOriginal: PERSONAGEM
-        Imagem2: PERSONAGEMB
+        ImagemOriginal: CLASSE-PERSONAGEM
+        Imagem2: CLASSE-PERSONAGEM-BRILHO
         Ação: 15
         Posição:
         - 740

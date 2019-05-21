@@ -6,7 +6,7 @@ from os import path, listdir
 #Classe Para criar um Nova Imagem Objeto
 class Novo_Objeto(pygame.sprite.Sprite):
 	
-	def __init__(self, Imagem, Multiplicador, Posição):
+	def __init__(self, Imagem, Multiplicador=1, Posição=(int(1920/2), int(1080/2))):
 		if type(Imagem) != pygame.Surface:
 			raise TypeError("Imagem não é um pygame.Surface")
 		elif type(Multiplicador) != float and type(Multiplicador) != int:
