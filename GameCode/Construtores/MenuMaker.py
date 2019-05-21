@@ -28,18 +28,18 @@ class MenuButton(Novo_Objeto):
 			self.Imagem2 = Imagem2
 
 	#Função de execusão do botão
-	def run(self, Multiplicador, Mouse_Press, Mouse_Pos):
+	def run(self, Mouse_Press, Mouse_Pos):
 		#Verficica se o mause está por cima do Botão
 		if self.rect.collidepoint(Mouse_Pos):
 			#Altera a Imagem
-			self.Criar_Objeto(self.Imagem2, Multiplicador)
+			self.Atualizar_Imagem(self.Imagem2)
 
 			#Verficica se o houve um MOUSEBUTTONDOWN
 			if Mouse_Press:
 				return self.Ação
 		else:
 			#Altera a Imagem
-			self.Criar_Objeto(self.ImagemOriginal, Multiplicador)
+			self.Atualizar_Imagem(self.ImagemOriginal)
 
 		return SEM_MUDANÇA
 
@@ -83,7 +83,7 @@ class Menu():
 					Mouse_Press = True
 
 			for button in self.getObjects(Multiplicador):
-				NOVO_ESTADO = button.run(Multiplicador, Mouse_Press, pygame.mouse.get_pos())
+				NOVO_ESTADO = button.run(Mouse_Press, pygame.mouse.get_pos())
 
 				Botões.add(button)
 
@@ -142,7 +142,7 @@ class SavedGamesMenu(Menu):
 				SAVE = 1
 
 			for button in Objetos:
-				NOVO_ESTADO = button.run(Multiplicador, Mouse_Press, pygame.mouse.get_pos())
+				NOVO_ESTADO = button.run(Mouse_Press, pygame.mouse.get_pos())
 
 				Botões.add(button)
 
