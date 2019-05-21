@@ -6,12 +6,8 @@
 # - Daniel Gurgel Terra, danielgt1@al.insper.edu.br
 
 from GameCode.Construtores.Funções_Base import *
-from GameCode.MenuMaker import Menu, SavedGamesMenu
-
-from GameCode.tela_jogo import tela_jogo
-
-#Testes lucas
-from GameCode.GameMaker import Start_Game
+from GameCode.Construtores.MenuMaker import Menu, SavedGamesMenu
+from GameCode.Game.GameMaker import Start_Game
 
 #Cria a Tela do Jogo e da o Multplicador das Imagens além de Iniciar o PyGAME
 Multiplicador, Tela = Iniciar_Pygame()
@@ -25,12 +21,6 @@ Save = -1
 #Runable do Jogo
 try:
 	while True:
-
-		#Fechando o Jogo atravez do X
-		for event in pygame.event.get():
-			if event.type == pygame.QUIT:
-				Estado = SAIR
-				break
 
 		#PARAR O LOOP
 		if Estado == SAIR or Estado == SEM_MUDANÇA:
@@ -126,8 +116,7 @@ try:
 
 		#Vai para o Jogo
 		elif Estado == JOGO:
-			Estado = tela_jogo(Tela, Multiplicador)
-			#Estado = Start_Game(CONFIG.getString("Díretorios.Jogos Salvos", default_value="Jogos Salvos"), Save, Tela)
+			Estado = Start_Game(CONFIG.getString("Díretorios.Jogos Salvos", default_value="Jogos Salvos"), Save, Tela, Multiplicador)
 
 		#Estado Desconhecido = Para o Jogo
 		else:
