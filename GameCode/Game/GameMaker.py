@@ -16,12 +16,22 @@ def Start_Game(SavedGamesDir, SavedGameNumber, Tela, Multiplicador):
 
 def Game(JSONFile, Tela, Multiplicador):
 
-	Lista_de_Imagens = [Imagens["FRENTE"], Imagens["ATRAS"], Imagens["DIREITA"], Imagens["ESQUERDA"]]
+	Todos_os_sprites = pygame.sprite.Group()
 
-	jogador = Jogador(Lista_de_Imagens, Multiplicador, (int(1920/2), int(1080/2)))
+	Lista_de_Imagens_do_Jogador = [Imagens["FRENTE"], Imagens["ATRAS"], Imagens["DIREITA"], Imagens["ESQUERDA"]]
 
-	Grupo = pygame.sprite.Group()
-	Grupo.add(jogador)
+	jogador = Jogador(Lista_de_Imagens_do_Jogador, Multiplicador, (int(1920/2), int(1080/2)))
+	Todos_os_sprites.add(jogador)
+	
+	NPCs = pygame.sprite.Group()
+
+	Imagem_NPC_1  = Imagens["NPC1"]
+	Posição_NPC_1 = (640,500)
+
+	NPC1 = NPC(Imagem_NPC_1, Multiplicador, Posição_NPC_1)
+	NPCs.add(NPC1)
+	Todos_os_sprites.add(NPC1)
+
 
 	while True:
 
@@ -54,6 +64,6 @@ def Game(JSONFile, Tela, Multiplicador):
 
 		jogador.atualização()
 
-		Atualizar_O_Plano_De_Fundo(Tela, Imagens["ACADEMIA"], Multiplicador, Grupo, JOGO)
+		Atualizar_O_Plano_De_Fundo(Tela, Imagens["ACADEMIA"], Multiplicador, Todos_os_sprites, JOGO)
 
 	return SAIR

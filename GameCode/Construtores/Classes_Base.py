@@ -3,6 +3,40 @@
 import pygame
 from os import path, listdir
 
+class Hitbox(pygame.Rect):
+
+	def __init__(self, Posição, Tamanho):
+		if type(Posição) != tuple:
+			raise TypeError("Posição não é Tuple")
+		elif len(Posição) != 2:
+			raise TypeError("Posição precisa conter X e Y")
+		elif type(Tamanho) != tuple and type(Tamanho) != list:
+			raise TypeError("Tamanho não é Tuple")
+		elif type(Posição[0]) != int or type(Posição[1]) != int:
+			raise TypeError("Todos os elementos da Posição tem que ser Interios")
+		else:
+			super().__init__(Posição[0], Posição[1], Tamanho[0], Tamanho[1])
+			#(left, top), (width, height)
+
+			#self.radius = int(self.width * .85 / 2)
+
+			self.left = Posição[0]
+			self.top  = Posiçã0[1]
+			self.right = self.left + Tamanho[0]
+			self.bottom = self.top + Tamanho[1]
+
+	def Atualizar_Posição(self, PosiçãoX, PosiçãoY):
+		#top, left, bottom, right
+
+		self.left = PosiçãoX
+		self.top = PosiçãoY
+
+	def Atualizar_Tamanho(self, Largura, Altura):
+		#width, height
+
+		self.right = Largura
+		self.bottom = Altura
+
 #Classe Para criar um Nova Imagem Objeto
 class Novo_Objeto(pygame.sprite.Sprite):
 	

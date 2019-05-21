@@ -31,3 +31,8 @@ class Jogador(Novo_Objeto):
 
 	def atualização(self):
 		self.Atualizar_Localização(self.rect.x + self.speedx, self.rect.y + self.speedy)
+
+class NPC(Novo_Objeto):
+
+	def __init__(self, Imagem, Multiplicador, Posição, ColorKey=(255, 0, 0)):
+		super().__init__(Imagem, Multiplicador, Posição, ColorKey)
