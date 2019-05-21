@@ -17,7 +17,7 @@ class Jogador(Novo_Objeto):
 		self.speedx = speedx
 		self.speedy = speedy
 
-		if self.speedx != 0:
+		if self.speedy != 0:
 			if self.speedy > 0:
 				self.Atualizar_Imagem(self.Lista_de_Imagens[0], self.Colorkey)
 			else:

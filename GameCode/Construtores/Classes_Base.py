@@ -23,15 +23,14 @@ class Novo_Objeto(pygame.sprite.Sprite):
 			#Variavel de Adequação
 			self.Multiplicador = Multiplicador
 
-			#Varivel de Backup para quando Atualizar a Imagem do Objeto
-			self.posx = 0
-			self.posy = 0
-
 			#Cria a Imagem do Objeto
 			self.Atualizar_Imagem(Imagem, ColorKey)
 
+			#Cria o rect do Objeto
+			self.rect = self.image.get_rect()
+
 			#Cria a Localização do Objeto
-			self.Atualizar_Localização(Posição[0], Posição[1])
+			self.Atualizar_Localização(Posição[0]*self.Multiplicador, Posição[1]*self.Multiplicador)
 
 	#Função para adequar as Imagens do Objeto a Dimensão do Jogo
 	def Atualizar_Imagem(self, Imagem, ColorKey=(0, 0, 0)):
@@ -44,13 +43,6 @@ class Novo_Objeto(pygame.sprite.Sprite):
 			#Faz a Imagem Ficar Transparente
 			self.image.set_colorkey(ColorKey)
 
-			#Atualiza o rect da do Objeto
-			self.rect = self.image.get_rect()
-
-			#Seta a localização do rect antigo
-			self.rect.x = self.posx
-			self.rect.y = self.posy
-
 	def Atualizar_Localização(self, PosiçãoX=0, PosiçãoY=0):
 		if type(PosiçãoX) != int and type(PosiçãoX) != float:
 			raise TypeError("PosiçãoX não é um numero!")
@@ -58,12 +50,8 @@ class Novo_Objeto(pygame.sprite.Sprite):
 			raise TypeError("PosiçãoY não é um numero!")
 		else:
 			#Atualiza as variveis de BackUP da Localização
-			self.posx = int(PosiçãoX*self.Multiplicador)
-			self.posy = int(PosiçãoY*self.Multiplicador)
-
-			#Muda a localização
-			self.rect.x = self.posx
-			self.rect.y = self.posy
+			self.rect.x = int(PosiçãoX)
+			self.rect.y = int(PosiçãoY)
 
 #Classe para Carregar todas as Imagens para o Jogo
 class CarregarImagens():
