@@ -15,7 +15,11 @@ def Start_Game(SavedGamesDir, SavedGameNumber, Tela, Multiplicador):
 		return Game(JSONFile(SavedGamesDir + "/last_game.json"), Tela, Multiplicador)
 
 def Game(JSONFile, Tela, Multiplicador):
-	jogador = Jogador(Imagens["FRENTE"], Multiplicador, (int(1920/2), int(1080/2)))
+
+	Lista_de_Imagens = [Imagens["FRENTE"], Imagens["ATRAS"], Imagens["DIREITA"], Imagens["ESQUERDA"]]
+
+	jogador = Jogador(Lista_de_Imagens, Multiplicador, (int(1920/2), int(1080/2)))
+
 	Grupo = pygame.sprite.Group()
 	Grupo.add(jogador)
 
