@@ -14,6 +14,18 @@ class Jogador(Novo_Objeto):
 		self.speedx = speedx
 		self.speedy = speedy
 
+		if self.speedx != 0:
+			if self.speedx > 0:
+				self.Atualizar_Imagem(Imagens["DIREITA"])
+			else:
+				self.Atualizar_Imagem(Imagens["ESQUERDA"])
+
+		if self.speedx != 0:
+			if self.speedy > 0:
+				self.Atualizar_Imagem(Imagens["FRENTE"])
+			else:
+				self.Atualizar_Imagem(Imagens["ATRAS"])
+
 	def atualização(self):
 		self.rect.x += self.speedx
 		self.rect.y += self.speedy
