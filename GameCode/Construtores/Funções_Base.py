@@ -40,27 +40,27 @@ def Iniciar_Pygame():
 	return Atualizar_Tela(CONFIG.getInt("Nível de Resolução do Jogo"), CONFIG.getBoolean("Tela Cheia", default_value=False))
 
 #Função para criar ou alterar o Plano de Fundo do Jogo
-def Atualizar_O_Plano_De_Fundo(Tela, Imagem, Multiplicador, Group, Estado):
+def Atualizar_O_Plano_De_Fundo(Tela, Plano_De_Fundo, Multiplicador, Group, Estado):
 	if type(Tela) != pygame.Surface:
 		raise TypeError("Tela não é um pygame.Surface")
-	elif type(Imagem) != pygame.Surface:
-		raise TypeError("Imagem não é um pygame.Surface")
+	elif type(Plano_De_Fundo) != pygame.Surface:
+		raise TypeError("Plano_De_Fundo não é um pygame.Surface")
 	elif type(Estado) != int:
 		raise TypeError("Estado não é um Inteiro")
-	elif Estado != JOGO and (Imagem.get_size()[0] != 1920 or Imagem.get_size()[1] != 1080):
+	elif Estado != JOGO and (Plano_De_Fundo.get_size()[0] != 1920 or Plano_De_Fundo.get_size()[1] != 1080):
 		raise Exception("A Imagem de Plano de Fundo tem que ser 1920 por 1080")
 	elif type(Multiplicador) != float and type(Multiplicador) != int:
 		raise TypeError("Multiplicador não é um Número")
 	elif type(Group) != pygame.sprite.Group:
 		raise TypeError("Group não é um pygame.sprite.Group")
 	else:
-		#Dimensiona a Imagem de Plano de Fundo
-		Imagem = pygame.transform.scale(Imagem, (int(Imagem.get_size()[0]*Multiplicador), int(Imagem.get_size()[1]*Multiplicador)))
+		#Dimensiona a Plano_De_Fundo de Plano de Fundo
+		Plano_De_Fundo = pygame.transform.scale(Plano_De_Fundo, (int(Plano_De_Fundo.get_size()[0]*Multiplicador), int(Plano_De_Fundo.get_size()[1]*Multiplicador)))
 
 		#Prenche a Tela de PRETO
 		Tela.fill((0, 0, 0, 255))
 		#Aplica o Plano de Fundo a Tela
-		Tela.blit(Imagem, Imagem.get_rect())
+		Tela.blit(Plano_De_Fundo, Plano_De_Fundo.get_rect())
 
 		#Desenha os Spites na Tela
 		Group.draw(Tela)

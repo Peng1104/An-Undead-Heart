@@ -4,8 +4,8 @@ from GameCode.Construtores.Classes_Base import Novo_Objeto
 
 class Jogador(Novo_Objeto):
 
-	def __init__(self, Lista_de_Imagens, Multiplicador, Posição, Colorkey=(255,0,0)):
-		super().__init__(Lista_de_Imagens[0], Multiplicador, Posição, Colorkey)
+	def __init__(self, Lista_de_Imagens, Multiplicador, Posição, Colorkey=(255, 0, 0, 255)):
+		super().__init__(Lista_de_Imagens[0], Multiplicador, Posição, None, Colorkey)
 
 		self.Colorkey = Colorkey
 		self.Lista_de_Imagens = Lista_de_Imagens
@@ -30,9 +30,10 @@ class Jogador(Novo_Objeto):
 				self.Atualizar_Imagem(self.Lista_de_Imagens[3], self.Colorkey)
 
 	def atualização(self):
-		self.Atualizar_Localização(self.rect.x + self.speedx, self.rect.y + self.speedy)
+		self.HitBox.Atualizar_Localização(self.rect.x + self.speedx)
+		self.HitBox.Atualizar_Localização(self.rect.y + self.speedy, False)
 
 class NPC(Novo_Objeto):
 
 	def __init__(self, Imagem, Multiplicador, Posição, ColorKey=(255, 0, 0)):
-		super().__init__(Imagem, Multiplicador, Posição, ColorKey)
+		super().__init__(Imagem, Multiplicador, Posição, None, ColorKey)

@@ -30,7 +30,7 @@ class MenuButton(Novo_Objeto):
 	#Função de execusão do botão
 	def run(self, Mouse_Press, Mouse_Pos):
 		#Verficica se o mause está por cima do Botão
-		if self.rect.collidepoint(Mouse_Pos):
+		if self.HitBox.Colisão_No_Retangulo(Mouse_Pos[0], Mouse_Pos[1]):
 			#Altera a Imagem
 			self.Atualizar_Imagem(self.Imagem2)
 
