@@ -20,18 +20,11 @@ def Game(JSONFile, Tela, Multiplicador):
 
 	Lista_de_Imagens_do_Jogador = [Imagens["FRENTE"], Imagens["ATRAS"], Imagens["DIREITA"], Imagens["ESQUERDA"]]
 
-	jogador = Jogador(Lista_de_Imagens_do_Jogador, Multiplicador, (int(1920/2), int(1080/2)))
+	jogador = Jogador(Lista_de_Imagens_do_Jogador, Multiplicador, (int(1920/2), int(1080/2)), (255, 0, 0, 255))
+
+	Todos_os_sprites.add(NPC(Imagens["NPC1"], Multiplicador, (640,500)))
 	Todos_os_sprites.add(jogador)
-	
-	NPCs = pygame.sprite.Group()
-
-	Imagem_NPC_1  = Imagens["NPC1"]
-	Posição_NPC_1 = (640,500)
-
-	NPC1 = NPC(Imagem_NPC_1, Multiplicador, Posição_NPC_1)
-	NPCs.add(NPC1)
-	Todos_os_sprites.add(NPC1)
-
+	#Todos_os_sprites.add(Falas((640,500), None, 50))
 
 	while True:
 
@@ -42,6 +35,9 @@ def Game(JSONFile, Tela, Multiplicador):
 			
 			elif evento.type == pygame.KEYDOWN:
 
+				if evento.key == pygame.K_q:
+					return SAIR
+					
 				if evento.key == pygame.K_UP:
 					jogador.speed(0, -20)
 				if evento.key == pygame.K_LEFT:

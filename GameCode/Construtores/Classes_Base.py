@@ -117,7 +117,7 @@ class Novo_Objeto(pygame.sprite.Sprite):
 			#Cria a HitBox do Objeto
 			self.HitBox = HitBox((int(Posição[0]*self.Multiplicador), int(Posição[1]*self.Multiplicador)), self.image.get_size(), Raio)
 
-			#Cria a variavel rect do Objeto
+			#Cria o Rect
 			self.rect = None
 
 			#Cria a mask do Objeto

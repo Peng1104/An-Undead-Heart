@@ -1,10 +1,11 @@
 #Arquivo que contem as class que vão ser usadas no Jogo
 
+import pygame
 from GameCode.Construtores.Classes_Base import Novo_Objeto
 
 class Jogador(Novo_Objeto):
 
-	def __init__(self, Lista_de_Imagens, Multiplicador, Posição, Colorkey=(255, 0, 0, 255)):
+	def __init__(self, Lista_de_Imagens, Multiplicador, Posição, Colorkey):
 		super().__init__(Lista_de_Imagens[0], Multiplicador, Posição, None, Colorkey)
 
 		self.Colorkey = Colorkey
@@ -13,6 +14,8 @@ class Jogador(Novo_Objeto):
 
 		self.speedx = 0
 		self.speedy = 0
+
+		self.hasCollided = False
 
 	def speed(self, speedx, speedy):
 		self.speedx = speedx
@@ -31,20 +34,40 @@ class Jogador(Novo_Objeto):
 				self.Atualizar_Imagem(self.Lista_de_Imagens[3], self.Colorkey)
 
 	def update(self):
+		#Atualização de variavel
+		if self.hasCollided:
+			self.speedx = -self.speedx
+			self.speedy = -self.speedy
+			self.hasCollided = False
+
+		#Teste de colisão
+		if self.speedx != 0 or self.speedy !=0:
+			for group in self.groups():
+				for sprite in group.sprites():
+					if not sprite == self and pygame.sprite.collide_mask(self, sprite):
+						self.speedx = -self.speedx
+						self.speedy = -self.speedy
+						self.hasCollided = True
+						break
+
+				if self.hasCollided:
+					break
+
+			#Teste se passou da tela
+			if self.HitBox.PosiçãoX + self.speedx < 0:
+				self.speedx = 0
+
+			if self.HitBox.PosiçãoX + self.speedx > int(1920*self.Multiplicador - self.HitBox.Retangulo.width):
+				self.speedx = 0
+
+			if self.HitBox.PosiçãoY + self.speedy < 0:
+				self.speedy = 0
+
+			if self.HitBox.PosiçãoY + self.speedy > int(1080*self.Multiplicador - self.HitBox.Retangulo.height):
+				self.speedy = 0
+
 		self.HitBox.Atualizar_Localização(self.HitBox.PosiçãoX + self.speedx)
 		self.HitBox.Atualizar_Localização(self.HitBox.PosiçãoY + self.speedy, False)
-
-		if self.HitBox.PosiçãoX < 0:
-			self.HitBox.PosiçãoX = 0
-
-		if self.HitBox.PosiçãoX > int(1920*self.Multiplicador - self.HitBox.Retangulo.width):
-			self.HitBox.PosiçãoX = int(1920*self.Multiplicador - self.HitBox.Retangulo.width)
-
-		if self.HitBox.PosiçãoY < 0:
-			self.HitBox.PosiçãoY = 0
-
-		if self.HitBox.PosiçãoY > int(1080*self.Multiplicador - self.HitBox.Retangulo.height):
-			self.HitBox.PosiçãoY = int(1080*self.Multiplicador - self.HitBox.Retangulo.height)
 
 		super().update()
 
@@ -52,3 +75,30 @@ class NPC(Novo_Objeto):
 
 	def __init__(self, Imagem, Multiplicador, Posição, ColorKey=(255, 0, 0)):
 		super().__init__(Imagem, Multiplicador, Posição, None, ColorKey)
+
+'''
+	def Falas_ao_chegar_próximo(Hitbox de quanto é próximo,Dicionario com as_falas desse personagem,Booleano = (randomico ou não)):
+
+		if colide com a Hitbox:
+			if Booleano:
+				Dicionario com as_falas desse personagem
+			else:
+				Dicionario com as_falas desse personagem
+
+	def interação com o cara(o cara aperta um botao,Dicionario com as_falas desse personagem):
+
+		if botao:
+			fala[npc]
+
+class Porta(HitBox):
+
+	def __init__(self, Posição, Tamanho=None, Raio=None):
+		super().__init__(Posição, Tamanho, Raio)
+		# Tamanho = (Largura , Altura)
+		# Posição = (X , Y)
+
+	def Mudança_de_Sala(Booleano, Sala que irá entrar):
+
+		if Booleano:
+			"Vai pra sala x"
+'''
