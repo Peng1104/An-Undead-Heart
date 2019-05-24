@@ -8,6 +8,7 @@ class Jogador(Novo_Objeto):
 		super().__init__(Lista_de_Imagens[0], Multiplicador, Posição, None, Colorkey)
 
 		self.Colorkey = Colorkey
+
 		self.Lista_de_Imagens = Lista_de_Imagens
 
 		self.speedx = 0
@@ -29,9 +30,23 @@ class Jogador(Novo_Objeto):
 			else:
 				self.Atualizar_Imagem(self.Lista_de_Imagens[3], self.Colorkey)
 
-	def atualização(self):
-		self.HitBox.Atualizar_Localização(self.rect.x + self.speedx)
-		self.HitBox.Atualizar_Localização(self.rect.y + self.speedy, False)
+	def update(self):
+		self.HitBox.Atualizar_Localização(self.HitBox.PosiçãoX + self.speedx)
+		self.HitBox.Atualizar_Localização(self.HitBox.PosiçãoY + self.speedy, False)
+
+		if self.HitBox.PosiçãoX < 0:
+			self.HitBox.PosiçãoX = 0
+
+		if self.HitBox.PosiçãoX > int(1920*self.Multiplicador - self.HitBox.Retangulo.width):
+			self.HitBox.PosiçãoX = int(1920*self.Multiplicador - self.HitBox.Retangulo.width)
+
+		if self.HitBox.PosiçãoY < 0:
+			self.HitBox.PosiçãoY = 0
+
+		if self.HitBox.PosiçãoY > int(1080*self.Multiplicador - self.HitBox.Retangulo.height):
+			self.HitBox.PosiçãoY = int(1080*self.Multiplicador - self.HitBox.Retangulo.height)
+
+		super().update()
 
 class NPC(Novo_Objeto):
 

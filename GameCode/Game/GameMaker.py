@@ -62,8 +62,6 @@ def Game(JSONFile, Tela, Multiplicador):
 				if evento.key == pygame.K_RIGHT:
 					jogador.speed(0, 0)
 
-		jogador.atualização()
-
 		Atualizar_O_Plano_De_Fundo(Tela, Imagens["ACADEMIA"], Multiplicador, Todos_os_sprites, JOGO)
 
 	return SAIR

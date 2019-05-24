@@ -117,8 +117,11 @@ class Novo_Objeto(pygame.sprite.Sprite):
 			#Cria a HitBox do Objeto
 			self.HitBox = HitBox((int(Posição[0]*self.Multiplicador), int(Posição[1]*self.Multiplicador)), self.image.get_size(), Raio)
 
-			#Rect
-			self.rect = self.HitBox.Retangulo
+			#Cria a variavel rect do Objeto
+			self.rect = None
+
+			#Cria a mask do Objeto
+			self.mask = pygame.mask.from_surface(self.image)
 
 	#Função para adequar as Imagens do Objeto a Dimensão do Jogo
 	def Atualizar_Imagem(self, Imagem, ColorKey=(0, 0, 0)):
@@ -136,6 +139,10 @@ class Novo_Objeto(pygame.sprite.Sprite):
 
 			#Atualiza a Imagem do Objeto
 			self.image = preImagem
+
+	#Função para atualizar o Novo_Objeto
+	def update(self):
+		self.rect = self.HitBox.Retangulo
 
 #Classe para Carregar todas as Imagens para o Jogo
 class CarregarImagens():

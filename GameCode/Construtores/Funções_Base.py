@@ -62,6 +62,9 @@ def Atualizar_O_Plano_De_Fundo(Tela, Plano_De_Fundo, Multiplicador, Group, Estad
 		#Aplica o Plano de Fundo a Tela
 		Tela.blit(Plano_De_Fundo, Plano_De_Fundo.get_rect())
 
+		#Atualiza todos os membros do Grupo
+		Group.update()
+
 		#Desenha os Spites na Tela
 		Group.draw(Tela)
 		#Inverte o Display
