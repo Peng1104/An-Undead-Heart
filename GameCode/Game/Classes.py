@@ -37,3 +37,25 @@ class NPC(Novo_Objeto):
 
 	def __init__(self, Imagem, Multiplicador, Posição, ColorKey=(255, 0, 0)):
 		super().__init__(Imagem, Multiplicador, Posição, None, ColorKey)
+		
+#'''
+	def Falas_ao_chegar_próximo(Hitbox de quanto é próximo,Dicionario com as_falas desse personagem,Booleano = (randomico ou não)):
+
+		if colide com a Hitbox:
+			if Booleano:
+				Dicionario com as_falas desse personagem
+			else:
+				Dicionario com as_falas desse personagem
+
+class Porta(HitBox):
+
+	def __init__(self, Posição, Tamanho=None, Raio=None):
+		super().__init__(Posição, Tamanho, Raio)
+		# Tamanho = (Largura , Altura)
+		# Posição = (X , Y)
+
+	def Mudança_de_Sala(Booleano, Sala que irá entrar):
+
+		if Booleano:
+			"Vai pra sala x"
+'''
