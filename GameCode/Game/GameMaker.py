@@ -34,6 +34,7 @@ def Game(JSONFile, Tela, Multiplicador):
 
 
 	while True:
+		posição_anterior = [jogador.HitBox.PosiçãoX, jogador.HitBox.PosiçãoY]
 
 		for evento in pygame.event.get():
 
@@ -61,6 +62,12 @@ def Game(JSONFile, Tela, Multiplicador):
 					jogador.speed(0, 0)
 				if evento.key == pygame.K_RIGHT:
 					jogador.speed(0, 0)
+
+		Colisão = pygame.sprite.spritecollide(jogador,NPCs,False)
+		if Colisão:
+			jogador.speed(0, 0)
+			jogador.HitBox.Atualizar_Localização(posição_anterior[0])
+			jogador.HitBox.Atualizar_Localização(posição_anterior[1], False)
 
 		jogador.atualização()
 
