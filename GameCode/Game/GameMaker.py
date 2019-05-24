@@ -25,16 +25,16 @@ def Game(JSONFile, Tela, Multiplicador):
 	
 	NPCs = pygame.sprite.Group()
 
-	Imagem_NPC_1  = Imagens["NPC1"]
-	Posição_NPC_1 = (640,500)
-
-	NPC1 = NPC(Imagem_NPC_1, Multiplicador, Posição_NPC_1)
+	NPC1 = NPC(Imagens["NPC1"], Multiplicador, (640,500))
 	NPCs.add(NPC1)
 	Todos_os_sprites.add(NPC1)
 
+	Falas = pygame.sprite.Group()
+	Fala1 = Falas((640,500), None, 50)
+	Todos_os_sprites.add(Fala1)
+
 
 	while True:
-		posição_anterior = [jogador.HitBox.PosiçãoX, jogador.HitBox.PosiçãoY]
 
 		for evento in pygame.event.get():
 
@@ -64,12 +64,9 @@ def Game(JSONFile, Tela, Multiplicador):
 					jogador.speed(0, 0)
 
 		Colisão = pygame.sprite.spritecollide(jogador,NPCs,False)
-		if Colisão:
-			jogador.speed(0, 0)
-			jogador.HitBox.Atualizar_Localização(posição_anterior[0])
-			jogador.HitBox.Atualizar_Localização(posição_anterior[1], False)
+		jogador.Atualiza_Posição(Colisão)
 
-		jogador.atualização()
+		Todos_os_sprites.update()
 
 		Atualizar_O_Plano_De_Fundo(Tela, Imagens["ACADEMIA"], Multiplicador, Todos_os_sprites, JOGO)
 

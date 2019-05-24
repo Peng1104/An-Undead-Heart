@@ -13,7 +13,7 @@ from GameCode.Game.GameMaker import Start_Game
 Multiplicador, Tela = Iniciar_Pygame()
 
 #Estado Inicial do Jogo
-Estado = MENU_PRINCIPAL
+Estado = JOGO
 
 #Save do Jogo sendo Jogado
 Save = -1

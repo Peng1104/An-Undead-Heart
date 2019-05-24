@@ -13,6 +13,9 @@ class Jogador(Novo_Objeto):
 		self.speedx = 0
 		self.speedy = 0
 
+		self.posiçãox = 0
+		self.posiçãoy = 0
+
 	def speed(self, speedx, speedy):
 		self.speedx = speedx
 		self.speedy = speedy
@@ -29,14 +32,40 @@ class Jogador(Novo_Objeto):
 			else:
 				self.Atualizar_Imagem(self.Lista_de_Imagens[3], self.Colorkey)
 
-	def atualização(self):
-		self.HitBox.Atualizar_Localização(self.rect.x + self.speedx)
-		self.HitBox.Atualizar_Localização(self.rect.y + self.speedy, False)
+	def Atualiza_Posição(self, Colisão):
+		if Colisão:
+			if self.speedy < 0:
+				self.posiçãoy = self.HitBox.Retangulo.y + 40
+				self.posiçãox = self.HitBox.Retangulo.x
+
+			elif self.speedy > 0:
+				self.posiçãoy = self.HitBox.Retangulo.y - 40
+				self.posiçãox = self.HitBox.Retangulo.x
+
+			elif self.speedx < 0:
+				self.posiçãoy = self.HitBox.Retangulo.y
+				self.posiçãox = self.HitBox.Retangulo.x + 40
+
+			elif self.speedx > 0:
+				self.posiçãoy = self.HitBox.Retangulo.y
+				self.posiçãox = self.HitBox.Retangulo.x - 40
+		else:
+			self.posiçãox = self.HitBox.Retangulo.x + self.speedx
+			self.posiçãoy = self.HitBox.Retangulo.y + self.speedy
+
+	def update(self):
+		self.HitBox.Atualizar_Localização(self.posiçãox)
+		self.HitBox.Atualizar_Localização(self.posiçãoy,False)
 
 class NPC(Novo_Objeto):
 
 	def __init__(self, Imagem, Multiplicador, Posição, ColorKey=(255, 0, 0)):
 		super().__init__(Imagem, Multiplicador, Posição, None, ColorKey)
+
+class Falas(Hitbox):
+
+	def __init__(self, Posição, Tamanho=None, Raio=50):
+		super().__init__(Posição, None, Raio)
 
 '''
 	def Falas_ao_chegar_próximo(Hitbox de quanto é próximo,Dicionario com as_falas desse personagem,Booleano = (randomico ou não)):
