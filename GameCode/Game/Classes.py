@@ -102,3 +102,8 @@ class Porta(HitBox):
 		if Booleano:
 			"Vai pra sala x"
 '''
+
+#class Falas(Novo_Objeto):
+
+#	def __init__(self, Imagem, Multiplicador, Posição, Raio = 30,ColorKey=(255, 0, 0)):
+#		super().__init__(Imagem, Multiplicador, Posição, Raio, ColorKey)
