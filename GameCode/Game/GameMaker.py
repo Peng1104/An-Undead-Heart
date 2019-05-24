@@ -29,10 +29,11 @@ def Game(JSONFile, Tela, Multiplicador):
 	NPCs.add(NPC1)
 	Todos_os_sprites.add(NPC1)
 
-	Falas = pygame.sprite.Group()
-	Fala1 = Falas((640,500), None, 50)
-	Todos_os_sprites.add(Fala1)
+	#Conversas = pygame.sprite.Group()
 
+	#Fala = Falas(Imagens["HITBOX"], Multiplicador, (640,500))
+	#Conversas.add(Fala)
+	#Todos_os_sprites.add(Fala)
 
 	while True:
 
@@ -63,8 +64,11 @@ def Game(JSONFile, Tela, Multiplicador):
 				if evento.key == pygame.K_RIGHT:
 					jogador.speed(0, 0)
 
-		Colisão = pygame.sprite.spritecollide(jogador,NPCs,False)
-		jogador.Atualiza_Posição(Colisão)
+		Colisão_npc = pygame.sprite.spritecollide(jogador,NPCs,False)
+		#Colisão_fala = pygame.sprite.spritecollide(jogador,Conversas,False)
+
+		#jogador.Atualiza_Posição(Colisão_fala)
+		jogador.Atualiza_Posição(Colisão_npc)
 
 		Todos_os_sprites.update()
 
