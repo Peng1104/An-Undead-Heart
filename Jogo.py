@@ -8,12 +8,11 @@ jogador = Jogador()
 sprites.add(jogador)
 
 aliens = pygame.sprite.Group()
-for i in range(20):
-	alien = Aliens()
-	alien.rect.centerx = random.randrange(0,1600)
-	alien.rect.centery = random.randrange(900,950)
+for i in range(100):
+	alien = Aliens(jogador)
 	sprites.add(alien)
 	aliens.add(alien)
+
 	
 try:
 

@@ -116,20 +116,65 @@ class Jogador(pygame.sprite.Sprite):
 
 class Aliens (pygame.sprite.Sprite):
 
-	def __init__(self):
+	def __init__(self, jogador):
 		super().__init__()
 
-		self.image = ALIEN
+		self.jogador = jogador
+
+		self.image = ALIEN_1
 
 		self.rect = self.image.get_rect()
 
-		self.rect.centerx = 0
-		self.rect.centery = 0
+		self.valor = random.randint(0,4)
+
+		self.speedx =  0
+		self.speedy =  0
+
+		self.posicao()
+
+	def TipoAlien(self):
+
+		self.tipo = random.randint(0,1)
+
+		if self.tipo == 0:
+
+			self.image = ALIEN_1
+
+			self.speedx = self.jogador.rect.centerx - self.rect.centerx
+			self.speedy = self.jogador.rect.centery - self.rect.centery
+
+		if self.tipo == 1:
+
+			self.image = ALIEN_2
+
+			self.speedx = 800 - self.rect.x
+			self.speedy = 450 - self.rect.y
+
+	def posicao(self):
+		self.valor = random.randint(0,3)
+
+		if self.valor == 0:
+			self.rect.centerx = random.randrange(-200, 1800)
+			self.rect.centery = random.randrange(-200, -100)
+
+		if self.valor == 1:
+			self.rect.centerx = random.randrange(-200, 1800)
+			self.rect.centery = random.randrange(1000, 1100)
+
+		if self.valor == 2:
+			self.rect.centerx = random.randrange(-200, -100)
+			self.rect.centery = random.randrange(-200, 1100)
+
+		if self.valor == 3:
+			self.rect.centerx = random.randrange(1700, 1800)
+			self.rect.centery = random.randrange(-200, 1100)
+
+		self.TipoAlien()
 
 	def update(self):
-		self.speedx =  800 - self.rect.centerx
-		self.speedy =  450 - self.rect.centery
 		
-
 		self.rect.centerx += (self.speedx)/200
 		self.rect.centery += (self.speedy)/200
+
+		if (self.rect.bottom > ALTURA + 300) or (self.rect.left < -300) or (self.rect.right > LARGURA + 300) or (self.rect.top < -300) :
+			self.posicao()

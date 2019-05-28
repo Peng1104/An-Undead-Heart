@@ -2,6 +2,7 @@ import pygame
 import random
 import time
 from os import path
+import math
 #==================#
 
 LARGURA  = 1600
@@ -34,9 +35,13 @@ JOGADOR    = pygame.image.load(path.join(IMAGENS, "JOGADOR.png")).convert()
 JOGADOR    = pygame.transform.scale( JOGADOR, (50,50) )
 JOGADOR.set_colorkey(VERMELHO)
 
-ALIEN    = pygame.image.load(path.join(IMAGENS, "ALIEN.png")).convert()
-ALIEN    = pygame.transform.scale( ALIEN, (50,50) )
-ALIEN.set_colorkey(BRANCO)
+ALIEN_1    = pygame.image.load(path.join(IMAGENS, "ALIEN1.png")).convert()
+ALIEN_1    = pygame.transform.scale( ALIEN_1, (50,50) )
+ALIEN_1.set_colorkey(PRETO)
+
+ALIEN_2    = pygame.image.load(path.join(IMAGENS, "ALIEN2.png")).convert()
+ALIEN_2    = pygame.transform.scale( ALIEN_2, (50,50) )
+ALIEN_2.set_colorkey(PRETO)
 
 MASCARA    =   pygame.image.load(path.join(IMAGENS, "MASCARA.png")).convert()
 FUNDO      =   pygame.image.load(path.join(IMAGENS, "FUNDO.png")).convert()
