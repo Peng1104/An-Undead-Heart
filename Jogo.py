@@ -13,6 +13,10 @@ for i in range(100):
 	sprites.add(alien)
 	aliens.add(alien)
 
+pewpews = pygame.sprite.Group()
+pewpew = Pewpew(jogador)
+sprites.add(pewpew)
+pewpews.add(pewpew)
 	
 try:
 
@@ -51,6 +55,7 @@ try:
 		if color_mask == (BRANCO):
 			colision_wall = True
 
+		pewpew.posição(jogador.rect)
 		jogador.speed()
 		jogador.wall(colision_wall)
 		sprites.update()

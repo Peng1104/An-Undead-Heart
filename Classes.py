@@ -178,3 +178,16 @@ class Aliens (pygame.sprite.Sprite):
 
 		if (self.rect.bottom > ALTURA + 300) or (self.rect.left < -300) or (self.rect.right > LARGURA + 300) or (self.rect.top < -300) :
 			self.posicao()
+
+class Pewpew (pygame.sprite.Sprite):
+	def __init__(self,jogador):
+		super().__init__()
+
+		self.image = PEWPEW
+
+		self.rect = self.image.get_rect()
+
+	def posição(self,rect_jogador):
+
+		self.rect.centerx = rect_jogador.centerx
+		self.rect.centery = rect_jogador.centery -45
