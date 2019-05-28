@@ -1,130 +1,70 @@
-# EP 2019-2: Insper Run
-#
-# Alunos: 
-# - Lucas Hix, lucash@al.insper.edu.br
-# - Fernando Giuseppe Avila Beltramo, fernandogab@al.insper.edu.br
-# - Daniel Gurgel Terra, danielgt1@al.insper.edu.br
+from Configurações import *
+from Classes import *
+pygame.init()
 
-from GameCode.Construtores.Funções_Base import *
-from GameCode.Construtores.MenuMaker import Menu, SavedGamesMenu
-from GameCode.Game.GameMaker import Start_Game
+sprites = pygame.sprite.Group()
 
-#Cria a Tela do Jogo e da o Multplicador das Imagens além de Iniciar o PyGAME
-Multiplicador, Tela = Iniciar_Pygame()
+jogador = Jogador()
+sprites.add(jogador)
 
-#Estado Inicial do Jogo
-Estado = MENU_PRINCIPAL
-
-#Save do Jogo sendo Jogado
-Save = -1
-
-#Runable do Jogo
+aliens = pygame.sprite.Group()
+for i in range(20):
+	alien = Aliens()
+	alien.rect.centerx = random.randrange(0,1600)
+	alien.rect.centery = random.randrange(900,950)
+	sprites.add(alien)
+	aliens.add(alien)
+	
 try:
-	while True:
 
-		#PARAR O LOOP
-		if Estado == SAIR or Estado == SEM_MUDANÇA:
-			break
+	colision_wall = False
+	running = True
+	while running:
 
-		#Entra no Menu Principal
-		elif Estado == MENU_PRINCIPAL:
-			Estado = Menu(CONFIG.getString("Díretorios.Imagens.Menus.Principal", default_value="Menu Principal"), Estado).run(Tela, Multiplicador)
+		for event in pygame.event.get():
 
-		#Entra no Menu das Opções
-		elif Estado == MENU_DAS_OPÇÕES:
-			Estado = Menu(CONFIG.getString("Díretorios.Imagens.Menus.Opções", default_value="Menu de Opções"), Estado).run(Tela, Multiplicador)
+			if event.type == pygame.QUIT:
+				running = False
 
-		#Entra no Menu de Como Jogar
-		elif Estado == MENU_DE_COMO_JOGAR:
-			Estado = Menu(CONFIG.getString("Díretorios.Imagens.Menus.Como Jogar", default_value="Menu de Como Jogar"), Estado).run(Tela, Multiplicador)
+			if event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_w:
+					jogador.UP    = True
+				if event.key == pygame.K_a:
+					jogador.LEFT  = True
+				if event.key == pygame.K_s:
+					jogador.DOWN  = True
+				if event.key == pygame.K_d:
+					jogador.RIGHT = True
 
-		#Entra no Menu de Vídeo
-		elif Estado == MENU_DE_VIDEO:
-			Estado = Menu(CONFIG.getString("Díretorios.Imagens.Menus.Vídeo", default_value="Menu de Vídeo"), Estado).run(Tela, Multiplicador)
+			elif event.type == pygame.KEYUP:
 
-		#Ativa a Tela cheia e volta para o Menu de Vídeo
-		elif Estado == ATIVAR_TELA_CHEIA:
-			#Atualiza a Tela e o Multiplicador
-			Multiplicador, Tela = Atualizar_Tela(CONFIG.getInt("Nível de Resolução do Jogo"), True)
+				if event.key == pygame.K_w:
+					jogador.UP    = False
+				if event.key == pygame.K_a:
+					jogador.LEFT  = False
+				if event.key == pygame.K_s:
+					jogador.DOWN  = False
+				if event.key == pygame.K_d:
+					jogador.RIGHT = False
 
-			#Retorna para o Menu de Vídeo
-			Estado = MENU_DE_VIDEO
+		color_mask = MASCARA.get_at(jogador.rect.center)
+		
+		if color_mask == (BRANCO):
+			colision_wall = True
 
-		#Desativa a Tela cheia e volta para o Menu de Vídeo
-		elif Estado == DESATIVAR_TELA_CHEIA:
-			#Atualiza a Tela e o Multiplicador
-			Multiplicador, Tela = Atualizar_Tela(CONFIG.getInt("Nível de Resolução do Jogo"), False)
+		jogador.speed()
+		jogador.wall(colision_wall)
+		sprites.update()
 
-			#Retorna para o Menu de Vídeo
-			Estado = MENU_DE_VIDEO
+		#colision_npcs = pygame.sprite.spritecollide(jogador, npcs, False)
+		#jogador.hitbox(npc.rect, colision_npcs)
+		
+		TELA.blit(FUNDO, FUNDO_RECT)
+		sprites.draw(TELA)
 
-		#Troca para a Resolução de 1080p e volta para o Menu de Vídeo
-		elif Estado == RESOLUÇÃO_DE_1080P:
-			#Atualiza a Tela e o Multiplicador
-			Multiplicador, Tela = Atualizar_Tela(6, CONFIG.getBoolean("Tela Cheia"))
+		pygame.display.flip()
 
-			#Retorna para o Menu de Vídeo
-			Estado = MENU_DE_VIDEO
-
-		#Troca para a Resolução de 900p e volta para o Menu de Vídeo
-		elif Estado == RESOLUÇÃO_DE_900P:
-			#Atualiza a Tela e o Multiplicador
-			Multiplicador, Tela = Atualizar_Tela(5, CONFIG.getBoolean("Tela Cheia"))
-
-			#Retorna para o Menu de Vídeo
-			Estado = MENU_DE_VIDEO
-
-		#Troca para a Resolução de 720p e volta para o Menu de Vídeo
-		elif Estado == RESOLUÇÃO_DE_720P:
-			#Atualiza a Tela e o Multiplicador
-			Multiplicador, Tela = Atualizar_Tela(4, CONFIG.getBoolean("Tela Cheia"))
-
-			#Retorna para o Menu de Vídeo
-			Estado = MENU_DE_VIDEO
-
-		#Troca para a Resolução de 576p e volta para o Menu de Vídeo
-		elif Estado == RESOLUÇÃO_DE_576P:
-			#Atualiza a Tela e o Multiplicador
-			Multiplicador, Tela = Atualizar_Tela(3, CONFIG.getBoolean("Tela Cheia"))
-
-			#Retorna para o Menu de Vídeo
-			Estado = MENU_DE_VIDEO
-
-		#Troca para a Resolução de 540p e volta para o Menu de Vídeo
-		elif Estado == RESOLUÇÃO_DE_540P:
-			#Atualiza a Tela e o Multiplicador
-			Multiplicador, Tela = Atualizar_Tela(2, CONFIG.getBoolean("Tela Cheia"))
-
-			#Retorna para o Menu de Vídeo
-			Estado = MENU_DE_VIDEO
-
-		#Troca para a Resolução de 360p e volta para o Menu de Vídeo
-		elif Estado == RESOLUÇÃO_DE_360P:
-			#Atualiza a Tela e o Multiplicador
-			Multiplicador, Tela = Atualizar_Tela(1, CONFIG.getBoolean("Tela Cheia"))
-
-			#Retorna para o Menu de Vídeo
-			Estado = MENU_DE_VIDEO
-
-		#Entra no Menu para selecionar um Jogo Salvo
-		elif Estado == MENU_PARA_CARREGAR_JOGO_SALVO:
-			Estado, Save = SavedGamesMenu(CONFIG.getString("Díretorios.Imagens.Menus.Carregar Save", default_value="Menu para Carregar Jogo Salvo"), Estado).run(Tela, Multiplicador, CONFIG.getString("Díretorios.Jogos Salvos", default_value="Jogos Salvos"))
-
-		#Entra no Menu para criar um Novo Jogo
-		elif Estado == MENU_DE_NOVO_JOGO:
-			Estado = Menu(CONFIG.getString("Díretorios.Imagens.Menus.Novo Jogo", default_value="Menu de Novo Jogo"), Estado).run(Tela, Multiplicador)
-
-		#Vai para o Jogo
-		elif Estado == JOGO:
-			Estado = Start_Game(CONFIG.getString("Díretorios.Jogos Salvos", default_value="Jogos Salvos"), Save, Tela, Multiplicador)
-
-		#Estado Desconhecido = Para o Jogo
-		else:
-			break
+		colision_wall = False
 
 finally:
-	#Fecha o Jogoz
 	pygame.quit()
-
-	#Salva o Config.yml
-	CONFIG.save()
