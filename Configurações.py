@@ -43,6 +43,10 @@ ALIEN_2    = pygame.image.load(path.join(IMAGENS, "ALIEN2.png")).convert()
 ALIEN_2    = pygame.transform.scale( ALIEN_2, (50,50) )
 ALIEN_2.set_colorkey(PRETO)
 
+PEWPEW    = pygame.image.load(path.join(IMAGENS, "PEWPEW.png")).convert()
+PEWPEW    = pygame.transform.scale( PEWPEW, (50,50) )
+PEWPEW.set_colorkey(BRANCO)
+
 MASCARA    =   pygame.image.load(path.join(IMAGENS, "MASCARA.png")).convert()
 FUNDO      =   pygame.image.load(path.join(IMAGENS, "FUNDO.png")).convert()
 FUNDO_RECT =   FUNDO.get_rect()
