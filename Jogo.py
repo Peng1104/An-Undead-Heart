@@ -18,6 +18,8 @@ pewpew = Pewpew(jogador)
 sprites.add(pewpew)
 pewpews.add(pewpew)
 	
+bullets = pygame.sprite.Group()
+
 try:
 
 	colision_wall = False
@@ -38,6 +40,13 @@ try:
 					jogador.DOWN  = True
 				if event.key == pygame.K_d:
 					jogador.RIGHT = True
+
+			if event.type == pygame.MOUSEBUTTONDOWN:
+				if event.button == 1: #ESQUERDO 3, #DIREITO 1
+					bullet = Bullet(pewpew.rect.centerx, pewpew.rect.top)
+					sprites.add(bullet)
+					bullets.add(bullet)
+
 
 			elif event.type == pygame.KEYUP:
 

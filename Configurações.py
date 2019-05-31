@@ -47,6 +47,9 @@ PEWPEW    = pygame.image.load(path.join(IMAGENS, "PEWPEW.png")).convert()
 PEWPEW    = pygame.transform.scale( PEWPEW, (50,50) )
 PEWPEW.set_colorkey(BRANCO)
 
+BULLET    = pygame.image.load(path.join(IMAGENS, "BULLET.png")).convert()
+BULLET.set_colorkey(BRANCO)
+
 MASCARA    =   pygame.image.load(path.join(IMAGENS, "MASCARA.png")).convert()
 FUNDO      =   pygame.image.load(path.join(IMAGENS, "FUNDO.png")).convert()
 FUNDO_RECT =   FUNDO.get_rect()
