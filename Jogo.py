@@ -22,10 +22,14 @@ bullets = pygame.sprite.Group()
 
 try:
 
+	score = 0
+
 	colision_wall = False
 	atirando = False
 	running = True
+
 	while running:
+		
 		atirando = False
 
 		for event in pygame.event.get():
@@ -78,6 +82,12 @@ try:
 
 		colision_bullets = pygame.sprite.groupcollide(bullets, aliens, True, True)
 		colision_alien   = pygame.sprite.spritecollide(jogador, aliens, False)
+
+		if colision_alien:
+			if alien.tipo == 0:
+				score += 1
+			if alien.tipo == 1:
+				score += 2
 
 		#if colision_alien:
 		#	jogador.kill()
