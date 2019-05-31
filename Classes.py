@@ -1,5 +1,7 @@
 from Configurações import *
 
+import math
+
 class Jogador(pygame.sprite.Sprite):
 	def __init__(self):
 		super().__init__()
@@ -191,6 +193,9 @@ class Pewpew (pygame.sprite.Sprite):
 
 		self.rect = self.image.get_rect()
 
+		self.rect.centerx = jogador.rect.centerx
+		self.rect.centery = jogador.rect.centery -45
+
 	def posição(self,rect_jogador):
 
 		self.rect.centerx = rect_jogador.centerx
@@ -198,9 +203,16 @@ class Pewpew (pygame.sprite.Sprite):
 
 	def rotacionar(self):
 
-		direcao = pygame.mouse.get_pos() - self.pos
-		
-		raio, angulo = direction.as_polar()
-		self.image = pygame.transform.rotate(self.imagem_original, -angulo)
+		mouse_x, mouse_y = pygame.mouse.get_pos()
+
+		vetor_x, vetor_y = mouse_x - self.rect.centerx, mouse_y - self.rect.centery
+
+		angulo = (180 / math.pi) * ( -math.atan2(vetor_y, vetor_x) )
+
+		self.image = pygame.transform.rotate(self.imagem_original, int(angulo))
 
 		self.rect = self.image.get_rect(center=self.rect.center)
+
+	def update(self):
+
+		self.rotacionar()
