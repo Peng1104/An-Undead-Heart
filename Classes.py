@@ -194,12 +194,12 @@ class Pewpew (pygame.sprite.Sprite):
 		self.rect = self.image.get_rect()
 
 		self.rect.centerx = jogador.rect.centerx
-		self.rect.centery = jogador.rect.centery -45
+		self.rect.centery = jogador.rect.centery
 
 	def posição(self,rect_jogador):
 
 		self.rect.centerx = rect_jogador.centerx
-		self.rect.centery = rect_jogador.centery -45
+		self.rect.centery = rect_jogador.centery
 
 	def rotacionar(self):
 
@@ -209,7 +209,7 @@ class Pewpew (pygame.sprite.Sprite):
 
 		angulo = (180 / math.pi) * ( -math.atan2(vetor_y, vetor_x) )
 
-		self.image = pygame.transform.rotate(self.imagem_original, int(angulo))
+		self.image = pygame.transform.rotate(self.imagem_original, angulo)
 
 		self.rect = self.image.get_rect(center=self.rect.center)
 
