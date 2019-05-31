@@ -3,6 +3,8 @@ import random
 import time
 from os import path
 import math
+
+pygame.init()
 #==================#
 
 LARGURA  = 1600

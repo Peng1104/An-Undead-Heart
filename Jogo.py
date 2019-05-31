@@ -1,5 +1,7 @@
 from Configurações import *
 from Classes import *
+
+
 pygame.init()
 
 sprites = pygame.sprite.Group()
@@ -76,26 +78,27 @@ try:
 			sprites.add(bullet)
 			bullets.add(bullet)
 
-		pewpew.posição(jogador.rect)
-		jogador.wall(colision_wall)
-		sprites.update()
-
 		colision_bullets = pygame.sprite.groupcollide(bullets, aliens, True, True)
-		colision_alien   = pygame.sprite.spritecollide(jogador, aliens, False)
 
-		if colision_alien:
+		for colisao in colision_bullets:
 			if alien.tipo == 0:
 				score += 1
 			if alien.tipo == 1:
 				score += 2
 
-		#if colision_alien:
-		#	jogador.kill()
-		#	pewpew.kill()
-		#jogador.hitbox(npc.rect, colision_npcs)
+		colision_alien   = pygame.sprite.spritecollide(jogador, aliens, False)
+
+		pewpew.posição(jogador.rect)
+		jogador.wall(colision_wall)
+		sprites.update()
 		
 		TELA.blit(FUNDO, FUNDO_RECT)
 		sprites.draw(TELA)
+
+		text_surface = SCORE.render("{:08d}".format(score), True, AMARELO)
+		text_rect = text_surface.get_rect()
+		text_rect.midtop = (LARGURA / 2,  10)
+		TELA.blit(text_surface, text_rect)
 
 		pygame.display.flip()
 
