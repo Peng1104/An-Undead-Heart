@@ -101,6 +101,8 @@ class Jogador(pygame.sprite.Sprite):
 
 	def update(self):
 
+		self.speed()
+
 		self.rect.x = self.next_positionx
 		self.rect.y = self.next_positiony
 
@@ -185,9 +187,20 @@ class Pewpew (pygame.sprite.Sprite):
 
 		self.image = PEWPEW
 
+		self.imagem_original = PEWPEW
+
 		self.rect = self.image.get_rect()
 
 	def posição(self,rect_jogador):
 
 		self.rect.centerx = rect_jogador.centerx
 		self.rect.centery = rect_jogador.centery -45
+
+	def rotacionar(self):
+
+		direcao = pygame.mouse.get_pos() - self.pos
+		
+		raio, angulo = direction.as_polar()
+		self.image = pygame.transform.rotate(self.imagem_original, -angulo)
+
+		self.rect = self.image.get_rect(center=self.rect.center)

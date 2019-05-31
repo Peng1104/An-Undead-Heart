@@ -56,7 +56,7 @@ try:
 			colision_wall = True
 
 		pewpew.posição(jogador.rect)
-		jogador.speed()
+		#jogador.speed()
 		jogador.wall(colision_wall)
 		sprites.update()
 
