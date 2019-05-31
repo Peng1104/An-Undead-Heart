@@ -4,6 +4,12 @@ from Classes import *
 
 pygame.init()
 
+RELÓGIO  = pygame.time.Clock()
+
+COOLDOWN = 100
+
+ultimo_tiro = pygame.time.get_ticks() - COOLDOWN
+
 sprites = pygame.sprite.Group()
 
 jogador = Jogador()
@@ -32,7 +38,8 @@ try:
 
 	while running:
 		
-		atirando = False
+		RELÓGIO.tick(30)
+		#atirando = False
 
 		for event in pygame.event.get():
 
@@ -74,9 +81,13 @@ try:
 			colision_wall = True
 
 		if atirando:
-			bullet = Bullet(jogador)
-			sprites.add(bullet)
-			bullets.add(bullet)
+			tiro_atual = pygame.time.get_ticks()
+
+			if tiro_atual - ultimo_tiro > COOLDOWN:
+				bullet = Bullet(jogador)
+				sprites.add(bullet)
+				bullets.add(bullet)
+				ultimo_tiro = tiro_atual
 
 		colision_bullets = pygame.sprite.groupcollide(bullets, aliens, True, True)
 

@@ -27,7 +27,7 @@ IMAGENS  = path.join(path.dirname(__file__), "Imagens")
 #==================#
 
 TELA     = pygame.display.set_mode((LARGURA, ALTURA))
-RELÓGIO  = pygame.time.Clock().tick(60)
+
 NOME     = "LAST SURPRISE"
 pygame.display.set_caption(NOME)
 

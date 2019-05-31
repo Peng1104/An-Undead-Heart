@@ -63,8 +63,8 @@ class Jogador(pygame.sprite.Sprite):
 			speedx = 0
 			speedy = 0
 
-		self.speedx = speedx
-		self.speedy = speedy
+		self.speedx = speedx * 8
+		self.speedy = speedy * 8
 
 	def hitbox(self, rect_objet, has_collided):
 
@@ -132,12 +132,15 @@ class Aliens (pygame.sprite.Sprite):
 		self.speedx =  0
 		self.speedy =  0
 
+		self.nascimento = pygame.time.get_ticks()
+
+		self.partida = self.nascimento + random.randint(0, 10000)
+
 		self.posicao()
 
 	def TipoAlien(self):
 
 		self.tipo = random.randint(0,1)
-		#self.tipo = 0
 
 		if self.tipo == 0:
 
@@ -199,15 +202,17 @@ class Aliens (pygame.sprite.Sprite):
 		self.TipoAlien()
 
 	def update(self):
+
+		if self.partida < pygame.time.get_ticks():
 		
-		self.pos_x += (self.speedx)*3
-		self.pos_y += (self.speedy)*3
+			self.pos_x += (self.speedx) * 22
+			self.pos_y += (self.speedy) * 22
 
-		self.rect.centerx = int(self.pos_x)
-		self.rect.centery = int(self.pos_y)
+			self.rect.centerx = int(self.pos_x)
+			self.rect.centery = int(self.pos_y)
 
-		if (self.rect.bottom > ALTURA + 300) or (self.rect.left < -300) or (self.rect.right > LARGURA + 300) or (self.rect.top < -300) :
-			self.posicao()
+			if (self.rect.bottom > ALTURA + 300) or (self.rect.left < -300) or (self.rect.right > LARGURA + 300) or (self.rect.top < -300) :
+				self.posicao()
 
 class Pewpew (pygame.sprite.Sprite):
 	def __init__(self,jogador):
@@ -282,8 +287,8 @@ class Bullet (pygame.sprite.Sprite):
 
 	def update(self):
 
-		self.pos_x -= self.speedx*5
-		self.pos_y -= self.speedy*5
+		self.pos_x -= self.speedx * 30
+		self.pos_y -= self.speedy * 30
 
 		self.rect.centerx = int(self.pos_x)
 		self.rect.centery = int(self.pos_y)
