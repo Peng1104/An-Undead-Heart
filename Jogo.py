@@ -23,8 +23,10 @@ bullets = pygame.sprite.Group()
 try:
 
 	colision_wall = False
+	atirando = False
 	running = True
 	while running:
+		atirando = False
 
 		for event in pygame.event.get():
 
@@ -43,12 +45,9 @@ try:
 
 			if event.type == pygame.MOUSEBUTTONDOWN:
 				if event.button == 1: #ESQUERDO 3, #DIREITO 1
-					bullet = Bullet(pewpew.rect.centerx, pewpew.rect.top)
-					sprites.add(bullet)
-					bullets.add(bullet)
+					atirando = True
 
-
-			elif event.type == pygame.KEYUP:
+			if event.type == pygame.KEYUP:
 
 				if event.key == pygame.K_w:
 					jogador.UP    = False
@@ -59,17 +58,30 @@ try:
 				if event.key == pygame.K_d:
 					jogador.RIGHT = False
 
+			if event.type == pygame.MOUSEBUTTONUP:
+				if event.button == 1: #ESQUERDO 3, #DIREITO 1
+					atirando = False
+
 		color_mask = MASCARA.get_at(jogador.rect.center)
 		
 		if color_mask == (BRANCO):
 			colision_wall = True
 
+		if atirando:
+			bullet = Bullet(jogador)
+			sprites.add(bullet)
+			bullets.add(bullet)
+
 		pewpew.posição(jogador.rect)
-		#jogador.speed()
 		jogador.wall(colision_wall)
 		sprites.update()
 
-		#colision_npcs = pygame.sprite.spritecollide(jogador, npcs, False)
+		colision_bullets = pygame.sprite.groupcollide(bullets, aliens, True, True)
+		colision_alien   = pygame.sprite.spritecollide(jogador, aliens, False)
+
+		#if colision_alien:
+		#	jogador.kill()
+		#	pewpew.kill()
 		#jogador.hitbox(npc.rect, colision_npcs)
 		
 		TELA.blit(FUNDO, FUNDO_RECT)

@@ -244,19 +244,49 @@ class Pewpew (pygame.sprite.Sprite):
 		self.rotacionar()
 
 class Bullet (pygame.sprite.Sprite):
-	def __init__(self, x, y):
+	def __init__(self, jogador):
 		super().__init__()
 
 		self.image = BULLET
+		self.imagem_original = BULLET
 
 		self.rect = self.image.get_rect()
 
-		self.rect.bottom = y
-		self.rect.centerx = x
-		self.speedy = -10
+		self.pos_x = jogador.rect.centerx
+		self.pos_y = jogador.rect.centery
+
+		self.mouse_x, self.mouse_y = pygame.mouse.get_pos()
+
+		self.speedx = self.pos_x - self.mouse_x
+		self.speedy = self.pos_y - self.mouse_y
+
+		self.norma = math.sqrt(self.speedx**2 + self.speedy**2)
+
+		if self.norma > 0.0:
+			self.speedx /= self.norma
+			self.speedy /= self.norma
+
+		self.rotacionar()
+
+	def rotacionar(self):
+
+		mouse_x, mouse_y = pygame.mouse.get_pos()
+
+		vetor_x, vetor_y = mouse_x - self.pos_x, mouse_y - self.pos_y
+
+		angulo = (180 / math.pi) * ( -math.atan2(vetor_y, vetor_x) )
+
+		self.image = pygame.transform.rotate(self.imagem_original, angulo)
+
+		self.rect = self.image.get_rect(center=self.rect.center)
 
 	def update(self):
-		self.rect.y += self.speedy
-		
+
+		self.pos_x -= self.speedx*2
+		self.pos_y -= self.speedy*2
+
+		self.rect.centerx = int(self.pos_x)
+		self.rect.centery = int(self.pos_y)
+
 		if self.rect.bottom < 0:
 			self.kill()
