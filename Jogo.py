@@ -8,7 +8,7 @@ jogador = Jogador()
 sprites.add(jogador)
 
 aliens = pygame.sprite.Group()
-for i in range(100):
+for i in range(10):
 	alien = Aliens(jogador)
 	sprites.add(alien)
 	aliens.add(alien)

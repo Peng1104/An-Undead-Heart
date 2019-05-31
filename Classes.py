@@ -129,8 +129,6 @@ class Aliens (pygame.sprite.Sprite):
 
 		self.rect = self.image.get_rect()
 
-		self.valor = random.randint(0,4)
-
 		self.speedx =  0
 		self.speedy =  0
 
@@ -139,6 +137,7 @@ class Aliens (pygame.sprite.Sprite):
 	def TipoAlien(self):
 
 		self.tipo = random.randint(0,1)
+		#self.tipo = 0
 
 		if self.tipo == 0:
 
@@ -147,12 +146,24 @@ class Aliens (pygame.sprite.Sprite):
 			self.speedx = self.jogador.rect.centerx - self.rect.centerx
 			self.speedy = self.jogador.rect.centery - self.rect.centery
 
+			self.norma = math.sqrt(self.speedx**2 + self.speedy**2)
+
+			if self.norma > 0.0:
+				self.speedx /= self.norma
+				self.speedy /= self.norma
+
 		if self.tipo == 1:
 
 			self.image = ALIEN_2
 
 			self.speedx = 800 - self.rect.x
 			self.speedy = 450 - self.rect.y
+
+			self.norma = math.sqrt(self.speedx**2 + self.speedy**2)
+
+			if self.norma > 0.0:
+				self.speedx /= self.norma
+				self.speedy /= self.norma
 
 	def posicao(self):
 		self.valor = random.randint(0,3)
@@ -161,24 +172,39 @@ class Aliens (pygame.sprite.Sprite):
 			self.rect.centerx = random.randrange(-200, 1800)
 			self.rect.centery = random.randrange(-200, -100)
 
+			self.pos_x = self.rect.centerx
+			self.pos_y = self.rect.centery
+
 		if self.valor == 1:
 			self.rect.centerx = random.randrange(-200, 1800)
 			self.rect.centery = random.randrange(1000, 1100)
+
+			self.pos_x = self.rect.centerx
+			self.pos_y = self.rect.centery
 
 		if self.valor == 2:
 			self.rect.centerx = random.randrange(-200, -100)
 			self.rect.centery = random.randrange(-200, 1100)
 
+			self.pos_x = self.rect.centerx
+			self.pos_y = self.rect.centery
+
 		if self.valor == 3:
 			self.rect.centerx = random.randrange(1700, 1800)
 			self.rect.centery = random.randrange(-200, 1100)
+
+			self.pos_x = self.rect.centerx
+			self.pos_y = self.rect.centery
 
 		self.TipoAlien()
 
 	def update(self):
 		
-		self.rect.centerx += (self.speedx)/200
-		self.rect.centery += (self.speedy)/200
+		self.pos_x += (self.speedx)*3
+		self.pos_y += (self.speedy)*3
+
+		self.rect.centerx = int(self.pos_x)
+		self.rect.centery = int(self.pos_y)
 
 		if (self.rect.bottom > ALTURA + 300) or (self.rect.left < -300) or (self.rect.right > LARGURA + 300) or (self.rect.top < -300) :
 			self.posicao()
