@@ -53,3 +53,5 @@ BULLET.set_colorkey(BRANCO)
 MASCARA    =   pygame.image.load(path.join(IMAGENS, "MASCARA.png")).convert()
 FUNDO      =   pygame.image.load(path.join(IMAGENS, "FUNDO.png")).convert()
 FUNDO_RECT =   FUNDO.get_rect()
+
+SCORE = pygame.font.Font(path.join(IMAGENS, "PressStart2P.ttf"), 28)

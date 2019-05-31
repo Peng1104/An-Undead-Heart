@@ -282,11 +282,11 @@ class Bullet (pygame.sprite.Sprite):
 
 	def update(self):
 
-		self.pos_x -= self.speedx*2
-		self.pos_y -= self.speedy*2
+		self.pos_x -= self.speedx*5
+		self.pos_y -= self.speedy*5
 
 		self.rect.centerx = int(self.pos_x)
 		self.rect.centery = int(self.pos_y)
 
-		if self.rect.bottom < 0:
+		if (self.rect.bottom < 0) or (self.rect.top > 900) or (self.rect.left > 1600) or (self.rect.right < 0) :
 			self.kill()
