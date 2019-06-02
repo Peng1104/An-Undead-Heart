@@ -9,6 +9,7 @@ class Jogador(pygame.sprite.Sprite):
 		self.image = JOGADOR
 
 		self.rect = self.image.get_rect()
+		self.radius = 25
 		
 		self.rect.centerx = LARGURA / 2
 		self.rect.centery = ALTURA  / 2

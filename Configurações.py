@@ -21,17 +21,13 @@ AMARELO  = (255, 255, 0)
 
 #==================#
 
-IMAGENS  = path.join(path.dirname(__file__), "Imagens")
-#SONS    = path.join(path.dirname(__file__), "Sons"   )
-
-#==================#
-
 TELA     = pygame.display.set_mode((LARGURA, ALTURA))
-
 NOME     = "LAST SURPRISE"
 pygame.display.set_caption(NOME)
 
 #==================#
+
+IMAGENS  = path.join(path.dirname(__file__), "Imagens")
 
 JOGADOR    = pygame.image.load(path.join(IMAGENS, "JOGADOR.png")).convert()
 JOGADOR    = pygame.transform.scale( JOGADOR, (50,50) )
@@ -57,3 +53,12 @@ FUNDO      =   pygame.image.load(path.join(IMAGENS, "FUNDO.png")).convert()
 FUNDO_RECT =   FUNDO.get_rect()
 
 SCORE = pygame.font.Font(path.join(IMAGENS, "PressStart2P.ttf"), 28)
+
+#=================#
+
+#SONS    = path.join(path.dirname(__file__), "Sons"   )
+#pygame.mixer.music.load(path.join(snd_dir, 'musica.ogg'))
+#pygame.mixer.music.set_volume(0.4)
+#boom_sound = pygame.mixer.Sound(path.join(snd_dir, 'musica.ogg'))
+
+#==================#
