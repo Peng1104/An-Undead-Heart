@@ -54,7 +54,7 @@ FUNDO_RECT =   FUNDO.get_rect()
 
 #=================#
 
-FONTE = pygame.font.Font(path.join(IMAGENS, "PressStart2P.ttf"), 28)
+FONTE = pygame.font.Font(path.join(IMAGENS, "FONTE.ttf"), 48)
 
 #=================#
 
