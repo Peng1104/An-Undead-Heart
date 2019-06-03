@@ -98,6 +98,7 @@ try:
 				sprites.add(bullet)
 				bullets.add(bullet)
 				ultimo_tiro = tiro_atual
+				pew_sound.play()
 
 		collision_bullets = pygame.sprite.groupcollide(bullets, aliens, True, True)
 
