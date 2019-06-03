@@ -21,16 +21,16 @@ for i in range(10):
 	sprites.add(alien)
 	aliens.add(alien)
 
-pewpews = pygame.sprite.Group()
 pewpew = Pewpew(jogador)
 sprites.add(pewpew)
-pewpews.add(pewpew)
 	
 bullets = pygame.sprite.Group()
 
 try:
 
 	score = 0
+
+	vidas = 5
 
 	colision_wall = False
 	atirando = False
@@ -89,15 +89,18 @@ try:
 				bullets.add(bullet)
 				ultimo_tiro = tiro_atual
 
-		colision_bullets = pygame.sprite.groupcollide(bullets, aliens, True, True)
+		collision_bullets = pygame.sprite.groupcollide(bullets, aliens, True, True)
 
-		for colisao in colision_bullets:
+		for colisao in collision_bullets:
 			if alien.tipo == 0:
 				score += 1
 			if alien.tipo == 1:
 				score += 2
 
-		colision_alien   = pygame.sprite.spritecollide(jogador, aliens, False)
+		collision_alien = pygame.sprite.spritecollide(jogador, aliens, False)
+
+		if collision_alien:
+			if 
 
 		pewpew.posição(jogador.rect)
 		jogador.wall(colision_wall)
@@ -106,7 +109,7 @@ try:
 		TELA.blit(FUNDO, FUNDO_RECT)
 		sprites.draw(TELA)
 
-		text_surface = SCORE.render("{:08d}".format(score), True, AMARELO)
+		text_surface = SCORE.render("SCORE : {:08d}".format(score), True, AMARELO)
 		text_rect = text_surface.get_rect()
 		text_rect.midtop = (LARGURA / 2,  10)
 		TELA.blit(text_surface, text_rect)
