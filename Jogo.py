@@ -101,8 +101,8 @@ try:
 
 		collision_alien = pygame.sprite.spritecollide(jogador, aliens, False)
 
-		if collision_alien:
-			if 
+		#if collision_alien:
+		#	if 
 
 		pewpew.posição(jogador.rect)
 		jogador.wall(colision_wall)
@@ -126,6 +126,11 @@ try:
 		timer_rect.left = 5
 		timer_rect.top = 10
 		TELA.blit(timer_surface, timer_rect)
+
+		text_surface = FONTE.render(chr(43) * vidas, True, VERMELHO)
+		text_rect = text_surface.get_rect()
+		text_rect.bottomleft = (10, ALTURA - 10)
+		TELA.blit(text_surface, text_rect)
 
 		pygame.display.flip()
 
