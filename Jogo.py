@@ -28,6 +28,8 @@ bullets = pygame.sprite.Group()
 
 try:
 
+	pygame.mixer.music.play(loops=-1)
+
 	score = 0
 
 	vidas = 5
@@ -127,7 +129,7 @@ try:
 		timer_rect.top = 10
 		TELA.blit(timer_surface, timer_rect)
 
-		text_surface = FONTE.render(chr(43) * vidas, True, VERMELHO)
+		text_surface = SIMBOLO.render("E" * vidas, True, VERMELHO)
 		text_rect = text_surface.get_rect()
 		text_rect.bottomleft = (10, ALTURA - 10)
 		TELA.blit(text_surface, text_rect)

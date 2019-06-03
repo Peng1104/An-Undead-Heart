@@ -56,11 +56,12 @@ FUNDO_RECT =   FUNDO.get_rect()
 
 FONTE = pygame.font.Font(path.join(IMAGENS, "FONTE.ttf"), 48)
 
+SIMBOLO = pygame.font.Font(path.join(IMAGENS, "SYMBOL_1.otf"), 48)
+
 #=================#
 
-#SONS    = path.join(path.dirname(__file__), "Sons"   )
-#pygame.mixer.music.load(path.join(snd_dir, 'musica.ogg'))
-#pygame.mixer.music.set_volume(0.4)
-#boom_sound = pygame.mixer.Sound(path.join(snd_dir, 'musica.ogg'))
+pygame.mixer.music.load(path.join(IMAGENS, 'Musica_de_Fundo.ogg'))
+pygame.mixer.music.set_volume(0.4)
+
 
 #==================#
