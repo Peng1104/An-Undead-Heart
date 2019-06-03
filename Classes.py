@@ -119,7 +119,7 @@ class Jogador(pygame.sprite.Sprite):
 		if self.rect.top < 0:
 			self.rect.top = 0
 
-class Aliens (pygame.sprite.Sprite):
+class Aliens(pygame.sprite.Sprite):
 
 	def __init__(self, jogador):
 		super().__init__()
@@ -215,7 +215,7 @@ class Aliens (pygame.sprite.Sprite):
 			if (self.rect.bottom > ALTURA + 300) or (self.rect.left < -300) or (self.rect.right > LARGURA + 300) or (self.rect.top < -300) :
 				self.posicao()
 
-class Pewpew (pygame.sprite.Sprite):
+class Pewpew(pygame.sprite.Sprite):
 	def __init__(self,jogador):
 		super().__init__()
 
@@ -249,7 +249,7 @@ class Pewpew (pygame.sprite.Sprite):
 
 		self.rotacionar()
 
-class Bullet (pygame.sprite.Sprite):
+class Bullet(pygame.sprite.Sprite):
 	def __init__(self, jogador):
 		super().__init__()
 
