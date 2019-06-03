@@ -62,6 +62,8 @@ SIMBOLO = pygame.font.Font(path.join(IMAGENS, "SYMBOL_1.otf"), 48)
 
 pygame.mixer.music.load(path.join(IMAGENS, 'Musica_de_Fundo.ogg'))
 pygame.mixer.music.set_volume(0.4)
+pew_sound = pygame.mixer.Sound(path.join(IMAGENS, 'Pew_Sound.ogg'))
+pew_sound.set_volume(0.05)
 
 
 #==================#
