@@ -32,6 +32,9 @@ try:
 
 	score = 0
 
+	timer = 0
+	minutos  = 0
+
 	colision_wall = False
 	atirando = False
 	running = True
@@ -57,7 +60,7 @@ try:
 					jogador.RIGHT = True
 
 			if event.type == pygame.MOUSEBUTTONDOWN:
-				if event.button == 1: #ESQUERDO 3, #DIREITO 1
+				if event.button == 1: #ESQUERDO 1, #DIREITO 3
 					atirando = True
 
 			if event.type == pygame.KEYUP:
@@ -72,7 +75,7 @@ try:
 					jogador.RIGHT = False
 
 			if event.type == pygame.MOUSEBUTTONUP:
-				if event.button == 1: #ESQUERDO 3, #DIREITO 1
+				if event.button == 1: #ESQUERDO 1, #DIREITO 3
 					atirando = False
 
 		color_mask = MASCARA.get_at(jogador.rect.center)
@@ -106,14 +109,27 @@ try:
 		TELA.blit(FUNDO, FUNDO_RECT)
 		sprites.draw(TELA)
 
-		text_surface = SCORE.render("{:08d}".format(score), True, AMARELO)
-		text_rect = text_surface.get_rect()
-		text_rect.midtop = (LARGURA / 2,  10)
-		TELA.blit(text_surface, text_rect)
+		score_surface = FONTE.render("{:08d}".format(score), True, AMARELO)
+		score_rect = score_surface.get_rect()
+		score_rect.midtop = (LARGURA / 2,  10)
+		TELA.blit(score_surface, score_rect)
+
+		segundos = int(timer/30)
+		if (timer/30) == 60:
+			minutos += 1
+			timer = 0
+
+		timer_surface = FONTE.render("{0:02d}:{1:02d}".format(minutos,segundos), True, BRANCO)
+		timer_rect = timer_surface.get_rect()
+		timer_rect.left = 5
+		timer_rect.top = 10
+		TELA.blit(timer_surface, timer_rect)
 
 		pygame.display.flip()
 
 		colision_wall = False
+
+		timer += 1
 
 finally:
 	pygame.quit()
