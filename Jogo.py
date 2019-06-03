@@ -1,8 +1,13 @@
 from Configurações import *
 from Classes import *
 
+iniciar_pygame()
 
-pygame.init()
+#Estado Inicial do Jogo
+Estado = INICIAR_JOGO
+
+#Save do Jogo sendo Jogado
+Save = -1
 
 RELÓGIO  = pygame.time.Clock()
 
@@ -16,6 +21,7 @@ jogador = Jogador()
 sprites.add(jogador)
 
 aliens = pygame.sprite.Group()
+
 for i in range(10):
 	alien = Aliens(jogador)
 	sprites.add(alien)
