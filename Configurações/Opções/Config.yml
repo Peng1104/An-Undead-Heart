@@ -1,17 +1,3 @@
-Nome do Jogo: An Undead Heart
-FPS: 60
-Nível de Resolução do Jogo: 4
-Tela Cheia: false
-Díretorios:
-  Jogos Salvos: Jogos Salvos
-  Imagens:
-    Menus:
-      Principal: Menu Principal
-      Opções: Menu de Opções
-      Vídeo: Menu de Vídeo
-      Novo Jogo: Menu de Novo Jogo
-      Carregar Save: Menu para Carregar Jogo Salvo
-      Como Jogar: Menu de Como Jogar
 Diretórios:
   Pai: Configurações
   Menu das Opções: Menus/Opções
@@ -20,4 +6,8 @@ Diretórios:
   Jogos Salvos: Jogos Salvos
   Menu dos Jogos Salvos: Menus/Jogos Salvos
   Iniciar Novo Jogo: Menus/Inicar Novo Jogo
-  Jogo: Jogo
+  Jogo: Assets
+FPS: '60'
+Nível de Resolução do Jogo: 4
+Nome do Jogo: LAST SURPRISE
+Tela Cheia: false

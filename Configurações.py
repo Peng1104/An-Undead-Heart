@@ -5,6 +5,9 @@ from os import path, listdir, makedirs
 from GameCode.Construtores.FileController import YamlFile
 import math
 
+
+pygame.init()
+
 #==================================================================================================================================#
 
 # Classe para Carregar todas as Imagens para o Jogo
@@ -50,6 +53,53 @@ class CarregarImagens():
 	# Retorna um dicionario contendo todas as imagens no file_path em forma de surfaces, os diretórios criaram dicionários internos
 	def getImagens(self):
 		return self.dictdeimagens
+
+#==================================================================================================================================#
+
+# Classe para Carregar todas os Sons para o Jogo
+class CarregarSons():
+
+	def __init__(self, file_path):
+		if type(file_path) == str:
+			if path.isdir(file_path):
+				self.dictdesons = self.__loadFile__(file_path)
+			else:
+				raise NotADirectoryError(file_path + " não existe ou não é um Dirétorio")
+		else:
+			raise TypeError("ERRO! file_path não é uma String")
+
+	def __loadFile__(self, file_path):
+		# Dicionário que vai conter todas os sons
+		maps = {}
+
+		# Lista todos os arquivos e diretórios dentro do file_path
+		for file in listdir(file_path):
+
+			# Verifica se não é um diretório
+			if file.find(".") > 0 and len(file) > 4:
+
+				# Verifica se um som com o mesmo nome já foi salva 
+				if not file[:-4] in maps:
+
+					# Arruma a extenção do arquivo caso não esteja em minusculo
+					file = file[:-4] + file[-4:].lower()
+
+					# Verifica se o arquivo é de um som
+					if file.endswith(".ogg"):  
+						
+						#Salva o som com seu nome no dicionário
+						maps[file[:-4]] = pygame.mixer.Sound(file_path + "/" + file)
+			else:
+
+				#Cria um dicionário interno
+				maps[file] = self.__loadFile__(file_path + "/" + file)
+
+		return maps
+
+	# Retorna um dicionario contendo todas os Sons no file_path em forma de surfaces, os diretórios criaram dicionários internos
+	def getSons(self):
+		return self.dictdesons
+
 #==================================================================================================================================#
 
 # Diretórios
@@ -79,37 +129,37 @@ CONFIG = YamlFile(DIR_CONFIG + "/Config.yml")
 DIR_PRINCIPAL 			   = CONFIG.getString("Diretórios.Pai", default_value="Configurações")
 
 # Diretório do menu inicial 
-DIR_MENU_INICIAL 		   = DIR_PRINCIPAL + CONFIG.getString("Diretórios.Menu das Opções", default_value="Menus/Opções")
+DIR_MENU_INICIAL 		   = DIR_PRINCIPAL + "/" + CONFIG.getString("Diretórios.Menu das Opções", default_value="Menus/Opções")
 
 # Diretório do menu de opções
-DIR_MENU_DE_OPÇÕES		   = DIR_PRINCIPAL + CONFIG.getString("Diretórios.Controles", default_value="Menus/Controles")
+DIR_MENU_DE_OPÇÕES		   = DIR_PRINCIPAL + "/" + CONFIG.getString("Diretórios.Controles", default_value="Menus/Controles")
 
 # Diretório do menu de como jogador
-DIR_CONTROLES 			   = DIR_PRINCIPAL + CONFIG.getString("Diretórios.Controles", default_value="Menus/Controles")
+DIR_CONTROLES 			   = DIR_PRINCIPAL + "/" + CONFIG.getString("Diretórios.Controles", default_value="Menus/Controles")
 
 # Diretório das configurações de vídeo
-DIR_CONFIGURAÇÕES_DE_VÍDEO = DIR_PRINCIPAL + CONFIG.getString("Diretórios.Configurações de Vídeo", default_value="Menus/Vídeo")
+DIR_CONFIGURAÇÕES_DE_VÍDEO = DIR_PRINCIPAL + "/" + CONFIG.getString("Diretórios.Configurações de Vídeo", default_value="Menus/Vídeo")
 
 # Diretório da localização dos jogos salvos
 DIR_SAVED_GAMES 		   = CONFIG.getString("Diretórios.Jogos Salvos", default_value="Jogos Salvos")
 
 # Diretório do menu dos jogos salvos
-DIR_MENU_DOS_JOGO_SALVO    = DIR_PRINCIPAL + CONFIG.getString("Diretórios.Menu dos Jogos Salvos", default_value="Menus/Jogos Salvos")
+DIR_MENU_DOS_JOGO_SALVO    = DIR_PRINCIPAL + "/" + CONFIG.getString("Diretórios.Menu dos Jogos Salvos", default_value="Menus/Jogos Salvos")
 
 # Diretório do menu de iniciar um novo jogo
-DIR_INICIAR_NOVO_JOGO      = DIR_PRINCIPAL + CONFIG.getString("Diretórios.Iniciar Novo Jogo", default_value="Menus/Inicar Novo Jogo")
+DIR_INICIAR_NOVO_JOGO      = DIR_PRINCIPAL + "/" + CONFIG.getString("Diretórios.Iniciar Novo Jogo", default_value="Menus/Inicar Novo Jogo")
 
 # Diretório das opções do jogo
-DIR_GAME                   = DIR_PRINCIPAL + CONFIG.getString("Diretórios.Jogo", default_value="Jogo")
+DIR_GAME                   = DIR_PRINCIPAL + "/" + CONFIG.getString("Diretórios.Jogo", default_value="Assets")
 
 #==================================================================================================================================#
 
 # Variáveis do jogo
 
 TELA            = None
-RELÓGIO         = None
 MULTIPLICADOR   = 1
 IMAGENS         = CarregarImagens(DIR_PRINCIPAL).getImagens()
+SONS            = CarregarSons(DIR_PRINCIPAL).getSons()
 
 #==================================================================================================================================#
 
@@ -161,44 +211,46 @@ MENU_DOS_JOGOS_SALVOS = "MENU DOS JOGOS SALVOS"
 INICIAR_NOVO_JOGO = "INICAR NOVO JOGO"
 INICIAR_JOGO = "INICAR JOGO"
 EM_JOGO = "EM JOGO"
+TELA_RESULTADOS = "TELA RESULTADOS"
 
 #==================================================================================================================================#
 
-JOGADOR    = pygame.image.load(path.join(IMAGENS, "JOGADOR.png")).convert()
+JOGADOR    = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["JOGADOR"]
 JOGADOR    = pygame.transform.scale( JOGADOR, (50,50) )
 JOGADOR.set_colorkey(VERMELHO)
 
-ALIEN_1    = pygame.image.load(path.join(IMAGENS, "ALIEN1.png")).convert()
+ALIEN_1    = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["ALIEN1"]
 ALIEN_1    = pygame.transform.scale( ALIEN_1, (50,50) )
 ALIEN_1.set_colorkey(PRETO)
 
-ALIEN_2    = pygame.image.load(path.join(IMAGENS, "ALIEN2.png")).convert()
+ALIEN_2    = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["ALIEN2"]
 ALIEN_2    = pygame.transform.scale( ALIEN_2, (50,50) )
 ALIEN_2.set_colorkey(PRETO)
 
-PEWPEW     = pygame.image.load(path.join(IMAGENS, "PEWPEW.png")).convert()
-PEWPEW     = pygame.transform.scale( PEWPEW, (50,50) )
-PEWPEW.set_colorkey(BRANCO)
+ARMA     = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["ARMA"]
+ARMA     = pygame.transform.scale( ARMA, (50,50) )
+ARMA.set_colorkey(BRANCO)
 
-BULLET     = pygame.image.load(path.join(IMAGENS, "BULLET.png")).convert()
+BULLET     = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["BULLET"]
 BULLET.set_colorkey(BRANCO)
 
-MASCARA    =   pygame.image.load(path.join(IMAGENS, "MASCARA.png")).convert()
-FUNDO      =   pygame.image.load(path.join(IMAGENS, "FUNDO.png")).convert()
+MASCARA    =   IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["MASCARA"]
+FUNDO      =   IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["FUNDO"]
 FUNDO_RECT =   FUNDO.get_rect()
 
 #=================#
 
-FONTE = pygame.font.Font(path.join(IMAGENS, "FONTE.ttf"), 48)
+FONTE      = pygame.font.Font(path.join(DIR_GAME, "Fontes/FONTE.ttf"), 28)
 
-SIMBOLO = pygame.font.Font(path.join(IMAGENS, "SYMBOL_1.otf"), 48)
+SIMBOLO    = pygame.font.Font(path.join(DIR_GAME, "Fontes/SYMBOL_1.otf"), 32)
 
 #=================#
 
-pygame.mixer.music.load(path.join(IMAGENS, 'Musica_de_Fundo.ogg'))
+pygame.mixer.music.load(path.join(DIR_GAME + "/Sons", 'Musica_de_Fundo.ogg'))
 pygame.mixer.music.set_volume(0.4)
-pew_sound = pygame.mixer.Sound(path.join(IMAGENS, 'Pew_Sound.ogg'))
-pew_sound.set_volume(0.05)
+
+TIRO = SONS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Sons"]["Tiro"]
+TIRO.set_volume(0.05)
 
 #==================================================================================================================================#
 
@@ -273,7 +325,7 @@ def atualizar_tela(plano_de_fundo, todos_os_sprites, estado_do_jogo):
 			Plano_De_Fundo = pygame.transform.scale(Plano_De_Fundo, (int(Plano_De_Fundo.get_size()[0]*MULTIPLICADOR), int(Plano_De_Fundo.get_size()[1]*MULTIPLICADOR)))
 
 		#Prenche a Tela de PRETO
-		Tela.fill((0, 0, 0, 255))
+		TELA.fill((0, 0, 0, 255))
 
 		#Aplica o Plano de Fundo a Tela
 		TELA.blit(Plano_De_Fundo, Plano_De_Fundo.get_rect())
@@ -286,6 +338,8 @@ def atualizar_tela(plano_de_fundo, todos_os_sprites, estado_do_jogo):
 
 		#Inverte o Display
 		pygame.display.flip()
+
+		return TELA
 
 #==================================================================================================================================#
 

@@ -27,8 +27,8 @@ for i in range(10):
 	sprites.add(alien)
 	aliens.add(alien)
 
-pewpew = Pewpew(jogador)
-sprites.add(pewpew)
+arma = Arma(jogador)
+sprites.add(arma)
 	
 bullets = pygame.sprite.Group()
 
@@ -98,7 +98,7 @@ try:
 				sprites.add(bullet)
 				bullets.add(bullet)
 				ultimo_tiro = tiro_atual
-				pew_sound.play()
+				TIRO.play()
 
 		collision_bullets = pygame.sprite.groupcollide(bullets, aliens, True, True)
 
@@ -113,12 +113,8 @@ try:
 		#if collision_alien:
 		#	if 
 
-		pewpew.posição(jogador.rect)
+		arma.posição(jogador.rect)
 		jogador.wall(colision_wall)
-		sprites.update()
-		
-		TELA.blit(FUNDO, FUNDO_RECT)
-		sprites.draw(TELA)
 
 		score_surface = FONTE.render("{:08d}".format(score), True, AMARELO)
 		score_rect = score_surface.get_rect()
@@ -130,7 +126,7 @@ try:
 			minutos += 1
 			timer = 0
 
-		timer_surface = FONTE.render("{0:02d}:{1:02d}".format(minutos,segundos), True, BRANCO)
+		timer_surface = FONTE[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Fontes"]["SYMBOL_1"].render("{0:02d}:{1:02d}".format(minutos,segundos), True, BRANCO)
 		timer_rect = timer_surface.get_rect()
 		timer_rect.left = 5
 		timer_rect.top = 10
@@ -141,7 +137,7 @@ try:
 		text_rect.bottomleft = (10, ALTURA - 10)
 		TELA.blit(text_surface, text_rect)
 
-		pygame.display.flip()
+		atualizar_tela(FUNDO, sprites, EM_JOGO)
 
 		colision_wall = False
 
