@@ -219,33 +219,37 @@ TELA_RESULTADOS = "TELA RESULTADOS"
 
 #==================================================================================================================================#
 
-JOGADOR    = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["JOGADOR"]
-JOGADOR    = pygame.transform.scale( JOGADOR, (50,50) )
+JOGADOR      = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["JOGADOR"]
+JOGADOR      = pygame.transform.scale( JOGADOR, (50,50) )
 JOGADOR.set_colorkey(VERMELHO)
 
-ALIEN_1    = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["ALIEN1"]
-ALIEN_1    = pygame.transform.scale( ALIEN_1, (50,50) )
+ALIEN_1      = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["ALIEN1"]
+ALIEN_1      = pygame.transform.scale( ALIEN_1, (50,50) )
 ALIEN_1.set_colorkey(PRETO)
 
-ALIEN_2    = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["ALIEN2"]
-ALIEN_2    = pygame.transform.scale( ALIEN_2, (50,50) )
+ALIEN_2      = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["ALIEN2"]
+ALIEN_2      = pygame.transform.scale( ALIEN_2, (50,50) )
 ALIEN_2.set_colorkey(PRETO)
 
-ARMA     = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["ARMA"]
-ARMA     = pygame.transform.scale( ARMA, (50,50) )
+ARMA         = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["ARMA"]
+ARMA         = pygame.transform.scale( ARMA, (50,50) )
 ARMA.set_colorkey((255, 255, 255, 0))
 
-BULLET     = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["BULLET"]
+BULLET       = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["BULLET"]
 BULLET.set_colorkey((255, 255, 255, 0))
 
-MASCARA    =   IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["MASCARA"]
-FUNDO      =   IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["FUNDO"]
+MASCARA      =   IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["MASCARA"]
+FUNDO        =   IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["FUNDO"]
+
+TELA_INICIAL = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["TELA_INICIAL"]
+
+TELA_FINAL = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["TELA_FINAL"]
 
 #=================#
 
-FONTE      = pygame.font.Font(path.join(DIR_GAME, "Fontes/FONTE.ttf"), 28)
+FONTE        = pygame.font.Font(path.join(DIR_GAME, "Fontes/FONTE.ttf"), 28)
 
-SIMBOLO    = pygame.font.Font(path.join(DIR_GAME, "Fontes/SYMBOL_1.otf"), 32)
+SIMBOLO      = pygame.font.Font(path.join(DIR_GAME, "Fontes/SYMBOL_1.otf"), 32)
 
 #=================#
 
