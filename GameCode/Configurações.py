@@ -5,7 +5,6 @@ from os import path, listdir, makedirs
 from GameCode.Construtores.FileController import YamlFile
 import math
 
-
 pygame.init()
 
 #==================================================================================================================================#
@@ -167,6 +166,8 @@ vidas           = 5
 inimigos_vivos  = 0
 tempo_absoluto  = 0
 
+MASCARA    = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["MASCARA"]
+
 #==================================================================================================================================#
 
 # CORES
@@ -219,30 +220,6 @@ TELA_RESULTADOS = "TELA RESULTADOS"
 
 #==================================================================================================================================#
 
-JOGADOR    = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["JOGADOR"]
-JOGADOR    = pygame.transform.scale( JOGADOR, (50,50) )
-JOGADOR.set_colorkey(VERMELHO)
-
-ALIEN_1    = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["ALIEN1"]
-ALIEN_1    = pygame.transform.scale( ALIEN_1, (50,50) )
-ALIEN_1.set_colorkey(PRETO)
-
-ALIEN_2    = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["ALIEN2"]
-ALIEN_2    = pygame.transform.scale( ALIEN_2, (50,50) )
-ALIEN_2.set_colorkey(PRETO)
-
-ARMA     = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["ARMA"]
-ARMA     = pygame.transform.scale( ARMA, (50,50) )
-ARMA.set_colorkey((255, 255, 255, 0))
-
-BULLET     = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["BULLET"]
-BULLET.set_colorkey((255, 255, 255, 0))
-
-MASCARA    =   IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["MASCARA"]
-FUNDO      =   IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["FUNDO"]
-
-#=================#
-
 FONTE      = pygame.font.Font(path.join(DIR_GAME, "Fontes/FONTE.ttf"), 28)
 
 SIMBOLO    = pygame.font.Font(path.join(DIR_GAME, "Fontes/SYMBOL_1.otf"), 32)
@@ -259,16 +236,12 @@ TIRO.set_volume(0.05)
 
 # Função para criar ou redimencionar a tela do jogo
 def redimencionar_tela(nível_de_resolução, tela_cheia):
-
-	global CONFIG
-
 	# Atualiza as opções no arquivo Config.yml
 
 	CONFIG.set("Nível de Resolução do Jogo", nível_de_resolução)
 	CONFIG.set("Tela Cheia", tela_cheia)
 	CONFIG.save()
 
-	global MULTIPLICADORES
 	global MULTIPLICADOR
 	global TELA
 
@@ -290,9 +263,6 @@ def redimencionar_tela(nível_de_resolução, tela_cheia):
 
 def iniciar_pygame():
 	# Checagens
-
-	global CONFIG
-	global DIR_SAVED_GAMES
 
 	if not path.isdir(DIR_SAVED_GAMES):
 		makedirs(DIR_SAVED_GAMES)
@@ -320,46 +290,44 @@ def atualizar_tela(plano_de_fundo, todos_os_sprites, estado_do_jogo):
 		raise TypeError("todos_os_sprites não é um pygame.sprite.Group")
 	elif type(estado_do_jogo) != str:
 		raise TypeError("Estado não é uma STRING")
-	elif estado_do_jogo != EM_JOGO and (plano_de_fundo.get_size()[0] != 1920 or plano_de_fundo.get_size()[1] != 1080):
+	elif plano_de_fundo.get_size()[0] != 1920 or plano_de_fundo.get_size()[1] != 1080:
 		raise Exception("A Imagem de Plano de Fundo tem que ser 1920 por 1080")
 	else:
 
-		global MULTIPLICADOR
-		global TELA
 		global timer
 		global minutos
-		global vidas
-		global inimigos_vivos
 
-		if estado_do_jogo != EM_JOGO:
-			#Dimensiona a Plano_De_Fundo de Plano de Fundo para menus
-			plano_de_fundo = pygame.transform.scale(plano_de_fundo, (int(plano_de_fundo.get_size()[0]*MULTIPLICADOR), int(plano_de_fundo.get_size()[1]*MULTIPLICADOR)))
+		# Dimensiona a plano_de_fundo de Plano de Fundo para menus
+		plano_de_fundo = pygame.transform.scale(plano_de_fundo, (int(plano_de_fundo.get_size()[0]*MULTIPLICADOR), int(plano_de_fundo.get_size()[1]*MULTIPLICADOR)))
 
-		#Prenche a Tela de PRETO
+		# Prenche a Tela de PRETO
 		TELA.fill((0, 0, 0, 255))
 
-		#Aplica o Plano de Fundo a Tela
+		# Aplica o Plano de Fundo a Tela
 		TELA.blit(plano_de_fundo, plano_de_fundo.get_rect())
 
-		score_surface = FONTE.render("{:08d}".format(score), True, AMARELO)
-		score_rect = score_surface.get_rect()
-		score_rect.midtop = (int(plano_de_fundo.get_size()[0]*MULTIPLICADOR) / 2,  10)
-		TELA.blit(score_surface, score_rect)
 
-		segundos = int(timer/30)
-		if (timer/30) == 60:
-			minutos += 1
-			timer = 0
+		if estado_do_jogo == EM_JOGO:
 
-		timer_surface = FONTE.render("{0:02d}:{1:02d}".format(minutos,segundos), True, BRANCO)
-		timer_rect = timer_surface.get_rect()
-		timer_rect.topleft = (10, 10)
-		TELA.blit(timer_surface, timer_rect)
+			score_surface = FONTE.render("{:08d}".format(score), True, AMARELO)
+			score_rect = score_surface.get_rect()
+			score_rect.midtop = (int(plano_de_fundo.get_size()[0]*MULTIPLICADOR) / 2,  10)
+			TELA.blit(score_surface, score_rect)
 
-		text_surface = SIMBOLO.render("E" * vidas, True, VERMELHO)
-		text_rect = text_surface.get_rect()
-		text_rect.bottomleft = (10, (int(plano_de_fundo.get_size()[1]*MULTIPLICADOR) - 10))
-		TELA.blit(text_surface, text_rect)
+			segundos = int(timer/30)
+			if (timer/30) == 60:
+				minutos += 1
+				timer = 0
+
+			timer_surface = FONTE.render("{0:02d}:{1:02d}".format(minutos,segundos), True, BRANCO)
+			timer_rect = timer_surface.get_rect()
+			timer_rect.topleft = (10, 10)
+			TELA.blit(timer_surface, timer_rect)
+
+			text_surface = SIMBOLO.render("E" * vidas, True, VERMELHO)
+			text_rect = text_surface.get_rect()
+			text_rect.bottomleft = (10, (int(plano_de_fundo.get_size()[1]*MULTIPLICADOR) - 10))
+			TELA.blit(text_surface, text_rect)
 
 		#Atualiza todos os membros do Grupo
 		todos_os_sprites.update()
@@ -369,8 +337,6 @@ def atualizar_tela(plano_de_fundo, todos_os_sprites, estado_do_jogo):
 
 		#Inverte o Display
 		pygame.display.flip()
-
-		return TELA
 
 #==================================================================================================================================#
 

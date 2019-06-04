@@ -1,163 +1,128 @@
-import Configurações
-import random
-from Classes import *
+import pygame
+from GameCode.Game.GameMaker import Game
+from GameCode.Configurações import *
+from GameCode.Construtores.MenuMaker import Menu, SavedGamesMenu
 
-Configurações.iniciar_pygame()
+iniciar_pygame()
 
 #Estado Inicial do Jogo
-Estado = Configurações.INICIAR_JOGO
+Estado = EM_JOGO
 
-#Save do Jogo sendo Jogado
+# Save do Jogo sendo Jogado
 Save = -1
 
 RELÓGIO  = pygame.time.Clock()
 
-COOLDOWN = 100
-
-COOLDOWN_DANO = 1500
-
-ultimo_tiro = pygame.time.get_ticks() - COOLDOWN
-
-ultimo_dano = pygame.time.get_ticks() - COOLDOWN_DANO
-
-sprites = pygame.sprite.Group()
-
-jogador = Jogador()
-sprites.add(jogador)
-
-aliens = pygame.sprite.Group()
-
-# Vareavel de Sorte
-x = random.randint(0, 10)
-
-for i in range(x):
-	alien = Aliens(jogador)
-	sprites.add(alien)
-	aliens.add(alien)
-
-arma = Arma(jogador)
-sprites.add(arma)
-	
-bullets = pygame.sprite.Group()
-
-nivel = 1
-
 try:
-
-	pygame.mixer.music.play(loops=-1)
-
-	colision_wall = False
-	atirando = False
-	running = True
-
-	while running:
+	while Estado != SAIR:
 		
 		RELÓGIO.tick(30)
-		#atirando = False
 
-		Configurações.inimigos_vivos = len(aliens.sprites())
+		# Entra no Menu Inicial
+		if Estado == INICIAR_JOGO:
+			Estado = Menu(DIR_MENU_INICIAL, Estado).run()
 
-		if Configurações.inimigos_vivos == 0:
+		# Entra no Menu das Opções
+		elif Estado == MENU_DE_OPÇÕES:
+			Estado = Menu(DIR_MENU_DE_OPÇÕES, Estado).run()
 
-			x = random.randint(x, 100)
+		# Mostra os controles do jogo
+		elif Estado == CONTROLES:
+			Estado = Menu(DIR_CONTROLES, Estado).run()
 
-			for i in range(nivel*x):
-				alien = Aliens(jogador)
-				sprites.add(alien)
-				aliens.add(alien)
-				
-			nivel = nivel + 1
+		# Entra no Menu das configurações de vídeo
+		elif Estado == CONFIGURAÇÕES_DE_VÍDEO:
+			Estado = Menu(DIR_CONFIGURAÇÕES_DE_VÍDEO, Estado).run()
 
-		for event in pygame.event.get():
+		# Ativa a Tela cheia e volta para o Menu das configurações de vídeo
+		elif Estado == ATIVAR_TELA_CHEIA:
 
-			if event.type == pygame.QUIT:
-				running = False
+			# Redimenciona a tela do jogo
+			redimencionar_tela(CONFIG.getInt("Nível de Resolução do Jogo"), True)
 
-			if event.type == pygame.KEYDOWN:
+			# Retorna para o Menu das configurações de vídeo
+			Estado = CONFIGURAÇÕES_DE_VÍDEO
 
-				# Parar o game
-				if event.key == pygame.K_q:
-					running = False
-					break
+		#Desativa a Tela cheia e volta para o Menu das configurações de vídeo
+		elif Estado == DESATIVAR_TELA_CHEIA:
 
-				if event.key == pygame.K_w:
-					jogador.UP    = True
-				if event.key == pygame.K_a:
-					jogador.LEFT  = True
-				if event.key == pygame.K_s:
-					jogador.DOWN  = True
-				if event.key == pygame.K_d:
-					jogador.RIGHT = True
+			# Redimenciona a tela do jogo
+			redimencionar_tela(CONFIG.getInt("Nível de Resolução do Jogo"), False)
 
-			if event.type == pygame.MOUSEBUTTONDOWN:
-				if event.button == 1: #ESQUERDO 1, #DIREITO 3
-					atirando = True
+			# Retorna para o Menu das configurações de vídeo
+			Estado = CONFIGURAÇÕES_DE_VÍDEO
 
-			if event.type == pygame.KEYUP:
+		#Troca para a Resolução de 1080p e volta para o Menu das configurações de vídeo
+		elif Estado == RESOLUÇÃO_DE_1080P:
 
-				if event.key == pygame.K_w:
-					jogador.UP    = False
-				if event.key == pygame.K_a:
-					jogador.LEFT  = False
-				if event.key == pygame.K_s:
-					jogador.DOWN  = False
-				if event.key == pygame.K_d:
-					jogador.RIGHT = False
+			# Redimenciona a tela do jogo
+			redimencionar_tela(6, CONFIG.getBoolean("Tela Cheia"))
 
-			if event.type == pygame.MOUSEBUTTONUP:
-				if event.button == 1: #ESQUERDO 1, #DIREITO 3
-					atirando = False
+			# Retorna para o Menu das configurações de vídeo
+			Estado = CONFIGURAÇÕES_DE_VÍDEO
 
-		color_mask = Configurações.MASCARA.get_at(jogador.rect.center)
-		
-		if color_mask == Configurações.BRANCO:
-			colision_wall = True
+		#Troca para a Resolução de 900p e volta para o Menu das configurações de vídeo
+		elif Estado == RESOLUÇÃO_DE_900P:
 
-		if atirando:
-			tiro_atual = pygame.time.get_ticks()
+			# Redimenciona a tela do jogo
+			redimencionar_tela(5, CONFIG.getBoolean("Tela Cheia"))
 
-			if tiro_atual - ultimo_tiro > COOLDOWN:
-				bullet = Bullet(jogador)
-				sprites.add(bullet)
-				bullets.add(bullet)
-				ultimo_tiro = tiro_atual
-				Configurações.TIRO.play()
+			# Retorna para o Menu das configurações de vídeo
+			Estado = CONFIGURAÇÕES_DE_VÍDEO
 
-		collision_bullets = pygame.sprite.groupcollide(bullets, aliens, True, True)
+		#Troca para a Resolução de 720p e volta para o Menu das configurações de vídeo
+		elif Estado == RESOLUÇÃO_DE_720P:
 
-		for colisao in collision_bullets:
-			if alien.tipo == 0:
-				Configurações.score += 1
-			if alien.tipo == 1:
-				Configurações.score += 2
+			# Redimenciona a tela do jogo
+			redimencionar_tela(4, CONFIG.getBoolean("Tela Cheia"))
 
-		collision_alien = pygame.sprite.spritecollide(jogador, aliens, False)
+			# Retorna para o Menu das configurações de vídeo
+			Estado = CONFIGURAÇÕES_DE_VÍDEO
 
-		for colisao in collision_alien:
-			dano_atual = pygame.time.get_ticks()
+		#Troca para a Resolução de 576p e volta para o Menu das configurações de vídeo
+		elif Estado == RESOLUÇÃO_DE_576P:
 
-			if dano_atual - ultimo_dano > COOLDOWN_DANO:
-				Configurações.vidas -= 1
-				ultimo_dano = dano_atual
-				jogador.image.set_alpha(125)
-		
-		dano_atual = pygame.time.get_ticks()
-		if (dano_atual - ultimo_dano > COOLDOWN_DANO):
-				jogador.image.set_alpha(255)
+			# Redimenciona a tela do jogo
+			redimencionar_tela(3, CONFIG.getBoolean("Tela Cheia"))
 
-		arma.posição(jogador.rect)
-		jogador.wall(colision_wall)
+			# Retorna para o Menu das configurações de vídeo
+			Estado = CONFIGURAÇÕES_DE_VÍDEO
 
-		Configurações.atualizar_tela(Configurações.FUNDO, sprites, Estado)
+		#Troca para a Resolução de 540p e volta para o Menu das configurações de vídeo
+		elif Estado == RESOLUÇÃO_DE_540P:
 
-		colision_wall = False
+			# Redimenciona a tela do jogo
+			redimencionar_tela(2, CONFIG.getBoolean("Tela Cheia"))
 
-		Configurações.timer += 1
-		Configurações.tempo_absoluto += 1
+			# Retorna para o Menu das configurações de vídeo
+			Estado = CONFIGURAÇÕES_DE_VÍDEO
 
-		if Configurações.vidas == 0:
-			#state = Configurações.TELA_RESULTADOS
-			running = False
+		#Troca para a Resolução de 360p e volta para o Menu das configurações de vídeo
+		elif Estado == RESOLUÇÃO_DE_360P:
+
+			# Redimenciona a tela do jogo
+			redimencionar_tela(1, CONFIG.getBoolean("Tela Cheia"))
+
+			# Retorna para o Menu das configurações de vídeo
+			Estado = CONFIGURAÇÕES_DE_VÍDEO
+
+		# Entra no Menu para selecionar um jogo salvo
+		elif Estado == MENU_DOS_JOGOS_SALVOS:
+			Estado, Save = SavedGamesMenu(DIR_MENU_DOS_JOGO_SALVO, Estado).run()
+
+		# Entra no Menu para criar um novo jogo
+		elif Estado == INICIAR_NOVO_JOGO:
+			Estado = Menu(DIR_INICIAR_NOVO_JOGO, Estado).run()
+
+		# Vai para o jogo
+		elif Estado == EM_JOGO:
+			Estado = Game()
+
+		# Estado Desconhecido (Ou estado para para o jogo) = Para o Jogo
+		else:
+			break
 
 finally:
+
+	# Fecha o Jogo
 	pygame.quit()
