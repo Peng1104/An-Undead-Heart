@@ -220,7 +220,13 @@ TELA_RESULTADOS = "TELA RESULTADOS"
 
 #==================================================================================================================================#
 
+<<<<<<< HEAD
 <<<<<<< HEAD:Configurações.py
+=======
+<<<<<<<< HEAD:GameCode/Configurações.py
+FONTE      = pygame.font.Font(path.join(DIR_GAME, "Fontes/FONTE.ttf"), 28)
+========
+>>>>>>> dbeeba54e0602eb72b24b9e207f174f0ddb08b4c
 JOGADOR      = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["JOGADOR"]
 JOGADOR      = pygame.transform.scale( JOGADOR, (50,50) )
 JOGADOR.set_colorkey(VERMELHO)
@@ -250,9 +256,13 @@ TELA_FINAL = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["TELA_FINAL"]
 #=================#
 
 FONTE        = pygame.font.Font(path.join(DIR_GAME, "Fontes/FONTE.ttf"), 28)
+<<<<<<< HEAD
 =======
 FONTE      = pygame.font.Font(path.join(DIR_GAME, "Fontes/FONTE.ttf"), 28)
 >>>>>>> dbeeba54e0602eb72b24b9e207f174f0ddb08b4c:GameCode/Configurações.py
+=======
+>>>>>>>> dbeeba54e0602eb72b24b9e207f174f0ddb08b4c:Configurações.py
+>>>>>>> dbeeba54e0602eb72b24b9e207f174f0ddb08b4c
 
 SIMBOLO      = pygame.font.Font(path.join(DIR_GAME, "Fontes/SYMBOL_1.otf"), 32)
 
