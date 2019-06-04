@@ -322,13 +322,13 @@ def atualizar_tela(plano_de_fundo, todos_os_sprites, estado_do_jogo):
 
 		if estado_do_jogo != EM_JOGO:
 			#Dimensiona a Plano_De_Fundo de Plano de Fundo para menus
-			Plano_De_Fundo = pygame.transform.scale(Plano_De_Fundo, (int(Plano_De_Fundo.get_size()[0]*MULTIPLICADOR), int(Plano_De_Fundo.get_size()[1]*MULTIPLICADOR)))
+			plano_de_fundo = pygame.transform.scale(plano_de_fundo, (int(plano_de_fundo.get_size()[0]*MULTIPLICADOR), int(plano_de_fundo.get_size()[1]*MULTIPLICADOR)))
 
 		#Prenche a Tela de PRETO
 		TELA.fill((0, 0, 0, 255))
 
 		#Aplica o Plano de Fundo a Tela
-		TELA.blit(Plano_De_Fundo, Plano_De_Fundo.get_rect())
+		TELA.blit(plano_de_fundo, plano_de_fundo.get_rect())
 
 		#Atualiza todos os membros do Grupo
 		todos_os_sprites.update()

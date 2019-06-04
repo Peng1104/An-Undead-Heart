@@ -1,4 +1,4 @@
-from Configurações import *
+import Configurações
 from Classes import *
 
 iniciar_pygame()
@@ -119,25 +119,25 @@ try:
 		score_surface = FONTE.render("{:08d}".format(score), True, AMARELO)
 		score_rect = score_surface.get_rect()
 		score_rect.midtop = (LARGURA / 2,  10)
-		TELA.blit(score_surface, score_rect)
+		Configurações.TELA.blit(score_surface, score_rect)
 
 		segundos = int(timer/30)
 		if (timer/30) == 60:
 			minutos += 1
 			timer = 0
 
-		timer_surface = FONTE[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Fontes"]["SYMBOL_1"].render("{0:02d}:{1:02d}".format(minutos,segundos), True, BRANCO)
+		timer_surface = FONTE.render("{0:02d}:{1:02d}".format(minutos,segundos), True, BRANCO)
 		timer_rect = timer_surface.get_rect()
 		timer_rect.left = 5
 		timer_rect.top = 10
-		TELA.blit(timer_surface, timer_rect)
+		Configurações.TELA.blit(timer_surface, timer_rect)
 
 		text_surface = SIMBOLO.render("E" * vidas, True, VERMELHO)
 		text_rect = text_surface.get_rect()
 		text_rect.bottomleft = (10, ALTURA - 10)
-		TELA.blit(text_surface, text_rect)
+		Configurações.TELA.blit(text_surface, text_rect)
 
-		atualizar_tela(FUNDO, sprites, EM_JOGO)
+		Configurações.atualizar_tela(FUNDO, sprites, EM_JOGO)
 
 		colision_wall = False
 
