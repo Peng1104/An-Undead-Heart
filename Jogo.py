@@ -14,7 +14,11 @@ RELÓGIO  = pygame.time.Clock()
 
 COOLDOWN = 100
 
+COOLDOWN_DANO = 3000
+
 ultimo_tiro = pygame.time.get_ticks() - COOLDOWN
+
+ultimo_dano = pygame.time.get_ticks() - COOLDOWN_DANO
 
 sprites = pygame.sprite.Group()
 
@@ -41,12 +45,6 @@ nivel = 1
 try:
 
 	pygame.mixer.music.play(loops=-1)
-
-	score = 0
-
-	vidas = 5
-	timer = 0
-	minutos  = 0
 
 	colision_wall = False
 	atirando = False
@@ -129,44 +127,31 @@ try:
 
 		for colisao in collision_bullets:
 			if alien.tipo == 0:
-				score += 1
+				Configurações.score += 1
 			if alien.tipo == 1:
-				score += 2
+				Configurações.score += 2
 
 		collision_alien = pygame.sprite.spritecollide(jogador, aliens, False)
 
-		#if collision_alien:
-		#	if 
+		for colisao in collision_alien:
+			dano_atual = pygame.time.get_ticks()
 
+			if dano_atual - ultimo_dano > COOLDOWN_DANO:
+				Configurações.vidas -= 1
+				ultimo_dano = dano_atual
+		 
 		arma.posição(jogador.rect)
 		jogador.wall(colision_wall)
-
-		score_surface = Configurações.FONTE.render("{:08d}".format(score), True, Configurações.AMARELO)
-		score_rect = score_surface.get_rect()
-		score_rect.midtop = (Configurações.getTamanho_Tela()[0] / 2,  10)
-		Configurações.TELA.blit(score_surface, score_rect)
-
-		segundos = int(timer/30)
-		if (timer/30) == 60:
-			minutos += 1
-			timer = 0
-
-		timer_surface = Configurações.FONTE.render("{0:02d}:{1:02d}".format(minutos,segundos), True, Configurações.BRANCO)
-		timer_rect = timer_surface.get_rect()
-		timer_rect.left = 5
-		timer_rect.top = 10
-		Configurações.TELA.blit(timer_surface, timer_rect)
-
-		text_surface = Configurações.SIMBOLO.render("E" * vidas, True, Configurações.VERMELHO)
-		text_rect = text_surface.get_rect()
-		text_rect.bottomleft = (10, Configurações.getTamanho_Tela()[1] - 10)
-		Configurações.TELA.blit(text_surface, text_rect)
 
 		Configurações.atualizar_tela(Configurações.FUNDO, sprites, Estado)
 
 		colision_wall = False
 
-		timer += 1
+		Configurações.timer += 1
+
+		if Configurações.vidas == 0:
+			#state = Configurações.TELA_RESULTADOS
+			pygame.quit()
 
 finally:
 	pygame.quit()

@@ -160,6 +160,10 @@ TELA            = None
 MULTIPLICADOR   = 1
 IMAGENS         = CarregarImagens(DIR_PRINCIPAL).getImagens()
 SONS            = CarregarSons(DIR_PRINCIPAL).getSons()
+score           = 0
+minutos         = 0
+timer           = 0
+vidas = 5
 
 #==================================================================================================================================#
 
@@ -227,7 +231,7 @@ ALIEN_2.set_colorkey(PRETO)
 
 ARMA     = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["ARMA"]
 ARMA     = pygame.transform.scale( ARMA, (50,50) )
-#ARMA.set_colorkey((255, 255, 255, 0))
+ARMA.set_colorkey((255, 255, 255, 0))
 
 BULLET     = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["BULLET"]
 BULLET.set_colorkey((255, 255, 255, 0))
@@ -320,6 +324,9 @@ def atualizar_tela(plano_de_fundo, todos_os_sprites, estado_do_jogo):
 
 		global MULTIPLICADOR
 		global TELA
+		global timer
+		global minutos
+		global vidas
 
 		if estado_do_jogo != EM_JOGO:
 			#Dimensiona a Plano_De_Fundo de Plano de Fundo para menus
@@ -330,6 +337,26 @@ def atualizar_tela(plano_de_fundo, todos_os_sprites, estado_do_jogo):
 
 		#Aplica o Plano de Fundo a Tela
 		TELA.blit(plano_de_fundo, plano_de_fundo.get_rect())
+
+		score_surface = FONTE.render("{:08d}".format(score), True, AMARELO)
+		score_rect = score_surface.get_rect()
+		score_rect.midtop = (int(plano_de_fundo.get_size()[0]*MULTIPLICADOR) / 2,  10)
+		TELA.blit(score_surface, score_rect)
+
+		segundos = int(timer/30)
+		if (timer/30) == 60:
+			minutos += 1
+			timer = 0
+
+		timer_surface = FONTE.render("{0:02d}:{1:02d}".format(minutos,segundos), True, BRANCO)
+		timer_rect = timer_surface.get_rect()
+		timer_rect.topleft = (10, 10)
+		TELA.blit(timer_surface, timer_rect)
+
+		text_surface = SIMBOLO.render("E" * vidas, True, VERMELHO)
+		text_rect = text_surface.get_rect()
+		text_rect.bottomleft = (10, (int(plano_de_fundo.get_size()[1]*MULTIPLICADOR) - 10))
+		TELA.blit(text_surface, text_rect)
 
 		#Atualiza todos os membros do Grupo
 		todos_os_sprites.update()
