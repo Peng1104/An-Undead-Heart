@@ -1,4 +1,5 @@
 import Configurações
+import random
 from Classes import *
 
 Configurações.iniciar_pygame()
@@ -22,7 +23,10 @@ sprites.add(jogador)
 
 aliens = pygame.sprite.Group()
 
-for i in range(10):
+# Vareavel de Sorte
+x = random.randint(0, 100)
+
+for i in range(x):
 	alien = Aliens(jogador)
 	sprites.add(alien)
 	aliens.add(alien)
@@ -31,6 +35,8 @@ arma = Arma(jogador)
 sprites.add(arma)
 	
 bullets = pygame.sprite.Group()
+
+nivel = 1
 
 try:
 
@@ -51,12 +57,31 @@ try:
 		RELÓGIO.tick(30)
 		#atirando = False
 
+		inimigos_vivos = len(aliens.sprites())
+
+		if inimigos_vivos == 0:
+
+			x = random.randint(x, 100)
+
+			for i in range(nivel*x):
+				alien = Aliens(jogador)
+				sprites.add(alien)
+				aliens.add(alien)
+				
+			nivel = nivel + 1
+
 		for event in pygame.event.get():
 
 			if event.type == pygame.QUIT:
 				running = False
 
 			if event.type == pygame.KEYDOWN:
+
+				# Parar o game
+				if event.key == pygame.K_q:
+					running = False
+					break
+
 				if event.key == pygame.K_w:
 					jogador.UP    = True
 				if event.key == pygame.K_a:

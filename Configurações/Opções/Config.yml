@@ -8,6 +8,6 @@ Diretórios:
   Iniciar Novo Jogo: Menus/Inicar Novo Jogo
   Jogo: Assets
 FPS: '60'
-Nível de Resolução do Jogo: 4
+Nível de Resolução do Jogo: 6
 Nome do Jogo: LAST SURPRISE
-Tela Cheia: false
+Tela Cheia: true
