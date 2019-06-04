@@ -1,10 +1,10 @@
 import Configurações
 from Classes import *
 
-iniciar_pygame()
+Configurações.iniciar_pygame()
 
 #Estado Inicial do Jogo
-Estado = INICIAR_JOGO
+Estado = Configurações.INICIAR_JOGO
 
 #Save do Jogo sendo Jogado
 Save = -1
@@ -85,9 +85,9 @@ try:
 				if event.button == 1: #ESQUERDO 1, #DIREITO 3
 					atirando = False
 
-		color_mask = MASCARA.get_at(jogador.rect.center)
+		color_mask = Configurações.MASCARA.get_at(jogador.rect.center)
 		
-		if color_mask == (BRANCO):
+		if color_mask == Configurações.BRANCO:
 			colision_wall = True
 
 		if atirando:
@@ -98,7 +98,7 @@ try:
 				sprites.add(bullet)
 				bullets.add(bullet)
 				ultimo_tiro = tiro_atual
-				TIRO.play()
+				Configurações.TIRO.play()
 
 		collision_bullets = pygame.sprite.groupcollide(bullets, aliens, True, True)
 
@@ -116,9 +116,9 @@ try:
 		arma.posição(jogador.rect)
 		jogador.wall(colision_wall)
 
-		score_surface = FONTE.render("{:08d}".format(score), True, AMARELO)
+		score_surface = Configurações.FONTE.render("{:08d}".format(score), True, Configurações.AMARELO)
 		score_rect = score_surface.get_rect()
-		score_rect.midtop = (LARGURA / 2,  10)
+		score_rect.midtop = (Configurações.getTamanho_Tela()[0] / 2,  10)
 		Configurações.TELA.blit(score_surface, score_rect)
 
 		segundos = int(timer/30)
@@ -126,18 +126,18 @@ try:
 			minutos += 1
 			timer = 0
 
-		timer_surface = FONTE.render("{0:02d}:{1:02d}".format(minutos,segundos), True, BRANCO)
+		timer_surface = Configurações.FONTE.render("{0:02d}:{1:02d}".format(minutos,segundos), True, Configurações.BRANCO)
 		timer_rect = timer_surface.get_rect()
 		timer_rect.left = 5
 		timer_rect.top = 10
 		Configurações.TELA.blit(timer_surface, timer_rect)
 
-		text_surface = SIMBOLO.render("E" * vidas, True, VERMELHO)
+		text_surface = Configurações.SIMBOLO.render("E" * vidas, True, Configurações.VERMELHO)
 		text_rect = text_surface.get_rect()
-		text_rect.bottomleft = (10, ALTURA - 10)
+		text_rect.bottomleft = (10, Configurações.getTamanho_Tela()[1] - 10)
 		Configurações.TELA.blit(text_surface, text_rect)
 
-		Configurações.atualizar_tela(FUNDO, sprites, SEM_MUDANÇA)
+		Configurações.atualizar_tela(Configurações.FUNDO, sprites, Estado)
 
 		colision_wall = False
 

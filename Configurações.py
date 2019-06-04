@@ -183,10 +183,8 @@ ROXO     = (125,   0, 255, 255)
 LARGURA_PADRÃO = 1920
 ALTURA_PADRÃO  = 1080
 
-LARGURA = LARGURA_PADRÃO*MULTIPLICADOR
-ALTURA = ALTURA_PADRÃO*MULTIPLICADOR
-
-TAMANHO_TELA = (LARGURA, ALTURA)
+def getTamanho_Tela():
+	return (int(LARGURA_PADRÃO*MULTIPLICADOR), int(ALTURA_PADRÃO*MULTIPLICADOR))
 
 #==================================================================================================================================#
 
@@ -236,7 +234,6 @@ BULLET.set_colorkey((255, 255, 255, 0))
 
 MASCARA    =   IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["MASCARA"]
 FUNDO      =   IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["FUNDO"]
-FUNDO_RECT =   FUNDO.get_rect()
 
 #=================#
 
@@ -272,10 +269,14 @@ def redimencionar_tela(nível_de_resolução, tela_cheia):
 	# Atualiza o Multiplicador
 	MULTIPLICADOR = MULTIPLICADORES[nível_de_resolução]
 
+	global MASCARA
+
+	MASCARA = pygame.transform.scale(MASCARA, (int(MASCARA.get_size()[0] * MULTIPLICADOR), int(MASCARA.get_size()[1] * MULTIPLICADOR)))
+
 	if tela_cheia:
-		TELA = pygame.display.set_mode((int(LARGURA_PADRÃO * MULTIPLICADOR), int(ALTURA_PADRÃO * MULTIPLICADOR)), flags=pygame.FULLSCREEN)
+		TELA = pygame.display.set_mode(getTamanho_Tela(), flags=pygame.FULLSCREEN)
 	else:
-		TELA = pygame.display.set_mode((int(LARGURA_PADRÃO * MULTIPLICADOR), int(ALTURA_PADRÃO * MULTIPLICADOR)))
+		TELA = pygame.display.set_mode(getTamanho_Tela())
 
 #==================================================================================================================================#
 

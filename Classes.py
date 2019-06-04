@@ -1,18 +1,19 @@
-from Configurações import *
-
+import Configurações
+import pygame
 import math
+import random
 
 class Jogador(pygame.sprite.Sprite):
 	def __init__(self):
 		super().__init__()
 
-		self.image = JOGADOR
+		self.image = Configurações.JOGADOR
 
 		self.rect = self.image.get_rect()
 		self.radius = 25
 		
-		self.rect.centerx = LARGURA / 2
-		self.rect.centery = ALTURA  / 2
+		self.rect.centerx = Configurações.getTamanho_Tela()[0] / 2
+		self.rect.centery = Configurações.getTamanho_Tela()[1] / 2
 		
 		self.speedx = 0
 		self.speedy = 0
@@ -109,13 +110,13 @@ class Jogador(pygame.sprite.Sprite):
 		self.rect.x = self.next_positionx
 		self.rect.y = self.next_positiony
 
-		if self.rect.right > LARGURA:
-			self.rect.right = LARGURA
+		if self.rect.right > Configurações.getTamanho_Tela()[0]:
+			self.rect.right = Configurações.getTamanho_Tela()[0]
 		if self.rect.left < 0:
 			self.rect.left = 0
 			
-		if self.rect.bottom > ALTURA:
-			self.rect.bottom = ALTURA
+		if self.rect.bottom > Configurações.getTamanho_Tela()[1]:
+			self.rect.bottom = Configurações.getTamanho_Tela()[1]
 		if self.rect.top < 0:
 			self.rect.top = 0
 
@@ -126,7 +127,7 @@ class Aliens(pygame.sprite.Sprite):
 
 		self.jogador = jogador
 
-		self.image = ALIEN_1
+		self.image = Configurações.ALIEN_1
 
 		self.rect = self.image.get_rect()
 
@@ -145,7 +146,7 @@ class Aliens(pygame.sprite.Sprite):
 
 		if self.tipo == 0:
 
-			self.image = ALIEN_1
+			self.image = Configurações.ALIEN_1
 
 			self.speedx = self.jogador.rect.centerx - self.rect.centerx
 			self.speedy = self.jogador.rect.centery - self.rect.centery
@@ -158,7 +159,7 @@ class Aliens(pygame.sprite.Sprite):
 
 		if self.tipo == 1:
 
-			self.image = ALIEN_2
+			self.image = Configurações.ALIEN_2
 
 			self.speedx = 800 - self.rect.x
 			self.speedy = 450 - self.rect.y
@@ -212,16 +213,16 @@ class Aliens(pygame.sprite.Sprite):
 			self.rect.centerx = int(self.pos_x)
 			self.rect.centery = int(self.pos_y)
 
-			if (self.rect.bottom > ALTURA + 300) or (self.rect.left < -300) or (self.rect.right > LARGURA + 300) or (self.rect.top < -300) :
+			if (self.rect.bottom > Configurações.getTamanho_Tela()[1] + 300) or (self.rect.left < -300) or (self.rect.right > Configurações.getTamanho_Tela()[0] + 300) or (self.rect.top < -300) :
 				self.posicao()
 
 class Arma(pygame.sprite.Sprite):
 	def __init__(self,jogador):
 		super().__init__()
 
-		self.image = ARMA
+		self.image = Configurações.ARMA
 
-		self.imagem_original = ARMA
+		self.imagem_original = Configurações.ARMA
 
 		self.rect = self.image.get_rect()
 
@@ -253,8 +254,8 @@ class Bullet(pygame.sprite.Sprite):
 	def __init__(self, jogador):
 		super().__init__()
 
-		self.image = BULLET
-		self.imagem_original = BULLET
+		self.image = Configurações.BULLET
+		self.imagem_original = Configurações.BULLET
 
 		self.rect = self.image.get_rect()
 
