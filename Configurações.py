@@ -229,10 +229,10 @@ ALIEN_2.set_colorkey(PRETO)
 
 ARMA     = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["ARMA"]
 ARMA     = pygame.transform.scale( ARMA, (50,50) )
-ARMA.set_colorkey(BRANCO)
+ARMA.set_colorkey((255, 255, 255, 0))
 
 BULLET     = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["BULLET"]
-BULLET.set_colorkey(BRANCO)
+BULLET.set_colorkey((255, 255, 255, 0))
 
 MASCARA    =   IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["MASCARA"]
 FUNDO      =   IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["FUNDO"]
@@ -273,9 +273,9 @@ def redimencionar_tela(nível_de_resolução, tela_cheia):
 	MULTIPLICADOR = MULTIPLICADORES[nível_de_resolução]
 
 	if tela_cheia:
-		TELA = pygame.display.set_mode(TAMANHO_TELA, flags=pygame.FULLSCREEN)
+		TELA = pygame.display.set_mode((int(LARGURA_PADRÃO * MULTIPLICADOR), int(ALTURA_PADRÃO * MULTIPLICADOR)), flags=pygame.FULLSCREEN)
 	else:
-		TELA = pygame.display.set_mode(TAMANHO_TELA)
+		TELA = pygame.display.set_mode((int(LARGURA_PADRÃO * MULTIPLICADOR), int(ALTURA_PADRÃO * MULTIPLICADOR)))
 
 #==================================================================================================================================#
 
@@ -313,7 +313,7 @@ def atualizar_tela(plano_de_fundo, todos_os_sprites, estado_do_jogo):
 		raise TypeError("todos_os_sprites não é um pygame.sprite.Group")
 	elif type(estado_do_jogo) != str:
 		raise TypeError("Estado não é uma STRING")
-	elif estado_do_jogo != EM_JOGO and (Plano_De_Fundo.get_size()[0] != 1920 or Plano_De_Fundo.get_size()[1] != 1080):
+	elif estado_do_jogo != EM_JOGO and (plano_de_fundo.get_size()[0] != 1920 or plano_de_fundo.get_size()[1] != 1080):
 		raise Exception("A Imagem de Plano de Fundo tem que ser 1920 por 1080")
 	else:
 

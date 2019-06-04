@@ -137,7 +137,7 @@ try:
 		text_rect.bottomleft = (10, ALTURA - 10)
 		Configurações.TELA.blit(text_surface, text_rect)
 
-		Configurações.atualizar_tela(FUNDO, sprites, EM_JOGO)
+		Configurações.atualizar_tela(FUNDO, sprites, SEM_MUDANÇA)
 
 		colision_wall = False
 
