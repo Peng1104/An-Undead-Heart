@@ -161,8 +161,8 @@ class Aliens(pygame.sprite.Sprite):
 
 			self.image = Configurações.ALIEN_2
 
-			self.speedx = 800 - self.rect.x
-			self.speedy = 450 - self.rect.y
+			self.speedx = (Configurações.getTamanho_Tela()[0] / 2) - self.rect.x
+			self.speedy = (Configurações.getTamanho_Tela()[1] / 2) - self.rect.y
 
 			self.norma = math.sqrt(self.speedx**2 + self.speedy**2)
 
@@ -174,29 +174,29 @@ class Aliens(pygame.sprite.Sprite):
 		self.valor = random.randint(0,3)
 
 		if self.valor == 0:
-			self.rect.centerx = random.randrange(-200, 1800)
+			self.rect.centerx = random.randrange(-200, (Configurações.getTamanho_Tela()[0] + 200))
 			self.rect.centery = random.randrange(-200, -100)
 
 			self.pos_x = self.rect.centerx
 			self.pos_y = self.rect.centery
 
 		if self.valor == 1:
-			self.rect.centerx = random.randrange(-200, 1800)
-			self.rect.centery = random.randrange(1000, 1100)
+			self.rect.centerx = random.randrange(-200, (Configurações.getTamanho_Tela()[0] + 200))
+			self.rect.centery = random.randrange((Configurações.getTamanho_Tela()[1] + 100), (Configurações.getTamanho_Tela()[1] + 200))
 
 			self.pos_x = self.rect.centerx
 			self.pos_y = self.rect.centery
 
 		if self.valor == 2:
 			self.rect.centerx = random.randrange(-200, -100)
-			self.rect.centery = random.randrange(-200, 1100)
+			self.rect.centery = random.randrange(-200, (Configurações.getTamanho_Tela()[1] + 200))
 
 			self.pos_x = self.rect.centerx
 			self.pos_y = self.rect.centery
 
 		if self.valor == 3:
-			self.rect.centerx = random.randrange(1700, 1800)
-			self.rect.centery = random.randrange(-200, 1100)
+			self.rect.centerx = random.randrange((Configurações.getTamanho_Tela()[0] + 100), (Configurações.getTamanho_Tela()[0] + 200))
+			self.rect.centery = random.randrange(-200, (Configurações.getTamanho_Tela()[1] + 200))
 
 			self.pos_x = self.rect.centerx
 			self.pos_y = self.rect.centery
@@ -295,5 +295,5 @@ class Bullet(pygame.sprite.Sprite):
 		self.rect.centerx = int(self.pos_x)
 		self.rect.centery = int(self.pos_y)
 
-		if (self.rect.bottom < 0) or (self.rect.top > 900) or (self.rect.left > 1600) or (self.rect.right < 0) :
+		if (self.rect.bottom < 0) or (self.rect.top > Configurações.getTamanho_Tela()[1]) or (self.rect.left > Configurações.getTamanho_Tela()[0]) or (self.rect.right < 0) :
 			self.kill()

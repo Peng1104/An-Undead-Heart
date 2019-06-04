@@ -227,7 +227,7 @@ ALIEN_2.set_colorkey(PRETO)
 
 ARMA     = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["ARMA"]
 ARMA     = pygame.transform.scale( ARMA, (50,50) )
-ARMA.set_colorkey((255, 255, 255, 0))
+#ARMA.set_colorkey((255, 255, 255, 0))
 
 BULLET     = IMAGENS[DIR_GAME[DIR_GAME.rfind("/")+1:]]["Imagens"]["BULLET"]
 BULLET.set_colorkey((255, 255, 255, 0))
