@@ -163,7 +163,9 @@ SONS            = CarregarSons(DIR_PRINCIPAL).getSons()
 score           = 0
 minutos         = 0
 timer           = 0
-vidas = 5
+vidas           = 5
+inimigos_vivos  = 0
+tempo_absoluto  = 0
 
 #==================================================================================================================================#
 
@@ -327,6 +329,7 @@ def atualizar_tela(plano_de_fundo, todos_os_sprites, estado_do_jogo):
 		global timer
 		global minutos
 		global vidas
+		global inimigos_vivos
 
 		if estado_do_jogo != EM_JOGO:
 			#Dimensiona a Plano_De_Fundo de Plano de Fundo para menus

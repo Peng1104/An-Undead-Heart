@@ -14,7 +14,7 @@ RELÓGIO  = pygame.time.Clock()
 
 COOLDOWN = 100
 
-COOLDOWN_DANO = 3000
+COOLDOWN_DANO = 1500
 
 ultimo_tiro = pygame.time.get_ticks() - COOLDOWN
 
@@ -28,7 +28,7 @@ sprites.add(jogador)
 aliens = pygame.sprite.Group()
 
 # Vareavel de Sorte
-x = random.randint(0, 100)
+x = random.randint(0, 10)
 
 for i in range(x):
 	alien = Aliens(jogador)
@@ -55,9 +55,9 @@ try:
 		RELÓGIO.tick(30)
 		#atirando = False
 
-		inimigos_vivos = len(aliens.sprites())
+		Configurações.inimigos_vivos = len(aliens.sprites())
 
-		if inimigos_vivos == 0:
+		if Configurações.inimigos_vivos == 0:
 
 			x = random.randint(x, 100)
 
@@ -139,7 +139,12 @@ try:
 			if dano_atual - ultimo_dano > COOLDOWN_DANO:
 				Configurações.vidas -= 1
 				ultimo_dano = dano_atual
-		 
+				jogador.image.set_alpha(125)
+		
+		dano_atual = pygame.time.get_ticks()
+		if (dano_atual - ultimo_dano > COOLDOWN_DANO):
+				jogador.image.set_alpha(255)
+
 		arma.posição(jogador.rect)
 		jogador.wall(colision_wall)
 
@@ -148,10 +153,11 @@ try:
 		colision_wall = False
 
 		Configurações.timer += 1
+		Configurações.tempo_absoluto += 1
 
 		if Configurações.vidas == 0:
 			#state = Configurações.TELA_RESULTADOS
-			pygame.quit()
+			running = False
 
 finally:
 	pygame.quit()

@@ -29,6 +29,8 @@ class Jogador(pygame.sprite.Sprite):
 		self.DOWN  = False
 		self.RIGHT = False
 
+		self.has_hit = False
+
 	def speed(self):
 
 		if self.UP:
@@ -109,16 +111,6 @@ class Jogador(pygame.sprite.Sprite):
 
 		self.rect.x = self.next_positionx
 		self.rect.y = self.next_positiony
-
-		if self.rect.right > Configurações.getTamanho_Tela()[0]:
-			self.rect.right = Configurações.getTamanho_Tela()[0]
-		if self.rect.left < 0:
-			self.rect.left = 0
-			
-		if self.rect.bottom > Configurações.getTamanho_Tela()[1]:
-			self.rect.bottom = Configurações.getTamanho_Tela()[1]
-		if self.rect.top < 0:
-			self.rect.top = 0
 
 class Aliens(pygame.sprite.Sprite):
 
