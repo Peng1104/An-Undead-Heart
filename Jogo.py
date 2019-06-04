@@ -1,50 +1,38 @@
-import Configurações
-import random
-from Classes import *
+import pygame
+from GameCode.Game.GameMaker import Game
+from GameCode.Configurações import *
+from GameCode.Construtores.MenuMaker import Menu, SavedGamesMenu
 
-Configurações.iniciar_pygame()
+iniciar_pygame()
 
 #Estado Inicial do Jogo
-Estado = Configurações.INICIAR_JOGO
+Estado = EM_JOGO
 
-#Save do Jogo sendo Jogado
+# Save do Jogo sendo Jogado
 Save = -1
 
 RELÓGIO  = pygame.time.Clock()
 
-COOLDOWN = 100
-
-COOLDOWN_DANO = 1500
-
-ultimo_tiro = pygame.time.get_ticks() - COOLDOWN
-
-ultimo_dano = pygame.time.get_ticks() - COOLDOWN_DANO
-
-sprites = pygame.sprite.Group()
-
-jogador = Jogador()
-sprites.add(jogador)
-
-aliens = pygame.sprite.Group()
-
-# Vareavel de Sorte
-x = random.randint(0, 10)
-
-for i in range(x):
-	alien = Aliens(jogador)
-	sprites.add(alien)
-	aliens.add(alien)
-
-arma = Arma(jogador)
-sprites.add(arma)
-	
-bullets = pygame.sprite.Group()
-
-nivel = 1
-
 try:
+	while Estado != SAIR:
+		
+		RELÓGIO.tick(30)
 
-	pygame.mixer.music.play(loops=-1)
+		# Entra no Menu Inicial
+		if Estado == INICIAR_JOGO:
+			Estado = Menu(DIR_MENU_INICIAL, Estado).run()
+
+		# Entra no Menu das Opções
+		elif Estado == MENU_DE_OPÇÕES:
+			Estado = Menu(DIR_MENU_DE_OPÇÕES, Estado).run()
+
+		# Mostra os controles do jogo
+		elif Estado == CONTROLES:
+			Estado = Menu(DIR_CONTROLES, Estado).run()
+
+		# Entra no Menu das configurações de vídeo
+		elif Estado == CONFIGURAÇÕES_DE_VÍDEO:
+			Estado = Menu(DIR_CONFIGURAÇÕES_DE_VÍDEO, Estado).run()
 
 	colision_wall = False
 	atirando = False
@@ -206,4 +194,6 @@ try:
 				ESTADO = Configurações.TELA_RESULTADOS
 
 finally:
+
+	# Fecha o Jogo
 	pygame.quit()

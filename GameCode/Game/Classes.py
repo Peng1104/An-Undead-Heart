@@ -1,109 +1,301 @@
-#Arquivo que contem as class que vão ser usadas no Jogo
+# Arquivo que contem as class que vão ser usadas no Jogo
 
 import pygame
-from GameCode.Construtores.Classes_Base import Novo_Objeto
+import math
+import random
 
-class Jogador(Novo_Objeto):
+class Jogador(pygame.sprite.Sprite):
 
-	def __init__(self, Lista_de_Imagens, Multiplicador, Posição, Colorkey):
-		super().__init__(Lista_de_Imagens[0], Multiplicador, Posição, None, Colorkey)
+	def __init__(self, imagem, tamanho_tela):
+		super().__init__()
 
-		self.Colorkey = Colorkey
+		self.image = imagem
 
-		self.Lista_de_Imagens = Lista_de_Imagens
-
+		self.rect = self.image.get_rect()
+		self.radius = 25
+		
+		self.rect.centerx = tamanho_tela[0] / 2
+		self.rect.centery = tamanho_tela[1] / 2
+		
 		self.speedx = 0
 		self.speedy = 0
 
-		self.hasCollided = False
+		self.next_positionx = self.rect.x
+		self.next_positiony = self.rect.y
 
-	def speed(self, speedx, speedy):
-		self.speedx = speedx
-		self.speedy = speedy
+		self.last_positionx = self.rect.x
+		self.last_positiony = self.rect.y
 
-		if self.speedy != 0:
-			if self.speedy > 0:
-				self.Atualizar_Imagem(self.Lista_de_Imagens[0], self.Colorkey)
+		self.UP    = False
+		self.LEFT  = False
+		self.DOWN  = False
+		self.RIGHT = False
+
+		self.has_hit = False
+
+	def speed(self):
+
+		if self.UP:
+			speedy = -4
+			if self.LEFT:
+				speedx = -2*(2**0.5)
+				speedy = -2*(2**0.5)
+			elif self.RIGHT:
+				speedx = +2*(2**0.5)
+				speedy = -2*(2**0.5)
 			else:
-				self.Atualizar_Imagem(self.Lista_de_Imagens[1], self.Colorkey)
+				speedx = 0
 
-		if self.speedx != 0:
-			if self.speedx > 0:
-				self.Atualizar_Imagem(self.Lista_de_Imagens[2], self.Colorkey)
+		elif self.DOWN:
+			speedy = 4
+			if self.LEFT:
+				speedx = -2*(2**0.5)
+				speedy = +2*(2**0.5)
+			elif self.RIGHT:
+				speedx = +2*(2**0.5)
+				speedy = +2*(2**0.5)
 			else:
-				self.Atualizar_Imagem(self.Lista_de_Imagens[3], self.Colorkey)
+				speedx = 0
+
+		elif self.LEFT:
+			speedx = -4
+			speedy =  0
+
+		elif self.RIGHT:
+			speedx = 4
+			speedy = 0
+
+		else:
+			speedx = 0
+			speedy = 0
+
+		self.speedx = speedx * 8
+		self.speedy = speedy * 8
+
+	def hitbox(self, rect_objet, has_collided):
+
+		if has_collided:
+
+			if self.rect.left < rect_objet.right and self.rect.left > rect_objet.left:
+				self.rect.left = rect_objet.right
+				self.next_positionx -= self.speedx
+
+			elif self.rect.right > rect_objet.left and self.rect.right < rect_objet.right:
+				self.rect.right = rect_objet.left
+				self.next_positionx -= self.speedx
+
+			elif self.rect.top < rect_objet.bottom and self.rect.bottom > rect_objet.bottom:
+				self.rect.top = rect_objet.bottom
+				self.next_positiony -= self.speedy
+
+			elif self.rect.bottom > rect_objet.top and self.rect.top < rect_objet.top:
+				self.rect.bottom = rect_objet.top
+				self.next_positiony -= self.speedy
+
+	def wall(self, has_collided):
+
+		if has_collided:
+
+			self.next_positionx = self.last_positionx
+			self.next_positiony = self.last_positiony
+
+		else:
+
+			self.next_positionx += self.speedx
+			self.next_positiony += self.speedy
+
+			self.last_positionx = self.rect.x
+			self.last_positiony = self.rect.y
 
 	def update(self):
-		#Atualização de variavel
-		if self.hasCollided:
-			self.speedx = -self.speedx
-			self.speedy = -self.speedy
-			self.hasCollided = False
 
-		#Teste de colisão
-		if self.speedx != 0 or self.speedy !=0:
-			for group in self.groups():
-				for sprite in group.sprites():
-					if not sprite == self and pygame.sprite.collide_mask(self, sprite):
-						self.speedx = -self.speedx
-						self.speedy = -self.speedy
-						self.hasCollided = True
-						break
+		self.speed()
 
-				if self.hasCollided:
-					break
+		self.rect.x = self.next_positionx
+		self.rect.y = self.next_positiony
 
-			#Teste se passou da tela
-			if self.HitBox.PosiçãoX + self.speedx < 0:
-				self.speedx = 0
+class Aliens(pygame.sprite.Sprite):
 
-			if self.HitBox.PosiçãoX + self.speedx > int(1920*self.Multiplicador - self.HitBox.Retangulo.width):
-				self.speedx = 0
+	def __init__(self, jogador, ALIEN_1, ALIEN_2, tamanho_tela):
+		super().__init__()
 
-			if self.HitBox.PosiçãoY + self.speedy < 0:
-				self.speedy = 0
+		self.jogador = jogador
 
-			if self.HitBox.PosiçãoY + self.speedy > int(1080*self.Multiplicador - self.HitBox.Retangulo.height):
-				self.speedy = 0
+		self.image = ALIEN_1
 
-		self.HitBox.Atualizar_Localização(self.HitBox.PosiçãoX + self.speedx)
-		self.HitBox.Atualizar_Localização(self.HitBox.PosiçãoY + self.speedy, False)
+		self.ALIEN_1 = ALIEN_1
+		self.ALIEN_2 = ALIEN_2
+		self.tamanho_tela = tamanho_tela
 
-		super().update()
+		self.rect = self.image.get_rect()
 
-class NPC(Novo_Objeto):
+		self.speedx =  0
+		self.speedy =  0
 
-	def __init__(self, Imagem, Multiplicador, Posição, ColorKey=(255, 0, 0)):
-		super().__init__(Imagem, Multiplicador, Posição, None, ColorKey)
+		self.nascimento = pygame.time.get_ticks()
 
-'''
-	def Falas_ao_chegar_próximo(Hitbox de quanto é próximo,Dicionario com as_falas desse personagem,Booleano = (randomico ou não)):
+		self.partida = self.nascimento + random.randint(0, 10000)
 
-		if colide com a Hitbox:
-			if Booleano:
-				Dicionario com as_falas desse personagem
-			else:
-				Dicionario com as_falas desse personagem
+		self.posicao()
 
-	def interação com o cara(o cara aperta um botao,Dicionario com as_falas desse personagem):
+	def TipoAlien(self):
 
-		if botao:
-			fala[npc]
+		self.tipo = random.randint(0,1)
 
-class Porta(HitBox):
+		if self.tipo == 0:
 
-	def __init__(self, Posição, Tamanho=None, Raio=None):
-		super().__init__(Posição, Tamanho, Raio)
-		# Tamanho = (Largura , Altura)
-		# Posição = (X , Y)
+			self.image = self.ALIEN_1
 
-	def Mudança_de_Sala(Booleano, Sala que irá entrar):
+			self.speedx = self.jogador.rect.centerx - self.rect.centerx
+			self.speedy = self.jogador.rect.centery - self.rect.centery
 
-		if Booleano:
-			"Vai pra sala x"
-'''
+			self.norma = math.sqrt(self.speedx**2 + self.speedy**2)
 
-#class Falas(Novo_Objeto):
+			if self.norma > 0.0:
+				self.speedx /= self.norma
+				self.speedy /= self.norma
 
-#	def __init__(self, Imagem, Multiplicador, Posição, Raio = 30,ColorKey=(255, 0, 0)):
-#		super().__init__(Imagem, Multiplicador, Posição, Raio, ColorKey)
+		if self.tipo == 1:
+
+			self.image = self.ALIEN_2
+
+			self.speedx = (self.tamanho_tela[0] / 2) - self.rect.x
+			self.speedy = (self.tamanho_tela[1] / 2) - self.rect.y
+
+			self.norma = math.sqrt(self.speedx**2 + self.speedy**2)
+
+			if self.norma > 0.0:
+				self.speedx /= self.norma
+				self.speedy /= self.norma
+
+	def posicao(self):
+		self.valor = random.randint(0,3)
+
+		if self.valor == 0:
+			self.rect.centerx = random.randrange(-200, (self.tamanho_tela[0] + 200))
+			self.rect.centery = random.randrange(-200, -100)
+
+			self.pos_x = self.rect.centerx
+			self.pos_y = self.rect.centery
+
+		if self.valor == 1:
+			self.rect.centerx = random.randrange(-200, (self.tamanho_tela[0] + 200))
+			self.rect.centery = random.randrange((self.tamanho_tela[1] + 100), (self.tamanho_tela[1] + 200))
+
+			self.pos_x = self.rect.centerx
+			self.pos_y = self.rect.centery
+
+		if self.valor == 2:
+			self.rect.centerx = random.randrange(-200, -100)
+			self.rect.centery = random.randrange(-200, (self.tamanho_tela[1] + 200))
+
+			self.pos_x = self.rect.centerx
+			self.pos_y = self.rect.centery
+
+		if self.valor == 3:
+			self.rect.centerx = random.randrange((self.tamanho_tela[0] + 100), (self.tamanho_tela[0] + 200))
+			self.rect.centery = random.randrange(-200, (self.tamanho_tela[1] + 200))
+
+			self.pos_x = self.rect.centerx
+			self.pos_y = self.rect.centery
+
+		self.TipoAlien()
+
+	def update(self):
+
+		if self.partida < pygame.time.get_ticks():
+		
+			self.pos_x += (self.speedx) * 22
+			self.pos_y += (self.speedy) * 22
+
+			self.rect.centerx = int(self.pos_x)
+			self.rect.centery = int(self.pos_y)
+
+			if (self.rect.bottom > self.tamanho_tela[1] + 300) or (self.rect.left < -300) or (self.rect.right > self.tamanho_tela[0] + 300) or (self.rect.top < -300) :
+				self.posicao()
+
+class Arma(pygame.sprite.Sprite):
+
+	def __init__(self, jogador, ARMA):
+		super().__init__()
+
+		self.image = ARMA
+
+		self.imagem_original = ARMA
+
+		self.rect = self.image.get_rect()
+
+		self.rect.centerx = jogador.rect.centerx
+		self.rect.centery = jogador.rect.centery
+
+	def posição(self,rect_jogador):
+
+		self.rect.centerx = rect_jogador.centerx
+		self.rect.centery = rect_jogador.centery
+
+	def rotacionar(self):
+
+		mouse_x, mouse_y = pygame.mouse.get_pos()
+
+		vetor_x, vetor_y = mouse_x - self.rect.centerx, mouse_y - self.rect.centery
+
+		angulo = (180 / math.pi) * ( -math.atan2(vetor_y, vetor_x) )
+
+		self.image = pygame.transform.rotate(self.imagem_original, angulo)
+
+		self.rect = self.image.get_rect(center=self.rect.center)
+
+	def update(self):
+
+		self.rotacionar()
+
+class Bullet(pygame.sprite.Sprite):
+
+	def __init__(self, jogador, BULLET, tamanho_tela):
+		super().__init__()
+
+		self.image = BULLET
+		self.imagem_original = BULLET
+
+		self.tamanho_tela = tamanho_tela
+
+		self.rect = self.image.get_rect()
+
+		self.pos_x = jogador.rect.centerx
+		self.pos_y = jogador.rect.centery
+
+		self.mouse_x, self.mouse_y = pygame.mouse.get_pos()
+
+		self.speedx = self.pos_x - self.mouse_x
+		self.speedy = self.pos_y - self.mouse_y
+
+		self.norma = math.sqrt(self.speedx**2 + self.speedy**2)
+
+		if self.norma > 0.0:
+			self.speedx /= self.norma
+			self.speedy /= self.norma
+
+		self.rotacionar()
+
+	def rotacionar(self):
+
+		mouse_x, mouse_y = pygame.mouse.get_pos()
+
+		vetor_x, vetor_y = mouse_x - self.pos_x, mouse_y - self.pos_y
+
+		angulo = (180 / math.pi) * ( -math.atan2(vetor_y, vetor_x) )
+
+		self.image = pygame.transform.rotate(self.imagem_original, angulo)
+
+		self.rect = self.image.get_rect(center=self.rect.center)
+
+	def update(self):
+
+		self.pos_x -= self.speedx * 30
+		self.pos_y -= self.speedy * 30
+
+		self.rect.centerx = int(self.pos_x)
+		self.rect.centery = int(self.pos_y)
+
+		if (self.rect.bottom < 0) or (self.rect.top > self.tamanho_tela[1]) or (self.rect.left > self.tamanho_tela[0]) or (self.rect.right < 0) :
+			self.kill()

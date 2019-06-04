@@ -424,7 +424,7 @@ class FileController(ABC):
 class YamlFile(FileController):
 
 	#Versão da classe YamlFile
-	__version__ = "1.2"
+	__version__ = "1.2.1"
 
 	def __init__(self, FilePath):
 		#Verefica a versâo do PyYAML se é igual ou superior a 5.1
@@ -435,8 +435,9 @@ class YamlFile(FileController):
 
 	#Carrega os dados do arquivo
 	def reload(self):
-		with open(self.FilePath, 'r', encoding="utf-8") as file:
-			self.data = yaml.load(file.read(), Loader=yaml.FullLoader)
+		if os.path.getsize(self.FilePath) != 0:
+			with open(self.FilePath, 'r', encoding="utf-8") as file:
+				self.data = yaml.load(file.read(), Loader=yaml.FullLoader)
 
 	#Salva os dados para o arquivo
 	def save(self):
@@ -449,15 +450,16 @@ class YamlFile(FileController):
 class JSONFile(FileController):
 
 	#Versão da classe JSONFile
-	__version__ = "1.2"
+	__version__ = "1.2.1"
 
 	def __init__(self, FilePath):
 		super().__init__(FilePath)
 
 	#Carrega os dados do arquivo
 	def reload(self):
-		with open(self.FilePath, 'r', encoding="utf-8") as file:
-			self.data = json.load(file)
+		if os.path.getsize(self.FilePath) != 0:
+			with open(self.FilePath, 'r', encoding="utf-8") as file:
+				self.data = json.load(file)
 
 	#Salva os dados para o arquivo
 	def save(self):
